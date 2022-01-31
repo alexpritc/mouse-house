@@ -1,0 +1,67 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Camera",
+            "id": "b5d9c046-be9f-46e7-a1a2-1c0fc7cf529e",
+            "actions": [
+                {
+                    "name": "RotateHorizontal",
+                    "type": "Button",
+                    "id": "48a72bf8-8505-45b6-a148-1cf1e3b42b98",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1386e893-9a12-4e11-a3eb-cbeb26356a6b",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e018eddf-8743-4972-8544-3a5ca2b06082",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c83b35be-a7d7-42de-8060-f37dba806329",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf431349-f289-4915-8d5a-93074d6840c1",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
