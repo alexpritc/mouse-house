@@ -41,6 +41,10 @@ public class Mouse : MonoBehaviour {
     public GameObject target;
 
     private NavMeshAgent _navMeshAgent;
+    
+    // Sensory radius gizmo
+    [Range(0, 100)] public int segments = 100;
+    private LineRenderer line;
 
     private void Start() {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -66,12 +70,7 @@ public class Mouse : MonoBehaviour {
     public void SetDestination(Transform target) {
         _navMeshAgent.destination = target.position;
     }
-
-
-    [Range(0, 100)] public int segments = 100;
-
-    private LineRenderer line;
-
+    
     void CreatePoints() {
         float x;
         float z;
