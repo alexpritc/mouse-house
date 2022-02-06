@@ -3,24 +3,32 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour {
     private Mesh _mesh;
     private Vector3[] _vertices;
     private int[] _triangles;
+    private Vector2[] _uvs;
+    private Color32[] _colors;
 
     [SerializeField] private int _xSize = 20;
     [SerializeField] private int _zSize = 20;
 
+    [SerializeField] private Gradient _tileGradient;
+
     private NavMeshSurface _navMeshSurface;
-    
+
+    private Color32 currentColor;
     void Start()
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
 
         _navMeshSurface = GetComponent<NavMeshSurface>();
+
+        currentColor = new Color32(0,0,0,0);
 
         CreateShape();
         UpdateMesh();
@@ -29,26 +37,30 @@ public class MeshGenerator : MonoBehaviour {
     void CreateShape() {
         
         // Calculate vertices
-        _vertices = new Vector3[(_xSize + 1) * (_zSize + 1)];
+        int numberOfVertices = (_xSize + 1) * (_zSize + 1);
+        _vertices = new Vector3[numberOfVertices];
+        _uvs = new Vector2[numberOfVertices];
         
         for (int i = 0, z = 0; z <= _zSize; z++) {
             
             for (int x = 0; x <= _xSize; x++, i++) {
                 
                 //float y = Mathf.PerlinNoise(x * 0.7f, z * 0.7f) * 2f;
-                _vertices[i] = new Vector3(x, 0, z);
+                float vertX = x * 10;
+                float vertZ = z * 10;
+                
+                _vertices[i] = new Vector3(vertX, 0, vertZ);
+                _uvs[i] = new Vector2(vertZ / (float)_zSize, vertX / (float)_xSize);
             }
         }
         
         // Calculate triangles
         _triangles = new int[_xSize * _zSize * 6];
-
-        int vert = 0;
-        int tris = 0;
-
-        for (int z = 0; z < _zSize; z++) {
+        for (int vert = 0, tris = 0, z = 0; z < _zSize; z++) {
             
             for (int x = 0; x < _xSize; x++) {
+                
+                // 6 triangles per quad
                 _triangles[tris + 0] = vert + 0;
                 _triangles[tris + 1] = vert + _xSize + 1;
                 _triangles[tris + 2] = vert + 1;
@@ -66,12 +78,53 @@ public class MeshGenerator : MonoBehaviour {
 
     void UpdateMesh() {
         _mesh.Clear();
-
-        _mesh.vertices = _vertices;
-        _mesh.triangles = _triangles;
         
+        UpdateMeshAttributes();
+
         _mesh.RecalculateNormals();
         
         _navMeshSurface.BuildNavMesh();
+    }
+
+    Color GetColorWithinRange(int i) {
+
+        Random.InitState(System.DateTime.Now.Millisecond);
+        
+        if (i % 6 == 0) {
+            currentColor =  _tileGradient.Evaluate(Random.Range (0f, 1.1f));
+        }
+
+        return currentColor;
+    }
+    
+    private void UpdateMeshAttributes()
+    {
+        Vector3[] verticesModified = new Vector3[_triangles.Length];
+        int[] trianglesModified = new int[_triangles.Length];
+        
+        Color32[] colors = new Color32[_triangles.Length];
+        for (int i = 0; i < trianglesModified.Length; i++) {
+            
+            // Makes every vertex unique
+            verticesModified[i] = _vertices[_triangles[i]];
+            trianglesModified[i] = i;
+            
+            // Every third vertex randomly chooses new color
+            if(i % 6 == 0){
+                currentColor = new Color(
+                    Random.Range (0.22f, 0.25f),
+                    Random.Range (0.78f, 1f),
+                    Random.Range (0.21f, 0.55f),
+                    1.0f
+                );
+            }
+
+            colors[i] = currentColor;
+        }
+        
+        // Apply changes to mesh
+        _mesh.vertices = verticesModified;
+        _mesh.triangles = trianglesModified;
+        _mesh.colors32 = colors;
     }
 }
