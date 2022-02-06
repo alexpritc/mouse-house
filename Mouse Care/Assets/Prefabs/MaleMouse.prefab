@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff6d61210134fb45b57ffc905257705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sensoryRadius: 10
+  _sensoryRadius: 20
   _speed: 10
   target: {fileID: 0}
   segments: 100

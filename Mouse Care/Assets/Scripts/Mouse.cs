@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,8 +22,8 @@ public class Mouse : MonoBehaviour {
     private int _weight;
     private bool _isFertile;
 
-    private float _hunger;
-    private float _thirst;
+    [Range(0,100)] private float _hunger = 50;
+    [Range(0,100)] private float _thirst = 50;
 
     /// <summary>
     /// How loneley is the mouse
@@ -44,17 +45,10 @@ public class Mouse : MonoBehaviour {
     
     // Sensory radius gizmo
     [Range(0, 100)] public int segments = 100;
-    private LineRenderer line;
 
     private void Start() {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _speed;
-
-        line = gameObject.GetComponent<LineRenderer>();
-
-        line.SetVertexCount(segments + 1);
-        line.useWorldSpace = false;
-        CreatePoints();
     }
 
     // Update is called once per frame
@@ -81,9 +75,13 @@ public class Mouse : MonoBehaviour {
             x = Mathf.Cos(Mathf.Deg2Rad * angle) * _sensoryRadius;
             z = Mathf.Sin(Mathf.Deg2Rad * angle) * _sensoryRadius;
 
-            line.SetPosition(i, new Vector3(x, 0, z));
+            Gizmos.DrawWireSphere(transform.position, _sensoryRadius);
 
             angle += (360f / segments);
         }
+    }
+
+    private void OnDrawGizmosSelected() {
+        CreatePoints();
     }
 }
