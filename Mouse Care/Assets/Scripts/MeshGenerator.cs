@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour {
@@ -16,11 +19,17 @@ public class MeshGenerator : MonoBehaviour {
     [SerializeField] private int _xSize = 20;
     [SerializeField] private int _zSize = 20;
 
+    [SerializeField] private int _xSpacing = 1;
+    [SerializeField] private int _zSpacing = 1;
+    
     [SerializeField] private Gradient _tileGradient;
 
     private NavMeshSurface _navMeshSurface;
 
     private Color32 currentColor;
+
+    [HideInInspector] public Vector3[] _gridPositions;
+    
     void Start()
     {
         _mesh = new Mesh();
@@ -31,7 +40,9 @@ public class MeshGenerator : MonoBehaviour {
         currentColor = new Color32(0,0,0,0);
 
         CreateShape();
+        GenerateGridPositions();
         UpdateMesh();
+        SaveMesh("Assets/Meshes/mesh.asset");
     }
 
     void CreateShape() {
@@ -41,24 +52,24 @@ public class MeshGenerator : MonoBehaviour {
         _vertices = new Vector3[numberOfVertices];
         _uvs = new Vector2[numberOfVertices];
         
-        for (int i = 0, z = 0; z <= _zSize; z++) {
+        for (int i = 0, cols = 0; cols <= _zSize; cols++) {
             
-            for (int x = 0; x <= _xSize; x++, i++) {
-                
-                float y = Mathf.PerlinNoise(x * 0.2f, z * 0.2f) * 10f;
-                float vertX = x * 10;
-                float vertZ = z * 10;
-                
-                _vertices[i] = new Vector3(vertX, y, vertZ);
-                _uvs[i] = new Vector2(vertZ / (float)_zSize, vertX / (float)_xSize);
+            for (int rows = 0; rows <= _xSize; rows++, i++) {
+
+                float z = cols * _zSpacing;
+                float x = rows * _xSpacing;
+                float y = Mathf.PerlinNoise(x * 0.2f, z * 0.2f) * 2f;
+
+                _vertices[i] = new Vector3(x, y, z);
+                _uvs[i] = new Vector2(z / _zSize, x / _xSize);
             }
         }
         
         // Calculate triangles
         _triangles = new int[_xSize * _zSize * 6];
-        for (int vert = 0, tris = 0, z = 0; z < _zSize; z++) {
+        for (int vert = 0, tris = 0, cols = 0; cols < _zSize; cols++) {
             
-            for (int x = 0; x < _xSize; x++) {
+            for (int rows = 0; rows < _xSize; rows++) {
                 
                 // 6 triangles per quad
                 _triangles[tris + 0] = vert + 0;
@@ -86,23 +97,42 @@ public class MeshGenerator : MonoBehaviour {
         _navMeshSurface.BuildNavMesh();
     }
 
-    Color GetColorWithinRange(int i) {
-
-        Random.InitState(System.DateTime.Now.Millisecond);
+    private void GenerateGridPositions() {
         
-        if (i % 6 == 0) {
-            currentColor =  _tileGradient.Evaluate(Random.Range (0f, 1.1f));
-        }
+        _gridPositions = new Vector3[(_xSize + 1) * (_zSize + 1)];
+        
+        for (int i = 0, cols = 0; cols < _zSize; cols++){
 
-        return currentColor;
+            for (int rows = 0; rows < _xSize; rows++) {
+                
+                float xOffset = _xSpacing / 2f;
+                float zOffset = _zSpacing / 2f;
+                
+                Vector3 pos = new Vector3( _vertices[i].x + xOffset, _vertices[i].y, _vertices[i].z + zOffset);
+
+                _gridPositions[i] = pos;
+                
+                i++;
+            }
+
+            i++;
+        }
     }
     
+    private void OnDrawGizmosSelected() {
+
+        foreach (var position in _gridPositions) {
+            Gizmos.DrawSphere(position, 0.1f);
+        }
+    }
+
     private void UpdateMeshAttributes()
     {
         Vector3[] verticesModified = new Vector3[_triangles.Length];
         int[] trianglesModified = new int[_triangles.Length];
         
         Color32[] colors = new Color32[_triangles.Length];
+        
         for (int i = 0; i < trianglesModified.Length; i++) {
             
             // Makes every vertex unique
@@ -126,5 +156,10 @@ public class MeshGenerator : MonoBehaviour {
         _mesh.vertices = verticesModified;
         _mesh.triangles = trianglesModified;
         _mesh.colors32 = colors;
+    }
+
+    private void SaveMesh(string path) {
+        AssetDatabase.CreateAsset(_mesh, path);
+        AssetDatabase.SaveAssets();
     }
 }
