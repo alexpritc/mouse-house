@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -107,8 +108,14 @@ public class MeshGenerator : MonoBehaviour {
                 
                 float xOffset = _xSpacing / 2f;
                 float zOffset = _zSpacing / 2f;
+
+                float y1 = FindVertexHeightAtXZ(_vertices[i].x + _xSpacing, _vertices[i].z);
+                float y2 = FindVertexHeightAtXZ(_vertices[i].x, _vertices[i].z + _zSpacing);
                 
-                Vector3 pos = new Vector3( _vertices[i].x + xOffset, _vertices[i].y, _vertices[i].z + zOffset);
+                float yOffset = (y1 + y2) / 2f;
+                
+                Vector3 pos = transform.position; 
+                pos += new Vector3( _vertices[i].x + xOffset, yOffset, _vertices[i].z + zOffset);
 
                 _gridPositions[i] = pos;
                 
@@ -117,6 +124,17 @@ public class MeshGenerator : MonoBehaviour {
 
             i++;
         }
+    }
+
+    private float FindVertexHeightAtXZ(float x, float z) {
+
+        foreach (var vertex in _vertices) {
+            if (vertex.x == x && vertex.z == z) {
+                return vertex.y;
+            }
+        }
+
+        return Mathf.Epsilon;
     }
     
     private void OnDrawGizmosSelected() {
