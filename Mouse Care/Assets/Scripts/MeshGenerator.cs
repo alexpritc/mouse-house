@@ -22,8 +22,6 @@ public class MeshGenerator : MonoBehaviour {
 
     [SerializeField] private int _xSpacing = 1;
     [SerializeField] private int _zSpacing = 1;
-    
-    [SerializeField] private Gradient _tileGradient;
 
     private NavMeshSurface _navMeshSurface;
 
@@ -113,7 +111,7 @@ public class MeshGenerator : MonoBehaviour {
                 float y2 = FindVertexHeightAtXZ(_vertices[i].x, _vertices[i].z + _zSpacing);
                 
                 float yOffset = (y1 + y2) / 2f;
-                
+
                 Vector3 pos = transform.position; 
                 pos += new Vector3( _vertices[i].x + xOffset, yOffset, _vertices[i].z + zOffset);
 
