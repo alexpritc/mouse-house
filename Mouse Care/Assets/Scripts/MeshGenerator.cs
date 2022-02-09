@@ -22,6 +22,8 @@ public class MeshGenerator : MonoBehaviour {
 
     [SerializeField] private int _xSpacing = 1;
     [SerializeField] private int _zSpacing = 1;
+    
+    [SerializeField] private float _yModifier = 2f;
 
     private NavMeshSurface _navMeshSurface;
 
@@ -57,7 +59,7 @@ public class MeshGenerator : MonoBehaviour {
 
                 float z = cols * _zSpacing;
                 float x = rows * _xSpacing;
-                float y = Mathf.PerlinNoise(x * 0.2f, z * 0.2f) * 2f;
+                float y = Mathf.PerlinNoise(x * 0.2f, z * 0.2f) * _yModifier;
 
                 _vertices[i] = new Vector3(x, y, z);
                 _uvs[i] = new Vector2(z / _zSize, x / _xSize);
