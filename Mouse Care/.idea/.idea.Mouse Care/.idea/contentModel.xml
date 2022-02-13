@@ -7,6 +7,12 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Controls.cs" t="Include" />
+        <e p="ForJump" t="Include">
+          <e p="ForJump" t="Include">
+            <e p="AgentJumpToTarget.cs" t="Include" />
+            <e p="ReturnNavmeshInfo.cs" t="Include" />
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="CameraRotation.cs" t="Include" />
           <e p="Enclosure.cs" t="Include" />
@@ -15,6 +21,7 @@
           <e p="MaleMouse.cs" t="Include" />
           <e p="MeshGenerator.cs" t="Include" />
           <e p="Mouse.cs" t="Include" />
+          <e p="MouseMovement.cs" t="Include" />
           <e p="MouseSpawner.cs" t="Include" />
         </e>
       </e>

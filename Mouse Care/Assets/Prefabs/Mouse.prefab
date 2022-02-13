@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2941249151852926755}
   - component: {fileID: 2941249151852926758}
-  - component: {fileID: 8832811126144684836}
   - component: {fileID: 8987083025874264022}
+  - component: {fileID: -871017549007743504}
   m_Layer: 6
-  m_Name: FemaleMouse
+  m_Name: Mouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,30 +48,14 @@ NavMeshAgent:
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 500
-  m_StoppingDistance: 0.5
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 0.37
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8832811126144684836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2941249151852926759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e8af7f52a9f59943849a006a105a06a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sensoryRadius: 20
-  _speed: 10
-  target: {fileID: 0}
-  segments: 100
 --- !u!54 &8987083025874264022
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -88,6 +72,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-871017549007743504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941249151852926759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4d51c1f49fc6942b6b50d7ac874b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sensoryRadius: 5
+  _speed: 5
+  target: {fileID: 0}
+  _enclosure: {fileID: 0}
+  segments: 100
 --- !u!1 &6457538119880940353
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6457538119880940353}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.551, z: 0.105}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 500, y: 500, z: 500}
   m_Children: []
   m_Father: {fileID: 2941249151852926755}
@@ -148,7 +149,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3606795508535278734, guid: c33a7f00ddc8c3d498f601a13de3bd3f, type: 3}
+  - {fileID: 2100000, guid: ce3f7a8b9bb3a2b41a32b1808e85f868, type: 2}
   - {fileID: -2770435109304195997, guid: c33a7f00ddc8c3d498f601a13de3bd3f, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0

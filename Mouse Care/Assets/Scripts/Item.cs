@@ -11,10 +11,10 @@ public class Item : MonoBehaviour
     /// <summary>
     /// How much enrichment this item gives
     /// </summary>
-    private float _enrichment;
+    public float _enrichment;
     
     /// <summary>
     /// How much stress this item gives
     /// </summary>
-    private float _stress;
+    public float _stress;
 }

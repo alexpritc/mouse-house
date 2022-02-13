@@ -27,21 +27,26 @@ public class MeshGenerator : MonoBehaviour {
 
     private NavMeshSurface _navMeshSurface;
 
+    [SerializeField] private Gradient _gradient;
     private Color32 currentColor;
 
     [HideInInspector] public Vector3[] _gridPositions;
-    
+
     void Start()
     {
+        if (_mesh != null) {
+            return;
+        }
+        
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
 
         _navMeshSurface = GetComponent<NavMeshSurface>();
 
         currentColor = new Color32(0,0,0,0);
-
+        
         CreateShape();
-        GenerateGridPositions();
+        //GenerateGridPositions();
         UpdateMesh();
         SaveMesh("Assets/Meshes/mesh.asset");
     }
@@ -139,7 +144,7 @@ public class MeshGenerator : MonoBehaviour {
     
     private void OnDrawGizmosSelected() {
 
-        foreach (var position in _gridPositions) {
+        foreach (var position in _mesh.vertices) {
             Gizmos.DrawSphere(position, 0.1f);
         }
     }
@@ -158,13 +163,8 @@ public class MeshGenerator : MonoBehaviour {
             trianglesModified[i] = i;
             
             // Every third vertex randomly chooses new color
-            if(i % 6 == 0){
-                currentColor = new Color(
-                    Random.Range (0.22f, 0.25f),
-                    Random.Range (0.78f, 1f),
-                    Random.Range (0.21f, 0.55f),
-                    1.0f
-                );
+            if(i % 3 == 0){
+                currentColor = _gradient.Evaluate (Random.Range (0f, 1f));
             }
 
             colors[i] = currentColor;
