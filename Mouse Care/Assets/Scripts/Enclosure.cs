@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,4 +25,9 @@ public class Enclosure : MonoBehaviour
     /// </summary>
     private float _beddingInInches;
     private int _maxMiceCapacity;
+
+    [HideInInspector] public Item[] _itemsInEnclosure;
+    [HideInInspector] public Mouse[] _miceInEnclosure;
+    
+    [HideInInspector] public Mesh _mesh;
 }
