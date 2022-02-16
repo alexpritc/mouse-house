@@ -28,4 +28,6 @@ public class Enclosure : MonoBehaviour
 
     [HideInInspector] public Item[] _itemsInEnclosure;
     [HideInInspector] public Mouse[] _miceInEnclosure;
+    
+    [HideInInspector] public Mesh _mesh;
 }

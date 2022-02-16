@@ -22,7 +22,6 @@ public class MouseSpawner : MonoBehaviour {
     void InstantiateMouse() {
 
         GameObject go = Instantiate(_mousePrefab, Vector3.zero, Quaternion.identity);
-        go.GetComponent<Mouse>().target = _target;
         go.GetComponent<Mouse>()._enclosure = _enclosure;
     }
 }

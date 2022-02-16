@@ -32,9 +32,12 @@ public class MeshGenerator : MonoBehaviour {
 
     [HideInInspector] public Vector3[] _gridPositions;
 
+    [SerializeField] private Enclosure _enclosure;
+
     void Start()
     {
         if (_mesh != null) {
+            _enclosure._mesh = _mesh;
             return;
         }
         
@@ -49,6 +52,8 @@ public class MeshGenerator : MonoBehaviour {
         //GenerateGridPositions();
         UpdateMesh();
         SaveMesh("Assets/Meshes/mesh.asset");
+
+        _enclosure._mesh = _mesh;
     }
 
     void CreateShape() {

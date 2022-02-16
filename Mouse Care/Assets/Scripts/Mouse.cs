@@ -1,13 +1,22 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
+using TMPro;
 
+public enum MouseStates {
+    Idle,
+    Moving,
+    LookingForFood,
+    Eating,
+    LookingForWater,
+    Drinking
+}
 
 public class Mouse : MonoBehaviour {
-    private string _status;
+    [SerializeField] private MouseStates _status;
     
     private string _name;
     private char _sex;
@@ -41,43 +50,95 @@ public class Mouse : MonoBehaviour {
     /// How far the mouse can see around them
     /// </summary>
     [SerializeField] private float _sensoryRadius = 5f;
-    [SerializeField] private float _speed = 5f;
-
-    public GameObject target;
+    [SerializeField] private float _boundaryRadius = 10f;
+    [SerializeField] private float _speed = 10f;
 
     private NavMeshAgent _navMeshAgent;
 
     [HideInInspector] public Enclosure _enclosure;
     private Vector3 _currentPosition;
+
+    private Vector3[] _allVertices;
     
     // Sensory radius gizmo
     [Range(0, 100)] public int segments = 100;
-    
-    [Header("Jump Info")]
-    private Rigidbody _rigidbody;
-    
-    public float JumpTime = 0.6f;
-    Transform _dummyAgent;
-    Vector3 JumpMidPoint;
-    Vector3 JumpEndPoint;
-    bool checkForStartPointReached;
-    Transform _transform;
-    List<Vector3> Path = new List<Vector3>();
-    float JumpDistance;
-    Vector3[] _jumpPath;
-    bool previousRigidBodyState;
 
+    private Animator _animator;
+
+    private TextMeshProUGUI _statusUI;
+    private Canvas _statusCanvas;
+    
     private void Start() {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _speed;
+
+        _animator = GetComponent<Animator>();
+
+        _statusUI = GetComponentInChildren<TextMeshProUGUI>();
+        _statusCanvas = GetComponentInChildren<Canvas>();
+        
+        _allVertices = _enclosure._mesh.vertices;
     }
 
     // Update is called once per frame
     void Update() {
 
-       SetDestination(target.transform.position);
+        if (!IsMouseWithinTarget()) {
+
+            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Walking") {
+                _animator.Play("Walking");
+                _status = MouseStates.Moving;
+                _statusUI.text = "Walking";
+            }
+        }
+        else {
+            // Find new destination
+            _status = MouseStates.Idle;
+            _statusUI.text = "Idle";
+
+            if (Random.Range(0f, 100f) <= 1f) {
+                SetDestination(FindNewDestinationOutsideSensoryRadius());   
+            }
+        }
+        
+        _statusCanvas.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 
+    Vector3 FindNewDestinationOutsideSensoryRadius() {
+        List<Vector3> verticesOutsideSensoryRadius = new List<Vector3>();
+        
+        foreach (var vertex in _allVertices) {
+
+            if (!IsInsideSensoryRadius(vertex) && IsInsideBoundaryRadius(vertex)) {
+                verticesOutsideSensoryRadius.Add(vertex);
+            }
+        }
+
+        return GetRandomVertex(verticesOutsideSensoryRadius);
+    }
+
+    Vector3 GetRandomVertex(List<Vector3> list) {
+        return list[Random.Range(0, list.Count)];
+    }
+
+    bool IsInsideSensoryRadius(Vector3 pos) {
+        
+        if (Vector3.Distance(pos, transform.position) <= _sensoryRadius){
+            return true;
+        }
+        
+        return false;
+    }
+    
+    bool IsInsideBoundaryRadius(Vector3 pos) {
+        
+        if (Vector3.Distance(pos, transform.position) <= _boundaryRadius){
+            return true;
+        }
+        
+        return false;
+    }
+    
     void OnMovementUpdate() {
 
         _hunger += 10f;
@@ -87,27 +148,6 @@ public class Mouse : MonoBehaviour {
         CheckMouseAttributes();
     }
     
-    void DoJump()
-    {
-       // previousRigidBodyState = Rigidbody.isKinematic;
-        _navMeshAgent.enabled = false;
-        _rigidbody.isKinematic = true;
-
-        _jumpPath = Path.ToArray();
-
-        // if you don't want to use a RigidBody change this to
-        //transform.DoLocalPath per the DoTween doc's
-    }
-
-    void JumpFinished()
-    {
-        _navMeshAgent.enabled = true;
-        _rigidbody.isKinematic = previousRigidBodyState;
-
-        // If using Pooling DeSpawn here instead
-        Destroy(_dummyAgent.gameObject);
-    }
-
     void CheckNeeds() {
 
         if (_hunger >= 10f) {
@@ -117,7 +157,23 @@ public class Mouse : MonoBehaviour {
         if (_thirst >= 10f) {
             // needs to drink
         }
+    }
 
+    bool IsMouseWithinTarget() {
+        
+        // Check if we've reached the destination
+        if (!_navMeshAgent.pathPending) {
+            
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance) {
+                
+                if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f) {
+                    
+                    return true;  // Arrived
+                }
+            }
+        }
+        
+        return false;
     }
     
     void GetAllInSensoryRadius() {
@@ -150,24 +206,13 @@ public class Mouse : MonoBehaviour {
     public void SetDestination(Transform target) {
         _navMeshAgent.destination = target.position;
     }
-    
-    void CreatePoints() {
-        float x;
-        float z;
-
-        float angle = 20f;
-
-        for (int i = 0; i < (segments + 1); i++) {
-            x = Mathf.Cos(Mathf.Deg2Rad * angle) * _sensoryRadius;
-            z = Mathf.Sin(Mathf.Deg2Rad * angle) * _sensoryRadius;
-
-            Gizmos.DrawWireSphere(transform.position, _sensoryRadius);
-
-            angle += (360f / segments);
-        }
-    }
 
     private void OnDrawGizmosSelected() {
-        CreatePoints();
+        //Gizmos.DrawWireSphere(transform.position, _sensoryRadius);
+        //Gizmos.DrawWireSphere(transform.position, _boundaryRadius);
+        
+        if (_navMeshAgent.hasPath) {
+            Gizmos.DrawLine(transform.position, _navMeshAgent.destination);
+        }
     }
 }
