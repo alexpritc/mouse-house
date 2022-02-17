@@ -11,6 +11,7 @@
           <e p="CameraRotation.cs" t="Include" />
           <e p="Enclosure.cs" t="Include" />
           <e p="FemaleMouse.cs" t="Include" />
+          <e p="GameManager.cs" t="Include" />
           <e p="Item.cs" t="Include" />
           <e p="MaleMouse.cs" t="Include" />
           <e p="MeshGenerator.cs" t="Include" />

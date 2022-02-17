@@ -35,6 +35,42 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RotateCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""f70339bb-1b34-4057-8213-5df700c748ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GetMouseStartPos"",
+                    ""type"": ""Button"",
+                    ""id"": ""71fbaafd-7849-44c4-97c6-fb58031f3b2b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PanCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""8889d79e-448c-4484-b581-9bd90b395154"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""7f58da7f-4b37-4ffa-8b41-25c381987d97"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -81,6 +117,61 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""RotateHorizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb017360-8117-4a42-8457-0b86486d4199"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a93bd95-8626-40b8-8307-5531316b8ad7"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GetMouseStartPos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9bef80e-ec23-457a-8d19-e4db0c424db6"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GetMouseStartPos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d37acfce-342a-45b4-929b-d1a1137f6df4"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c03fd67-f216-4af2-942f-7334e7f0f31d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Hold(duration=0.25)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PanCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -90,6 +181,10 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_RotateHorizontal = m_Camera.FindAction("RotateHorizontal", throwIfNotFound: true);
+        m_Camera_RotateCamera = m_Camera.FindAction("RotateCamera", throwIfNotFound: true);
+        m_Camera_GetMouseStartPos = m_Camera.FindAction("GetMouseStartPos", throwIfNotFound: true);
+        m_Camera_PanCamera = m_Camera.FindAction("PanCamera", throwIfNotFound: true);
+        m_Camera_MousePosition = m_Camera.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -150,11 +245,19 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Camera;
     private ICameraActions m_CameraActionsCallbackInterface;
     private readonly InputAction m_Camera_RotateHorizontal;
+    private readonly InputAction m_Camera_RotateCamera;
+    private readonly InputAction m_Camera_GetMouseStartPos;
+    private readonly InputAction m_Camera_PanCamera;
+    private readonly InputAction m_Camera_MousePosition;
     public struct CameraActions
     {
         private @Controls m_Wrapper;
         public CameraActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @RotateHorizontal => m_Wrapper.m_Camera_RotateHorizontal;
+        public InputAction @RotateCamera => m_Wrapper.m_Camera_RotateCamera;
+        public InputAction @GetMouseStartPos => m_Wrapper.m_Camera_GetMouseStartPos;
+        public InputAction @PanCamera => m_Wrapper.m_Camera_PanCamera;
+        public InputAction @MousePosition => m_Wrapper.m_Camera_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -167,6 +270,18 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @RotateHorizontal.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateHorizontal;
                 @RotateHorizontal.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateHorizontal;
                 @RotateHorizontal.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateHorizontal;
+                @RotateCamera.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateCamera;
+                @RotateCamera.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateCamera;
+                @RotateCamera.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotateCamera;
+                @GetMouseStartPos.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnGetMouseStartPos;
+                @GetMouseStartPos.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnGetMouseStartPos;
+                @GetMouseStartPos.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnGetMouseStartPos;
+                @PanCamera.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnPanCamera;
+                @PanCamera.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnPanCamera;
+                @PanCamera.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnPanCamera;
+                @MousePosition.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMousePosition;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -174,6 +289,18 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @RotateHorizontal.started += instance.OnRotateHorizontal;
                 @RotateHorizontal.performed += instance.OnRotateHorizontal;
                 @RotateHorizontal.canceled += instance.OnRotateHorizontal;
+                @RotateCamera.started += instance.OnRotateCamera;
+                @RotateCamera.performed += instance.OnRotateCamera;
+                @RotateCamera.canceled += instance.OnRotateCamera;
+                @GetMouseStartPos.started += instance.OnGetMouseStartPos;
+                @GetMouseStartPos.performed += instance.OnGetMouseStartPos;
+                @GetMouseStartPos.canceled += instance.OnGetMouseStartPos;
+                @PanCamera.started += instance.OnPanCamera;
+                @PanCamera.performed += instance.OnPanCamera;
+                @PanCamera.canceled += instance.OnPanCamera;
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
             }
         }
     }
@@ -181,5 +308,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     public interface ICameraActions
     {
         void OnRotateHorizontal(InputAction.CallbackContext context);
+        void OnRotateCamera(InputAction.CallbackContext context);
+        void OnGetMouseStartPos(InputAction.CallbackContext context);
+        void OnPanCamera(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }

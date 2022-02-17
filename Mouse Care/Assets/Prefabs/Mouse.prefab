@@ -88,7 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _status: 0
   _sensoryRadius: 5
-  _boundaryRadius: 10
+  _boundaryRadius: 3
   _speed: 5
   _enclosure: {fileID: 0}
   segments: 100

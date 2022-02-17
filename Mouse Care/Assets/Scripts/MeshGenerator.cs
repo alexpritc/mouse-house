@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Unity.AI.Navigation;
 using Unity.Mathematics;
 using UnityEditor;
@@ -34,10 +35,12 @@ public class MeshGenerator : MonoBehaviour {
 
     [SerializeField] private Enclosure _enclosure;
 
+    public bool[] isPositionOccupied; 
+    
     void Start()
     {
         if (_mesh != null) {
-            _enclosure._mesh = _mesh;
+            _enclosure.MeshGen = this;
             return;
         }
         
@@ -53,7 +56,7 @@ public class MeshGenerator : MonoBehaviour {
         UpdateMesh();
         SaveMesh("Assets/Meshes/mesh.asset");
 
-        _enclosure._mesh = _mesh;
+        _enclosure.MeshGen = this;
     }
 
     void CreateShape() {
@@ -179,10 +182,24 @@ public class MeshGenerator : MonoBehaviour {
         _mesh.vertices = verticesModified;
         _mesh.triangles = trianglesModified;
         _mesh.colors32 = colors;
+
+        FillPositions();
+    }
+
+    private void FillPositions() {
+        isPositionOccupied = new bool[_mesh.vertices.Length];
+
+        for (int i = 0; i < isPositionOccupied.Length; i++) {
+            isPositionOccupied[i] = false;
+        }
     }
 
     private void SaveMesh(string path) {
         AssetDatabase.CreateAsset(_mesh, path);
         AssetDatabase.SaveAssets();
+    }
+
+    public Mesh GetMesh() {
+        return _mesh;
     }
 }
