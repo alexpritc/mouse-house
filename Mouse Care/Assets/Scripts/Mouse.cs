@@ -17,20 +17,6 @@ public enum MouseStates {
 
 public class Mouse : MonoBehaviour {
     [SerializeField] private MouseStates _status;
-    
-    private string _name;
-    private char _sex;
-    private string _breed;
-    private string _temprement;
-
-    /// <summary>
-    /// Age of mouse in months. A mouse is initially 8 weeks old.
-    /// </summary>
-    private int _ageMonths = 0;
-    private int _ageWeeks = 8;
-
-    private int _weight;
-    private bool _isFertile;
 
     /// <summary>
     /// Higher _hunger means the mouse needs to eat.
@@ -40,12 +26,7 @@ public class Mouse : MonoBehaviour {
     /// Higher _thirst means the mouse needs to drink.
     /// </summary>
     [Range(0,100)] private float _thirst = 0f;
-
-    /// <summary>
-    /// How loneley is the mouse
-    /// </summary>
-    private float _socialisation;
-    private float _stress;
+    
     
     /// <summary>
     /// How far the mouse can see around them
@@ -56,22 +37,17 @@ public class Mouse : MonoBehaviour {
     /// mouse will pick a new random destination from
     /// </summary>
     [SerializeField] private float _boundaryRadius = 2f;
-    
     [SerializeField] private float _speed = 10f;
-
     private NavMeshAgent _navMeshAgent;
 
     [HideInInspector] public Enclosure _enclosure;
-   
     private Vector3 _currentPosition;
-
     private Vector3[] _allVertices;
     
     // Sensory radius gizmo
-    [Range(0, 100)] public int segments = 100;
+    [Range(0, 100)] private int segments = 100;
 
     private Animator _animator;
-
     private TextMeshProUGUI _statusUI;
     private Canvas _statusCanvas;
     
@@ -97,20 +73,16 @@ public class Mouse : MonoBehaviour {
                 _status = MouseStates.Moving;
                 _statusUI.text = _status.ToString();
             }
-            
-            OnMovementUpdate();
         }
         else {
             // Find new destination
             _status = MouseStates.Idle;
             _statusUI.text = _status.ToString();
 
-            if (Random.Range(0f, 100f) <= 1f) {
+            if (Random.Range(0f, 200f) <= 1f) {
                 SetDestination(FindNewDestinationOutsideSensoryRadius());   
             }
         }
-        
-        
         
         _statusCanvas.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
@@ -149,27 +121,6 @@ public class Mouse : MonoBehaviour {
         return false;
     }
 
-    void OnMovementUpdate() {
-
-        _hunger += 0.05f;
-        _thirst += 0.1f;
-        
-        CheckNeeds();
-    }
-    
-    void CheckNeeds() {
-
-        if (_hunger >= 50f) {
-            // needs to eat
-           // Debug.Log("look for food");
-        }
-
-        if (_thirst >= 50f) {
-            // needs to drink
-           // Debug.Log("look for water");
-        }
-    }
-
     bool IsMouseWithinTarget() {
         
         // Check if we've reached the destination
@@ -183,26 +134,9 @@ public class Mouse : MonoBehaviour {
                 }
             }
         }
-        
         return false;
     }
-    
-    void GetAllInSensoryRadius() {
 
-        foreach (var item in _enclosure.ItemsInEnclosure) {
-            if (Vector3.Distance(item.transform.position, transform.position) < _sensoryRadius) {
-                _stress += item._stress;
-            }
-        }
-
-        foreach (var mouse in _enclosure.MiceInEnclosure) {
-            if (Vector3.Distance(mouse.transform.position, transform.position) < _sensoryRadius) {
-                // do something with _socialisation
-                // and _reproductiveUrge
-            }
-        }
-    }
-    
     public void SetDestination(Vector3 targetPos) {
         _navMeshAgent.destination = targetPos;
     }
@@ -212,9 +146,7 @@ public class Mouse : MonoBehaviour {
     }
 
     private void OnDrawGizmosSelected() {
-        //Gizmos.DrawWireSphere(transform.position, _sensoryRadius);
-        //Gizmos.DrawWireSphere(transform.position, _boundaryRadius);
-        
+
         if (_navMeshAgent.hasPath) {
             Gizmos.DrawLine(transform.position, _navMeshAgent.destination);
         }
