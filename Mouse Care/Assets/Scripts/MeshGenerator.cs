@@ -13,6 +13,8 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour {
     private Mesh _mesh;
+    private Mesh _meshUnderneath;
+    
     private Vector3[] _vertices;
     private int[] _triangles;
     private Vector2[] _uvs;
@@ -20,9 +22,11 @@ public class MeshGenerator : MonoBehaviour {
 
     [SerializeField] private int _xSize = 20;
     [SerializeField] private int _zSize = 20;
+    [SerializeField] private int _ySize = 20;
 
     [SerializeField] private int _xSpacing = 1;
     [SerializeField] private int _zSpacing = 1;
+    [SerializeField] private float _ySpacing = 1f;
     
     [SerializeField] private float _yModifier = 2f;
 
@@ -59,42 +63,93 @@ public class MeshGenerator : MonoBehaviour {
         _enclosure.MeshGen = this;
     }
 
-    void CreateShape() {
-        
+    void CreateShape()
+    {
+
         // Calculate vertices
         int numberOfVertices = (_xSize + 1) * (_zSize + 1);
+        numberOfVertices += (_xSize + 1) * 20;
+        numberOfVertices += (_zSize + 1) * 20; // was 2
+
         _vertices = new Vector3[numberOfVertices];
-        _uvs = new Vector2[numberOfVertices];
-        
-        for (int i = 0, cols = 0; cols <= _zSize; cols++) {
-            
-            for (int rows = 0; rows <= _xSize; rows++, i++) {
+
+        int xz = (_xSize + 1) * (_zSize + 1) - 1;
+
+        int i = 0;
+
+        // Top surface
+        for (int cols = 0; cols <= _zSize; cols++)
+        {
+
+            for (int rows = 0; rows <= _xSize; rows++, i++)
+            {
 
                 float z = cols * _zSpacing;
                 float x = rows * _xSpacing;
                 float y = Mathf.PerlinNoise(x * 0.2f, z * 0.2f) * _yModifier;
 
                 _vertices[i] = new Vector3(x, y, z);
-                _uvs[i] = new Vector2(z / _zSize, x / _xSize);
             }
         }
-        
+
+        // back surface
+        for (int cols = 0; cols <= _ySize; cols++)
+        {
+            for (int rows = 0; rows <= _xSize; rows++, i++)
+            {
+                float z = 0f;
+                float x = rows * _xSpacing;
+                float y = cols * _ySpacing;
+
+                _vertices[i] = new Vector3(x, -y, _zSpacing * _zSize);
+            }
+        }
+
         // Calculate triangles
-        _triangles = new int[_xSize * _zSize * 6];
-        for (int vert = 0, tris = 0, cols = 0; cols < _zSize; cols++) {
-            
-            for (int rows = 0; rows < _xSize; rows++) {
-                
+        _triangles = new int[((_xSize * _zSize) + (_xSize * _ySize * 2)) * 6];
+
+        int vert = 0;
+        int tris = 0;
+
+        // Top surface triangles
+        for (int cols = 0; cols < _zSize; cols++)
+        {
+            for (int rows = 0; rows < _xSize; rows++)
+            {
+
                 // 6 triangles per quad
                 _triangles[tris + 0] = vert + 0;
                 _triangles[tris + 1] = vert + _xSize + 1;
                 _triangles[tris + 2] = vert + 1;
+
                 _triangles[tris + 3] = vert + 1;
                 _triangles[tris + 4] = vert + _xSize + 1;
                 _triangles[tris + 5] = vert + _xSize + 2;
 
-                vert++;
                 tris += 6;
+                vert++;
+            }
+
+            vert++;
+        }
+
+        // Back surface triangles
+        for (int cols = 0; cols < _ySize; cols++)
+        {
+            for (int rows = 0; rows < _xSize; rows++)
+            {
+
+                // 6 triangles per quad
+                _triangles[tris + 0] = vert + 0;
+                _triangles[tris + 1] = vert + _xSize + 1;
+                _triangles[tris + 2] = vert + 1;
+
+                _triangles[tris + 3] = vert + 1;
+                _triangles[tris + 4] = vert + _xSize + 1;
+                _triangles[tris + 5] = vert + _xSize + 2;
+
+                tris += 6;
+                vert++;
             }
 
             vert++;
@@ -152,8 +207,11 @@ public class MeshGenerator : MonoBehaviour {
     
     private void OnDrawGizmosSelected() {
 
-        foreach (var position in _mesh.vertices) {
-            Gizmos.DrawSphere(position, 0.1f);
+        if (_mesh != null)
+        {
+            foreach (var position in _mesh.vertices) {
+                Gizmos.DrawSphere(position, 0.1f);
+            }   
         }
     }
 
