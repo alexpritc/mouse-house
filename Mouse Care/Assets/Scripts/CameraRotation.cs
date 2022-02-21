@@ -8,12 +8,13 @@ using static UnityEngine.InputSystem.Mouse;
 public class CameraRotation : MonoBehaviour {
     private Vector2 touchPos;
 
-    public float rotationSpeed = 5f;
+    [SerializeField] private float _rotationSpeed = 1f;
+    [SerializeField] private float _movementSpeed = 0.5f;
 
     private Controls controls;
     
-    private bool _rot;
-    private bool _pan;
+    private bool _isRotating;
+    private bool _isPanning;
 
     private Vector3 _touchStart;
     private Vector3 _direction;
@@ -23,58 +24,99 @@ public class CameraRotation : MonoBehaviour {
 
     private Vector2 turn;
 
-    private bool f;
+    private float _rot;
 
-    private Vector3 worldMouse;
-    
+    private bool _isZooming;
+    private float _zoomModifer;
+
     private void Awake() {
         _camera = GetComponentInChildren<Camera>();
         controls = new Controls();
         
         controls.Camera.GetMouseStartPos.performed += ctx => _touchStart = cursorWorldPosOnNCP;
         
-        controls.Camera.PanCamera.performed += ctx => _pan = true;
-        controls.Camera.PanCamera.canceled += ctx => _pan = false;
+        controls.Camera.PanCamera.performed += ctx => _isPanning = true;
+        controls.Camera.PanCamera.canceled += ctx => _isPanning = false;
         
-        controls.Camera.RotateCamera.performed += ctx => _rot = true;
-        controls.Camera.RotateCamera.canceled += ctx => _rot = false;
+        controls.Camera.RotateCamera.performed += ctx => _isRotating = true;
+        controls.Camera.RotateCamera.canceled += ctx => _isRotating = false;
+
+        controls.Camera.CameraZoom.performed += ctx => _isZooming = true;
+        controls.Camera.CameraZoom.performed += ctx => _zoomModifer = ctx.ReadValue<Vector2>().y;
+        controls.Camera.CameraZoom.canceled += ctx => _isZooming = false;
     }
 
     // Update is called once per frame
-    void FixedUpdate() {
 
-        worldMouse = cursorWorldPosOnNCP;
-
-        if (_pan) {
-            _direction = _touchStart - cursorWorldPosOnNCP;
-            transform.position += _direction * 0.5f;
-        }
-        else if (_rot) {
-            _direction = _touchStart - cursorWorldPosOnNCP;
-
-            transform.Rotate(Vector3.up, _direction.x, Space.World);
-
-           // float rotY = _direction.y;
-
-           // rotY = Mathf.Clamp(rotY, 0f, 90f);
-
-           // transform.Rotate(Vector3.right, rotY, Space.World);
+    private void Update()
+    {
+        if (_isZooming)
+        {
+            _zoomModifer = Mathf.Clamp(_zoomModifer, -1f, 1f);
+            _zoomModifer = -_zoomModifer;
+            _camera.fieldOfView += _zoomModifer;
             
-            //turn.x += _direction.x;
-            //turn.y += _direction.y;
-
-            //-Mathf.Clamp(turn.y, 0f, 90f)
-
-            //transform.localRotation = Quaternion.Euler(0f, turn.x * 0.003f, 0f);
+            if (_camera.fieldOfView < 10f)
+            {
+                _camera.fieldOfView = 10f;
+            }
+            else if (_camera.fieldOfView > 40f)
+            {
+                _camera.fieldOfView = 40f;
+            }
         }
     }
 
-    float ClampAngle (float angle, float min, float max) {
-        if (angle < -360)
-            angle += 360;
-        if (angle > 360)
-            angle -= 360;
-        return Mathf.Clamp (angle, min, max);
+    void FixedUpdate() {
+        
+        if (_isPanning)
+        {
+            _direction = _touchStart - cursorWorldPosOnNCP;
+            transform.Translate(_direction * _movementSpeed, Space.Self);
+        }
+        else if (_isRotating) {
+            _direction = _touchStart - cursorWorldPosOnNCP;
+
+            // Standardises rotation speed
+            _direction = StandardiseRotationSpeed(_direction);
+
+            transform.Rotate(Vector3.up, _direction.x * _rotationSpeed);
+        }
+    }
+
+    private Vector3 StandardiseRotationSpeed(Vector3 inVector)
+    {
+        float x = 0f, y = 0f, z = 0f;
+
+        if (inVector.x < 0)
+        {
+            x = -1f;
+        }
+        else if (inVector.x > 0)
+        {
+            x = 1f;
+        }
+
+        if (inVector.y < 0)
+        {
+            y = -1f;
+        }
+        else if (inVector.y > 0)
+        {
+            y = 1f;
+        }
+
+        if (inVector.z < 0)
+        {
+            z = -1f;
+        }
+        else if (inVector.z > 0)
+        {
+            z = 1f;
+        }
+
+        return new Vector3(x, y, z);
+
     }
 
     private static Vector3 cursorWorldPosOnNCP {
@@ -84,17 +126,6 @@ public class CameraRotation : MonoBehaviour {
                     Input.mousePosition.y, 
                     Camera.main.nearClipPlane));
         }
-    }
-    private Vector3 GetWorldPosition(float z){
-        Ray mousePos = _camera.ScreenPointToRay(Input.mousePosition);
-        
-        Plane ground = new Plane(Vector3.forward, new Vector3(0,0,z));
-        
-        float distance;
-        
-        ground.Raycast(mousePos, out distance);
-        
-        return mousePos.GetPoint(distance);
     }
 
     private void OnEnable() {

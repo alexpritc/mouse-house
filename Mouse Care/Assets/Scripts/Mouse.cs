@@ -79,7 +79,7 @@ public class Mouse : MonoBehaviour {
             _status = MouseStates.Idle;
             _statusUI.text = _status.ToString();
 
-            if (Random.Range(0f, 200f) <= 1f) {
+            if (Random.Range(0f, 500f) <= 1f) {
                 SetDestination(FindNewDestinationOutsideSensoryRadius());   
             }
         }
