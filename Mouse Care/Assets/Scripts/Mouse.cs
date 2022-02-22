@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using TMPro;
+
 
 public enum MouseStates {
     Idle,
@@ -50,6 +51,9 @@ public class Mouse : MonoBehaviour {
     private Animator _animator;
     private TextMeshProUGUI _statusUI;
     private Canvas _statusCanvas;
+
+    [SerializeField] private Slider HungerSlider;
+    [SerializeField] private Slider ThirstSlider;
     
     private void Start() {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -59,6 +63,9 @@ public class Mouse : MonoBehaviour {
 
         _statusUI = GetComponentInChildren<TextMeshProUGUI>();
         _statusCanvas = GetComponentInChildren<Canvas>();
+
+        HungerSlider.value = _hunger;
+        ThirstSlider.value = _thirst;
         
         _allVertices = _enclosure.MeshGen.GetMesh().vertices;
     }
@@ -73,6 +80,15 @@ public class Mouse : MonoBehaviour {
                 _status = MouseStates.Moving;
                 _statusUI.text = _status.ToString();
             }
+            
+            if (Random.Range(0f, 250) <= 1f)
+            {
+                _hunger += 2f;
+            }
+            if (Random.Range(0f, 250) <= 1f)
+            {
+                _thirst += 3f;
+            }
         }
         else {
             // Find new destination
@@ -82,8 +98,19 @@ public class Mouse : MonoBehaviour {
             if (Random.Range(0f, 500f) <= 1f) {
                 SetDestination(FindNewDestinationOutsideSensoryRadius());   
             }
+            
+            if (Random.Range(0f, 500) <= 1f)
+            {
+                _hunger += 1f;
+            }
+            if (Random.Range(0f, 500) <= 1f)
+            {
+                _thirst += 2f;
+            }
         }
         
+        HungerSlider.value = Mathf.Lerp(HungerSlider.value, _hunger, 0.5f);
+        ThirstSlider.value = Mathf.Lerp(ThirstSlider.value, _thirst, 0.5f);
         _statusCanvas.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 

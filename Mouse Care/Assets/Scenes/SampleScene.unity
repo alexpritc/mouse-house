@@ -604,11 +604,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3468aee5730309e4dac79e25d0daa58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _xSize: 15
-  _zSize: 10
+  _xSize: 10
+  _zSize: 5
   _xSpacing: 2
   _zSpacing: 2
-  _yModifier: 0.75
+  _yModifier: 0.9
   _gradient:
     serializedVersion: 2
     key0: {r: 0.24344225, g: 0.745283, b: 0.2285066, a: 1}
