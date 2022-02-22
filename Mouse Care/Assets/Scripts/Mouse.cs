@@ -73,47 +73,98 @@ public class Mouse : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (!IsMouseWithinTarget()) {
-
-            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Walking") {
-                _animator.Play("Walking");
-                _status = MouseStates.Moving;
+        if (NeedsMet())
+        {
+            if (!IsMouseWithinTarget()) {
+                Move();
+            }
+            else {
+                // Find new destination
+                Idle(500f);
+            }   
+        }
+        else
+        {
+            if (NeedsWater())
+            {
+                // Look for water
+                _status = MouseStates.LookingForWater;
                 _statusUI.text = _status.ToString();
-            }
-            
-            if (Random.Range(0f, 250) <= 1f)
-            {
-                _hunger += 2f;
-            }
-            if (Random.Range(0f, 250) <= 1f)
-            {
-                _thirst += 3f;
+                
+                SetDestination(FindNewDestinationOutsideSensoryRadius());
             }
         }
-        else {
-            // Find new destination
-            _status = MouseStates.Idle;
-            _statusUI.text = _status.ToString();
 
-            if (Random.Range(0f, 500f) <= 1f) {
-                SetDestination(FindNewDestinationOutsideSensoryRadius());   
-            }
-            
-            if (Random.Range(0f, 500) <= 1f)
-            {
-                _hunger += 1f;
-            }
-            if (Random.Range(0f, 500) <= 1f)
-            {
-                _thirst += 2f;
-            }
-        }
-        
         HungerSlider.value = Mathf.Lerp(HungerSlider.value, _hunger, 0.5f);
         ThirstSlider.value = Mathf.Lerp(ThirstSlider.value, _thirst, 0.5f);
         _statusCanvas.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
+    
+    ///////// Needs /////////
+    bool NeedsMet()
+    {
+        return !(_hunger > 50f) && !(_thirst > 50f);
+    }
 
+    bool NeedsWater()
+    {
+        return _thirst > 50f;
+    }
+    
+    bool NeedsFood()
+    {
+        return _hunger > 50f;
+    }
+
+    void GetNearestGameObject(string tag)
+    {
+
+    }
+    
+    Transform [] array;
+    void GetInactiveInRadius(){
+        foreach (Transform tr in array){
+            float distanceSqr = (transform.position - tr.position).sqrMagnitude;
+            if (distanceSqr < _sensoryRadius)
+                tr.gameObject.SetActive(true);
+        }
+    }
+
+    void AdjustNeeds(ref float need, float value, float chance)
+    {
+        if (Random.Range(0f, chance) <= 1f)
+        {
+            need += value;
+        }
+    }
+    
+    ///////// Movement /////////
+    void Move()
+    {
+        if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Walking") {
+            _animator.Play("Walking");
+            _status = MouseStates.Moving;
+            _statusUI.text = _status.ToString();
+        }
+
+        AdjustNeeds(ref _hunger, 1f, 250f);
+        AdjustNeeds(ref _thirst, 2f, 250f);
+    }
+
+    void Idle(float chance)
+    {
+        // Find new destination
+        _status = MouseStates.Idle;
+        _statusUI.text = _status.ToString();
+
+        if (Random.Range(0f, chance) <= 1f) {
+            SetDestination(FindNewDestinationOutsideSensoryRadius());   
+        }
+        
+        AdjustNeeds(ref _hunger, 1f, 750f);
+        AdjustNeeds(ref _thirst, 1f, 750f);
+    }
+    
     Vector3 FindNewDestinationOutsideSensoryRadius() {
         List<Vector3> verticesOutsideSensoryRadius = new List<Vector3>();
         
@@ -172,6 +223,7 @@ public class Mouse : MonoBehaviour {
         _navMeshAgent.destination = target.position;
     }
 
+    ///////// Debugging /////////
     private void OnDrawGizmosSelected() {
 
         if (_navMeshAgent.hasPath) {
