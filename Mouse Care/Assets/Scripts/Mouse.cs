@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using TMPro;
+
 
 public enum MouseStates {
     Idle,
@@ -17,19 +18,6 @@ public enum MouseStates {
 
 public class Mouse : MonoBehaviour {
     [SerializeField] private MouseStates _status;
-    
-    private string _name;
-    private char _sex;
-    private string _breed;
-    private string _temprement;
-
-    /// <summary>
-    /// Age of mouse in months.
-    /// </summary>
-    private int _age;
-
-    private int _weight;
-    private bool _isFertile;
 
     /// <summary>
     /// Higher _hunger means the mouse needs to eat.
@@ -39,34 +27,33 @@ public class Mouse : MonoBehaviour {
     /// Higher _thirst means the mouse needs to drink.
     /// </summary>
     [Range(0,100)] private float _thirst = 0f;
-
-    /// <summary>
-    /// How loneley is the mouse
-    /// </summary>
-    private float _socialisation;
-    private float _stress;
+    
     
     /// <summary>
     /// How far the mouse can see around them
     /// </summary>
     [SerializeField] private float _sensoryRadius = 5f;
-    [SerializeField] private float _boundaryRadius = 10f;
+    /// <summary>
+    /// The area outside of the sensory radius that the
+    /// mouse will pick a new random destination from
+    /// </summary>
+    [SerializeField] private float _boundaryRadius = 2f;
     [SerializeField] private float _speed = 10f;
-
     private NavMeshAgent _navMeshAgent;
 
     [HideInInspector] public Enclosure _enclosure;
     private Vector3 _currentPosition;
-
     private Vector3[] _allVertices;
     
     // Sensory radius gizmo
-    [Range(0, 100)] public int segments = 100;
+    [Range(0, 100)] private int segments = 100;
 
     private Animator _animator;
-
     private TextMeshProUGUI _statusUI;
     private Canvas _statusCanvas;
+
+    [SerializeField] private Slider HungerSlider;
+    [SerializeField] private Slider ThirstSlider;
     
     private void Start() {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -76,40 +63,114 @@ public class Mouse : MonoBehaviour {
 
         _statusUI = GetComponentInChildren<TextMeshProUGUI>();
         _statusCanvas = GetComponentInChildren<Canvas>();
+
+        HungerSlider.value = _hunger;
+        ThirstSlider.value = _thirst;
         
-        _allVertices = _enclosure._mesh.vertices;
+        _allVertices = _enclosure.MeshGen.GetMesh().vertices;
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (!IsMouseWithinTarget()) {
-
-            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Walking") {
-                _animator.Play("Walking");
-                _status = MouseStates.Moving;
-                _statusUI.text = "Walking";
+        if (NeedsMet())
+        {
+            if (!IsMouseWithinTarget()) {
+                Move();
+            }
+            else {
+                // Find new destination
+                Idle(500f);
+            }   
+        }
+        else
+        {
+            if (NeedsWater())
+            {
+                // Look for water
+                _status = MouseStates.LookingForWater;
+                _statusUI.text = _status.ToString();
+                
+                SetDestination(FindNewDestinationOutsideSensoryRadius());
             }
         }
-        else {
-            // Find new destination
-            _status = MouseStates.Idle;
-            _statusUI.text = "Idle";
 
-            if (Random.Range(0f, 100f) <= 1f) {
-                SetDestination(FindNewDestinationOutsideSensoryRadius());   
-            }
-        }
-        
+        HungerSlider.value = Mathf.Lerp(HungerSlider.value, _hunger, 0.5f);
+        ThirstSlider.value = Mathf.Lerp(ThirstSlider.value, _thirst, 0.5f);
         _statusCanvas.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
+    
+    ///////// Needs /////////
+    bool NeedsMet()
+    {
+        return !(_hunger > 50f) && !(_thirst > 50f);
+    }
 
+    bool NeedsWater()
+    {
+        return _thirst > 50f;
+    }
+    
+    bool NeedsFood()
+    {
+        return _hunger > 50f;
+    }
+
+    void GetNearestGameObject(string tag)
+    {
+
+    }
+    
+    Transform [] array;
+    void GetInactiveInRadius(){
+        foreach (Transform tr in array){
+            float distanceSqr = (transform.position - tr.position).sqrMagnitude;
+            if (distanceSqr < _sensoryRadius)
+                tr.gameObject.SetActive(true);
+        }
+    }
+
+    void AdjustNeeds(ref float need, float value, float chance)
+    {
+        if (Random.Range(0f, chance) <= 1f)
+        {
+            need += value;
+        }
+    }
+    
+    ///////// Movement /////////
+    void Move()
+    {
+        if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Walking") {
+            _animator.Play("Walking");
+            _status = MouseStates.Moving;
+            _statusUI.text = _status.ToString();
+        }
+
+        AdjustNeeds(ref _hunger, 1f, 250f);
+        AdjustNeeds(ref _thirst, 2f, 250f);
+    }
+
+    void Idle(float chance)
+    {
+        // Find new destination
+        _status = MouseStates.Idle;
+        _statusUI.text = _status.ToString();
+
+        if (Random.Range(0f, chance) <= 1f) {
+            SetDestination(FindNewDestinationOutsideSensoryRadius());   
+        }
+        
+        AdjustNeeds(ref _hunger, 1f, 750f);
+        AdjustNeeds(ref _thirst, 1f, 750f);
+    }
+    
     Vector3 FindNewDestinationOutsideSensoryRadius() {
         List<Vector3> verticesOutsideSensoryRadius = new List<Vector3>();
         
         foreach (var vertex in _allVertices) {
 
-            if (!IsInsideSensoryRadius(vertex) && IsInsideBoundaryRadius(vertex)) {
+            if (!IsInsideRadius(vertex) && IsInsideRadius(vertex, _boundaryRadius)) {
                 verticesOutsideSensoryRadius.Add(vertex);
             }
         }
@@ -118,45 +179,24 @@ public class Mouse : MonoBehaviour {
     }
 
     Vector3 GetRandomVertex(List<Vector3> list) {
+        
+        int index = Random.Range(0,list.Count);
+        
+        // Only go to a vertex that isn't occupied
+        if (_enclosure.MeshGen.isPositionOccupied[index]) {
+            return GetRandomVertex(list);
+        }
+        
         return list[Random.Range(0, list.Count)];
     }
 
-    bool IsInsideSensoryRadius(Vector3 pos) {
-        
-        if (Vector3.Distance(pos, transform.position) <= _sensoryRadius){
+    bool IsInsideRadius(Vector3 pos, float outerBounds = 1f) {
+
+        if (Vector3.Distance(pos, transform.position) <= _sensoryRadius * outerBounds) {
             return true;
         }
         
         return false;
-    }
-    
-    bool IsInsideBoundaryRadius(Vector3 pos) {
-        
-        if (Vector3.Distance(pos, transform.position) <= _boundaryRadius){
-            return true;
-        }
-        
-        return false;
-    }
-    
-    void OnMovementUpdate() {
-
-        _hunger += 10f;
-        _thirst += 5f;
-        
-        GetAllInSensoryRadius();
-        CheckMouseAttributes();
-    }
-    
-    void CheckNeeds() {
-
-        if (_hunger >= 10f) {
-            // needs to eat
-        }
-
-        if (_thirst >= 10f) {
-            // needs to drink
-        }
     }
 
     bool IsMouseWithinTarget() {
@@ -172,33 +212,9 @@ public class Mouse : MonoBehaviour {
                 }
             }
         }
-        
         return false;
     }
-    
-    void GetAllInSensoryRadius() {
 
-        foreach (var item in _enclosure._itemsInEnclosure) {
-            if (Vector3.Distance(item.transform.position, transform.position) < _sensoryRadius) {
-                _stress += item._stress;
-            }
-        }
-        
-        foreach (var mouse in _enclosure._miceInEnclosure) {
-            if (Vector3.Distance(mouse.transform.position, transform.position) < _sensoryRadius) {
-                // do something with _socialisation
-                // and _reproductiveUrge
-            }
-        }
-        
-    }
-
-    void CheckMouseAttributes() {
-     
-        // if thirsty search for water, if hungry look for food, etc
-
-    }
-    
     public void SetDestination(Vector3 targetPos) {
         _navMeshAgent.destination = targetPos;
     }
@@ -207,10 +223,9 @@ public class Mouse : MonoBehaviour {
         _navMeshAgent.destination = target.position;
     }
 
+    ///////// Debugging /////////
     private void OnDrawGizmosSelected() {
-        //Gizmos.DrawWireSphere(transform.position, _sensoryRadius);
-        //Gizmos.DrawWireSphere(transform.position, _boundaryRadius);
-        
+
         if (_navMeshAgent.hasPath) {
             Gizmos.DrawLine(transform.position, _navMeshAgent.destination);
         }

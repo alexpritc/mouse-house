@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Unity.AI.Navigation;
 using Unity.Mathematics;
 using UnityEditor;
@@ -12,6 +13,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour {
     private Mesh _mesh;
+
     private Vector3[] _vertices;
     private int[] _triangles;
     private Vector2[] _uvs;
@@ -34,10 +36,12 @@ public class MeshGenerator : MonoBehaviour {
 
     [SerializeField] private Enclosure _enclosure;
 
+    public bool[] isPositionOccupied; 
+    
     void Start()
     {
         if (_mesh != null) {
-            _enclosure._mesh = _mesh;
+            _enclosure.MeshGen = this;
             return;
         }
         
@@ -49,53 +53,74 @@ public class MeshGenerator : MonoBehaviour {
         currentColor = new Color32(0,0,0,0);
         
         CreateShape();
-        //GenerateGridPositions();
         UpdateMesh();
         SaveMesh("Assets/Meshes/mesh.asset");
 
-        _enclosure._mesh = _mesh;
+        _enclosure.MeshGen = this;
     }
 
-    void CreateShape() {
-        
+    void CreateShape()
+    {
+
         // Calculate vertices
         int numberOfVertices = (_xSize + 1) * (_zSize + 1);
-        _vertices = new Vector3[numberOfVertices];
-        _uvs = new Vector2[numberOfVertices];
         
-        for (int i = 0, cols = 0; cols <= _zSize; cols++) {
-            
-            for (int rows = 0; rows <= _xSize; rows++, i++) {
+        _vertices = new Vector3[numberOfVertices];
 
+        int i = 0;
+
+        // Top surface
+        for (int cols = 0; cols <= _zSize; cols++)
+        {
+            for (int rows = 0; rows <= _xSize; rows++, i++)
+            {
                 float z = cols * _zSpacing;
                 float x = rows * _xSpacing;
                 float y = Mathf.PerlinNoise(x * 0.2f, z * 0.2f) * _yModifier;
 
                 _vertices[i] = new Vector3(x, y, z);
-                _uvs[i] = new Vector2(z / _zSize, x / _xSize);
             }
         }
-        
+
         // Calculate triangles
-        _triangles = new int[_xSize * _zSize * 6];
-        for (int vert = 0, tris = 0, cols = 0; cols < _zSize; cols++) {
-            
-            for (int rows = 0; rows < _xSize; rows++) {
-                
+        _triangles = new int[((_xSize * _zSize)) * 6];
+
+        int vert = 0;
+        int tris = 0;
+
+        // Top surface triangles
+        for (int cols = 0; cols < _zSize; cols++)
+        {
+            for (int rows = 0; rows < _xSize; rows++)
+            {
                 // 6 triangles per quad
                 _triangles[tris + 0] = vert + 0;
                 _triangles[tris + 1] = vert + _xSize + 1;
                 _triangles[tris + 2] = vert + 1;
+
                 _triangles[tris + 3] = vert + 1;
                 _triangles[tris + 4] = vert + _xSize + 1;
                 _triangles[tris + 5] = vert + _xSize + 2;
 
-                vert++;
                 tris += 6;
+                vert++;
             }
 
             vert++;
         }
+    }
+
+    float FindVertexHeight(float x, float z)
+    {
+        foreach (var vertex in _vertices)
+        {
+            if (vertex.x == x && vertex.z == z)
+            {
+                return 1f - vertex.y;
+            }
+        }
+
+        return 0f;
     }
 
     void UpdateMesh() {
@@ -149,8 +174,11 @@ public class MeshGenerator : MonoBehaviour {
     
     private void OnDrawGizmosSelected() {
 
-        foreach (var position in _mesh.vertices) {
-            Gizmos.DrawSphere(position, 0.1f);
+        if (_mesh != null)
+        {
+            foreach (var position in _mesh.vertices) {
+                Gizmos.DrawSphere(position, 0.1f);
+            }   
         }
     }
 
@@ -179,10 +207,24 @@ public class MeshGenerator : MonoBehaviour {
         _mesh.vertices = verticesModified;
         _mesh.triangles = trianglesModified;
         _mesh.colors32 = colors;
+
+        FillPositions();
+    }
+
+    private void FillPositions() {
+        isPositionOccupied = new bool[_mesh.vertices.Length];
+
+        for (int i = 0; i < isPositionOccupied.Length; i++) {
+            isPositionOccupied[i] = false;
+        }
     }
 
     private void SaveMesh(string path) {
         AssetDatabase.CreateAsset(_mesh, path);
         AssetDatabase.SaveAssets();
+    }
+
+    public Mesh GetMesh() {
+        return _mesh;
     }
 }

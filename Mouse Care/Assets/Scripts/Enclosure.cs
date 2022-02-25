@@ -26,8 +26,8 @@ public class Enclosure : MonoBehaviour
     private float _beddingInInches;
     private int _maxMiceCapacity;
 
-    [HideInInspector] public Item[] _itemsInEnclosure;
-    [HideInInspector] public Mouse[] _miceInEnclosure;
+    [HideInInspector] public Item[] ItemsInEnclosure;
+    [HideInInspector] public Mouse[] MiceInEnclosure;
     
-    [HideInInspector] public Mesh _mesh;
+    [HideInInspector] public MeshGenerator MeshGen;
 }
