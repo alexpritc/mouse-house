@@ -141,6 +141,34 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Item"",
+            ""id"": ""30affd5c-4b0c-496c-855c-04c87656d95f"",
+            ""actions"": [
+                {
+                    ""name"": ""PlaceItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""137ccb43-f3e2-4652-9e0c-af353fd98d30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c4deed6f-38db-43a2-900b-671416a9baba"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -152,6 +180,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Camera_PanCamera = m_Camera.FindAction("PanCamera", throwIfNotFound: true);
         m_Camera_MousePosition = m_Camera.FindAction("MousePosition", throwIfNotFound: true);
         m_Camera_CameraZoom = m_Camera.FindAction("CameraZoom", throwIfNotFound: true);
+        // Item
+        m_Item = asset.FindActionMap("Item", throwIfNotFound: true);
+        m_Item_PlaceItem = m_Item.FindAction("PlaceItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -272,6 +303,39 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         }
     }
     public CameraActions @Camera => new CameraActions(this);
+
+    // Item
+    private readonly InputActionMap m_Item;
+    private IItemActions m_ItemActionsCallbackInterface;
+    private readonly InputAction m_Item_PlaceItem;
+    public struct ItemActions
+    {
+        private @Controls m_Wrapper;
+        public ItemActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PlaceItem => m_Wrapper.m_Item_PlaceItem;
+        public InputActionMap Get() { return m_Wrapper.m_Item; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ItemActions set) { return set.Get(); }
+        public void SetCallbacks(IItemActions instance)
+        {
+            if (m_Wrapper.m_ItemActionsCallbackInterface != null)
+            {
+                @PlaceItem.started -= m_Wrapper.m_ItemActionsCallbackInterface.OnPlaceItem;
+                @PlaceItem.performed -= m_Wrapper.m_ItemActionsCallbackInterface.OnPlaceItem;
+                @PlaceItem.canceled -= m_Wrapper.m_ItemActionsCallbackInterface.OnPlaceItem;
+            }
+            m_Wrapper.m_ItemActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PlaceItem.started += instance.OnPlaceItem;
+                @PlaceItem.performed += instance.OnPlaceItem;
+                @PlaceItem.canceled += instance.OnPlaceItem;
+            }
+        }
+    }
+    public ItemActions @Item => new ItemActions(this);
     public interface ICameraActions
     {
         void OnRotateCamera(InputAction.CallbackContext context);
@@ -279,5 +343,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnPanCamera(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnCameraZoom(InputAction.CallbackContext context);
+    }
+    public interface IItemActions
+    {
+        void OnPlaceItem(InputAction.CallbackContext context);
     }
 }

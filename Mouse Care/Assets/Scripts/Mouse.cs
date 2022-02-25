@@ -65,8 +65,8 @@ public class Mouse : MonoBehaviour {
         _navMeshAgent.speed = _speed;
 
         _animator = GetComponent<Animator>();
-        _collider = GetComponent<CapsuleCollider>();
-        _collider.radius = _sensoryRadius;
+        //_collider = GetComponent<CapsuleCollider>();
+        //_collider.radius = _sensoryRadius;
 
         _statusUI = GetComponentInChildren<TextMeshProUGUI>();
         _statusCanvas = GetComponentInChildren<Canvas>();

@@ -119,6 +119,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Item",
+            "id": "30affd5c-4b0c-496c-855c-04c87656d95f",
+            "actions": [
+                {
+                    "name": "PlaceItem",
+                    "type": "Button",
+                    "id": "137ccb43-f3e2-4652-9e0c-af353fd98d30",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c4deed6f-38db-43a2-900b-671416a9baba",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlaceItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

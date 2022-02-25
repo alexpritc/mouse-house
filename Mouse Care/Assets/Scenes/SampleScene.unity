@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &182405580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,9 +585,10 @@ GameObject:
   - component: {fileID: 347087682}
   - component: {fileID: 347087681}
   - component: {fileID: 347087685}
+  - component: {fileID: 347087686}
   m_Layer: 0
   m_Name: Mesh
-  m_TagString: Untagged
+  m_TagString: Mesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -734,6 +735,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!64 &347087686
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347087680}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: d969dbb5c92de1a44a1717d426dd615c, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,6 +924,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: poop
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 564f675584d6eac4b914ccbeda158869,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 564f675584d6eac4b914ccbeda158869, type: 3}
 --- !u!1 &934391376
@@ -952,7 +972,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -1160,9 +1180,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1251391794}
   - component: {fileID: 1251391795}
-  m_Layer: 0
+  - component: {fileID: 1251391796}
+  m_Layer: 7
   m_Name: Camera Pivot
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1196,6 +1217,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationSpeed: 1
   _movementSpeed: 0.5
+--- !u!114 &1251391796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251391793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9080cc1c736fa4c469fe08840688a17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 6297649773205177473, guid: 1bf5a9d829daa33408332a0e5fb29c8f,
+    type: 3}
+  mainCamera: {fileID: 963194227}
 --- !u!1 &1629711992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1486,6 +1522,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Waterbowl
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c9818db8328e2a346997f7e101c95132,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c9818db8328e2a346997f7e101c95132,
         type: 3}
