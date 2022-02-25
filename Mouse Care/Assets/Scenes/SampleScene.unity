@@ -586,7 +586,7 @@ GameObject:
   - component: {fileID: 347087681}
   - component: {fileID: 347087685}
   - component: {fileID: 347087686}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Mesh
   m_Icon: {fileID: 0}
@@ -1232,6 +1232,12 @@ MonoBehaviour:
   cubePrefab: {fileID: 6297649773205177473, guid: 1bf5a9d829daa33408332a0e5fb29c8f,
     type: 3}
   mainCamera: {fileID: 963194227}
+  isItemSelected: 1
+  previewMat: {fileID: 2100000, guid: 713fc5b6e0172014eaee74c5c552f8ea, type: 2}
+  previewMatRed: {fileID: 2100000, guid: a9e6395a3a510184d8e2daaf68c8717d, type: 2}
+  meshLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1629711992
 GameObject:
   m_ObjectHideFlags: 0

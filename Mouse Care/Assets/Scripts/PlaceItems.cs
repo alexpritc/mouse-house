@@ -19,6 +19,9 @@ public class PlaceItems : MonoBehaviour
     [SerializeField] private Material previewMatRed;
 
     [SerializeField] private LayerMask meshLayer;
+
+    private float distanceBetweenItems = 2f;
+    private bool canSpawn;
     
     private void Awake() {
         _controls = new Controls();
@@ -43,13 +46,33 @@ public class PlaceItems : MonoBehaviour
                 
                 if (hit.collider.gameObject.tag == "Mesh")
                 {
-                    preview.GetComponent<MeshRenderer>().material = previewMat;
+                    if (IsOverlapping(preview.transform.position, preview.transform.localScale.x,
+                            preview.transform.localScale.y, preview.transform.localScale.z))
+                    {
+                        canSpawn = false;
+                        preview.GetComponent<MeshRenderer>().material = previewMatRed;
+
+                        Ray ray2 = new Ray(hit.point, hit.point - Camera.main.transform.position);
                     
-                    preview.transform.rotation = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z,
-                        cubePrefab.transform.rotation.w);
+                        if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity, meshLayer.value))
+                        {
+                            preview.transform.rotation = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
+                                cubePrefab.transform.rotation.w);
+                        }
+                    }
+                    else
+                    {
+                        canSpawn = true;
+                        
+                        preview.GetComponent<MeshRenderer>().material = previewMat;
+                    
+                        preview.transform.rotation = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z,
+                            cubePrefab.transform.rotation.w);   
+                    }
                 }
                 else
                 {
+                    canSpawn = false;
                     preview.GetComponent<MeshRenderer>().material = previewMatRed;
 
                     Ray ray2 = new Ray(hit.point, hit.point - Camera.main.transform.position);
@@ -90,7 +113,7 @@ public class PlaceItems : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.collider.gameObject.tag == "Mesh")
+            if (hit.collider.gameObject.tag == "Mesh" && canSpawn)
             {
                 GameObject go = Instantiate(cubePrefab, hit.point + new Vector3(0f,cubePrefab.transform.localScale.y / 2,0f),
                     new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, cubePrefab.transform.rotation.w));
@@ -98,7 +121,21 @@ public class PlaceItems : MonoBehaviour
             
             Destroy(preview);
             preview = null;
+            canSpawn = false;
         }
+    }
+
+    private bool IsOverlapping(Vector3 point, float width, float height, float depth)
+    {
+
+        // foreach "point" in an item
+        Collider[] hitColliders = Physics.OverlapSphere(point, 0.49f);
+        foreach (var hitCollider in hitColliders)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void OnEnable() {
