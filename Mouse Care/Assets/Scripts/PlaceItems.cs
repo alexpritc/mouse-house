@@ -56,7 +56,7 @@ public class PlaceItems : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Mesh")
             {
-                GameObject go = Instantiate(cubePrefab, hit.point + new Vector3(0f,0.5f,0f),
+                GameObject go = Instantiate(cubePrefab, hit.point + new Vector3(0f,cubePrefab.transform.localScale.y / 2,0f),
                     new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, cubePrefab.transform.rotation.w));
             }
         }
