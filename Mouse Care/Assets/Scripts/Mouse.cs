@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 
 public enum MouseStates {
@@ -38,6 +40,9 @@ public class Mouse : MonoBehaviour {
     /// mouse will pick a new random destination from
     /// </summary>
     [SerializeField] private float _boundaryRadius = 2f;
+
+    private CapsuleCollider _collider;
+    
     [SerializeField] private float _speed = 10f;
     private NavMeshAgent _navMeshAgent;
 
@@ -54,12 +59,14 @@ public class Mouse : MonoBehaviour {
 
     [SerializeField] private Slider HungerSlider;
     [SerializeField] private Slider ThirstSlider;
-    
+
     private void Start() {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _speed;
 
         _animator = GetComponent<Animator>();
+        _collider = GetComponent<CapsuleCollider>();
+        _collider.radius = _sensoryRadius;
 
         _statusUI = GetComponentInChildren<TextMeshProUGUI>();
         _statusCanvas = GetComponentInChildren<Canvas>();
@@ -90,8 +97,6 @@ public class Mouse : MonoBehaviour {
                 // Look for water
                 _status = MouseStates.LookingForWater;
                 _statusUI.text = _status.ToString();
-                
-                SetDestination(FindNewDestinationOutsideSensoryRadius());
             }
         }
 
@@ -115,12 +120,15 @@ public class Mouse : MonoBehaviour {
     {
         return _hunger > 50f;
     }
-
-    void GetNearestGameObject(string tag)
-    {
-
-    }
     
+    private void OnTriggerStay(Collider other)
+    {
+        if (NeedsWater() && other.CompareTag("Water"))
+        {
+            SetDestination(other.transform);
+        }
+    }
+
     Transform [] array;
     void GetInactiveInRadius(){
         foreach (Transform tr in array){
