@@ -36,8 +36,6 @@ public class MeshGenerator : MonoBehaviour {
 
     [SerializeField] private Enclosure _enclosure;
 
-    public bool[] isPositionOccupied; 
-    
     void Start()
     {
         if (_mesh != null) {
@@ -54,7 +52,7 @@ public class MeshGenerator : MonoBehaviour {
         
         CreateShape();
         UpdateMesh();
-        SaveMesh("Assets/Meshes/mesh.asset");
+        SaveMesh("Assets/Meshes/mesh2.asset");
 
         _enclosure.MeshGen = this;
     }
@@ -208,17 +206,9 @@ public class MeshGenerator : MonoBehaviour {
         _mesh.triangles = trianglesModified;
         _mesh.colors32 = colors;
 
-        FillPositions();
+        gameObject.GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
-
-    private void FillPositions() {
-        isPositionOccupied = new bool[_mesh.vertices.Length];
-
-        for (int i = 0; i < isPositionOccupied.Length; i++) {
-            isPositionOccupied[i] = false;
-        }
-    }
-
+    
     private void SaveMesh(string path) {
         AssetDatabase.CreateAsset(_mesh, path);
         AssetDatabase.SaveAssets();

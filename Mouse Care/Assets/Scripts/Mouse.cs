@@ -187,14 +187,6 @@ public class Mouse : MonoBehaviour {
     }
 
     Vector3 GetRandomVertex(List<Vector3> list) {
-        
-        int index = Random.Range(0,list.Count);
-        
-        // Only go to a vertex that isn't occupied
-        if (_enclosure.MeshGen.isPositionOccupied[index]) {
-            return GetRandomVertex(list);
-        }
-        
         return list[Random.Range(0, list.Count)];
     }
 

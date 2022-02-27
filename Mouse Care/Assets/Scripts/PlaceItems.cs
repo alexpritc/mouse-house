@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public class PlaceItems : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class PlaceItems : MonoBehaviour
 
     private float distanceBetweenItems = 2f;
     private bool canSpawn;
+
+    private float rotationSpeed = 3f;
     
     private void Awake() {
         _controls = new Controls();
@@ -42,6 +46,9 @@ public class PlaceItems : MonoBehaviour
                     preview = Instantiate(cubePrefab);
                     preview.GetComponent<Collider>().enabled = false;
                     preview.GetComponent<MeshRenderer>().material = previewMat;
+                    preview.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+                    preview.GetComponent<MeshRenderer>().receiveShadows = false;
+                    Destroy(preview.GetComponent<NavMeshObstacle>());
                 }
                 
                 if (hit.collider.gameObject.tag == "Mesh")
@@ -56,8 +63,10 @@ public class PlaceItems : MonoBehaviour
                     
                         if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity, meshLayer.value))
                         {
-                            preview.transform.rotation = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
+                            Quaternion rot = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
                                 cubePrefab.transform.rotation.w);
+                            
+                            StartCoroutine(UpdateRotation(preview, preview.transform.rotation, rot));
                         }
                     }
                     else
@@ -66,8 +75,10 @@ public class PlaceItems : MonoBehaviour
                         
                         preview.GetComponent<MeshRenderer>().material = previewMat;
                     
-                        preview.transform.rotation = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z,
-                            cubePrefab.transform.rotation.w);   
+                        Quaternion rot = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z,
+                            cubePrefab.transform.rotation.w);
+                        
+                        StartCoroutine(UpdateRotation(preview, preview.transform.rotation, rot));
                     }
                 }
                 else
@@ -79,8 +90,13 @@ public class PlaceItems : MonoBehaviour
                     
                     if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity, meshLayer.value))
                     {
-                        preview.transform.rotation = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
+                        Quaternion rot = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
                             cubePrefab.transform.rotation.w);
+                        
+                        StartCoroutine(UpdateRotation(preview, preview.transform.rotation, rot));
+                        
+                        // preview.transform.rotation = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
+                        //     cubePrefab.transform.rotation.w);
                     }
                 }
                 
@@ -125,14 +141,23 @@ public class PlaceItems : MonoBehaviour
         }
     }
 
+    IEnumerator UpdateRotation(GameObject go, Quaternion from, Quaternion to)
+    {
+        go.transform.rotation = Quaternion.Lerp(from, to, Time.deltaTime * rotationSpeed);
+        yield return null;
+    }
+    
     private bool IsOverlapping(Vector3 point, float width, float height, float depth)
     {
 
         // foreach "point" in an item
-        Collider[] hitColliders = Physics.OverlapSphere(point, 0.49f);
+        Collider[] hitColliders = Physics.OverlapSphere(point, 0.6f);
         foreach (var hitCollider in hitColliders)
         {
-            return true;
+            if (hitCollider.tag != "Mesh")
+            {
+                return true;   
+            }
         }
 
         return false;
