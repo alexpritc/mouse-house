@@ -26,10 +26,26 @@ public class PlaceItems : MonoBehaviour
     private bool canSpawn;
 
     private float rotationSpeed = 3f;
-    
+
+    private void Start()
+    {
+        preview = Instantiate(cubePrefab);
+        preview.gameObject.name = "Preview";
+        preview.GetComponent<Collider>().enabled = false;
+        preview.GetComponent<MeshRenderer>().material = previewMat;
+        preview.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
+        preview.GetComponent<MeshRenderer>().receiveShadows = false;
+        Destroy(preview.GetComponent<NavMeshObstacle>());
+        
+        if (!isItemSelected)
+        {
+            preview.SetActive(false);
+        }
+    }
+
     private void Awake() {
         _controls = new Controls();
-        
+
         _controls.Item.PlaceItem.performed += ctx => PlaceItem();
         preview = null;
     }
@@ -41,14 +57,12 @@ public class PlaceItems : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             { 
-                if (preview == null)
+                if (!preview.activeSelf)
                 {
-                    preview = Instantiate(cubePrefab);
-                    preview.GetComponent<Collider>().enabled = false;
-                    preview.GetComponent<MeshRenderer>().material = previewMat;
-                    preview.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
-                    preview.GetComponent<MeshRenderer>().receiveShadows = false;
-                    Destroy(preview.GetComponent<NavMeshObstacle>());
+                    preview.SetActive(true);
+
+                    preview.transform.rotation = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, 
+                        cubePrefab.transform.rotation.w);
                 }
                 
                 if (hit.collider.gameObject.tag == "Mesh")
@@ -94,15 +108,18 @@ public class PlaceItems : MonoBehaviour
                             cubePrefab.transform.rotation.w);
                         
                         StartCoroutine(UpdateRotation(preview, preview.transform.rotation, rot));
-                        
-                        // preview.transform.rotation = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
-                        //     cubePrefab.transform.rotation.w);
                     }
                 }
                 
                 preview.transform.position =
                     hit.point + new Vector3(0f, preview.transform.localScale.y / 2, 0f);
 
+            }
+            else
+            {
+                canSpawn = false;
+                StopAllCoroutines();
+                preview.SetActive(false);
             }
         }
     }
@@ -133,11 +150,11 @@ public class PlaceItems : MonoBehaviour
             {
                 GameObject go = Instantiate(cubePrefab, hit.point + new Vector3(0f,cubePrefab.transform.localScale.y / 2,0f),
                     new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, cubePrefab.transform.rotation.w));
+                
+                preview.transform.rotation = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, 
+                    cubePrefab.transform.rotation.w);
+                canSpawn = false;
             }
-            
-            Destroy(preview);
-            preview = null;
-            canSpawn = false;
         }
     }
 
