@@ -22,6 +22,7 @@ public class CameraController : MonoBehaviour {
     private Vector3 _direction;
     private float _groundZ = 0;
     
+    [SerializeField] private GameObject _cameraPivot;
     [SerializeField] private GameObject _camera;
 
     private Vector2 turn;
@@ -72,12 +73,12 @@ public class CameraController : MonoBehaviour {
     void FixedUpdate()
     {
         Vector3 move = new Vector3(moveInput.x, y, moveInput.y);
-        _camera.transform.Translate(move * _movementSpeed, Space.Self);
+        _cameraPivot.transform.Translate(move * _movementSpeed, Space.Self);
         
         if (_isPanning && !GameManager.Instance.IsInPlaceItemMode)
         {
             _direction = _touchStart - cursorWorldPosOnNCP;
-            _camera.transform.Translate(_direction * _panningSpeed, Space.Self);
+            _cameraPivot.transform.Translate(_direction * _panningSpeed, Space.Self);
         }
         else if (_isRotating) {
             _direction = _touchStart - cursorWorldPosOnNCP;
