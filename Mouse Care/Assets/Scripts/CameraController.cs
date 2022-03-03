@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.Mouse;
 
-public class CameraRotation : MonoBehaviour {
+[RequireComponent(typeof(Rigidbody))]
+public class CameraController : MonoBehaviour {
     private Vector2 touchPos;
 
     [SerializeField] private float _rotationSpeed = 1f;
-    [SerializeField] private float _movementSpeed = 0.5f;
-
+    [SerializeField] private float _panningSpeed = 0.5f;
+    [SerializeField] private float _movementSpeed = 1f;
+    
     private Controls controls;
     
     private bool _isRotating;
@@ -20,7 +22,8 @@ public class CameraRotation : MonoBehaviour {
     private Vector3 _direction;
     private float _groundZ = 0;
     
-    private Camera _camera;
+    [SerializeField] private GameObject _cameraPivot;
+    [SerializeField] private GameObject _camera;
 
     private Vector2 turn;
 
@@ -29,8 +32,11 @@ public class CameraRotation : MonoBehaviour {
     private bool _isZooming;
     private float _zoomModifer;
 
+    private float y;
+
+    private Vector2 moveInput;
+
     private void Awake() {
-        _camera = GetComponentInChildren<Camera>();
         controls = new Controls();
         
         controls.Camera.GetMouseStartPos.performed += ctx => _touchStart = cursorWorldPosOnNCP;
@@ -44,35 +50,35 @@ public class CameraRotation : MonoBehaviour {
         controls.Camera.CameraZoom.performed += ctx => _isZooming = true;
         controls.Camera.CameraZoom.performed += ctx => _zoomModifer = ctx.ReadValue<Vector2>().y;
         controls.Camera.CameraZoom.canceled += ctx => _isZooming = false;
+
+        controls.Camera.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        controls.Camera.Movement.canceled += ctx => moveInput = ctx.ReadValue<Vector2>();
+
+        controls.Camera.Up.performed += ctx => y = 1f;
+        controls.Camera.Down.performed += ctx => y = -1f;
+        controls.Camera.Up.canceled += ctx => y = 0f;
+        controls.Camera.Down.canceled += ctx => y = 0f;
     }
 
     // Update is called once per frame
-
     private void Update()
     {
         if (_isZooming)
         {
-            _zoomModifer = Mathf.Clamp(_zoomModifer, -1f, 1f);
-            _zoomModifer = -_zoomModifer;
-            _camera.fieldOfView += _zoomModifer;
-            
-            if (_camera.fieldOfView < 10f)
-            {
-                _camera.fieldOfView = 10f;
-            }
-            else if (_camera.fieldOfView > 40f)
-            {
-                _camera.fieldOfView = 40f;
-            }
+            _zoomModifer = Mathf.Clamp(_zoomModifer, -5f, 5f);
+            _camera.transform.position += _camera.transform.forward * _zoomModifer;
         }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
+        Vector3 move = new Vector3(moveInput.x, y, moveInput.y);
+        _cameraPivot.transform.Translate(move * _movementSpeed, Space.Self);
         
-        if (_isPanning)
+        if (_isPanning && !GameManager.Instance.IsInPlaceItemMode)
         {
             _direction = _touchStart - cursorWorldPosOnNCP;
-            transform.Translate(_direction * _movementSpeed, Space.Self);
+            _cameraPivot.transform.Translate(_direction * _panningSpeed, Space.Self);
         }
         else if (_isRotating) {
             _direction = _touchStart - cursorWorldPosOnNCP;

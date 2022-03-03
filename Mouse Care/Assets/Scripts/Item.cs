@@ -9,6 +9,16 @@ public class Item : MonoBehaviour
     private string _description;
     
     /// <summary>
+    /// Used for checking if all of the item is on the mesh
+    /// </summary>
+    public Transform[] corners;
+    
+    /// <summary>
+    /// Used for checking if the item fits into the space
+    /// </summary>
+    public Transform[] widths;
+    
+    /// <summary>
     /// How much enrichment this item gives
     /// </summary>
     public float _enrichment;

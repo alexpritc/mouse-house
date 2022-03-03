@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Water
   - Food
+  - Mesh
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Mouse
-  - 
-  - 
+  - InputMouse
+  - Mesh
   - 
   - 
   - 

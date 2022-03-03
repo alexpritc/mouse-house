@@ -363,7 +363,6 @@ GameObject:
   - component: {fileID: 8987083025874264022}
   - component: {fileID: -871017549007743504}
   - component: {fileID: 505886006}
-  - component: {fileID: 7499261511493104856}
   m_Layer: 6
   m_Name: Mouse
   m_TagString: Untagged
@@ -380,7 +379,7 @@ Transform:
   m_GameObject: {fileID: 2941249151852926759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.66, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2822604449381484666}
   - {fileID: 2887898316834107769}
@@ -463,20 +462,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &7499261511493104856
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2941249151852926759}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.96
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4659091091165217812
 GameObject:
   m_ObjectHideFlags: 0
