@@ -60,8 +60,7 @@ public class PlaceItems : MonoBehaviour
                 
                 if (hit.collider.gameObject.tag == "Mesh")
                 {
-                    if (IsOverlapping(_preview.transform.position, _preview.transform.localScale.x,
-                            _preview.transform.localScale.y, _preview.transform.localScale.z))
+                    if (IsOverlapping(_preview.transform.position) || !IsOnMesh())
                     {
                         _canSpawn = false;
                         _preview.GetComponent<MeshRenderer>().material = _previewMatRed;
@@ -79,7 +78,7 @@ public class PlaceItems : MonoBehaviour
                 }
                 
                 _preview.transform.position =
-                    hit.point + new Vector3(0f, _preview.transform.localScale.y / 2, 0f);
+                    hit.point;
             }
             else
             {
@@ -87,25 +86,13 @@ public class PlaceItems : MonoBehaviour
                 _preview.SetActive(false);
             }
         }
-    }
-
-    private void OnDrawGizmosSelected() {
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        else
         {
-            if (hit.collider.gameObject.tag == "Mesh")
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.red;   
-            }
-            Gizmos.DrawRay(hit.point, Camera.main.transform.position);
+            _canSpawn = false;
+            _preview.SetActive(false);
         }
     }
-    
+
     private void PlaceItem()
     {
         if (GameManager.Instance.IsInPlaceItemMode)
@@ -138,7 +125,7 @@ public class PlaceItems : MonoBehaviour
         yield return null;
     }
     
-    private bool IsOverlapping(Vector3 point, float width, float height, float depth)
+    private bool IsOverlapping(Vector3 point)
     {
 
         // foreach "point" in an item
@@ -152,6 +139,62 @@ public class PlaceItems : MonoBehaviour
         }
 
         return false;
+    }
+    
+    private bool IsOnMesh()
+    {
+        // foreach "point" in an item
+        foreach (var corner  in _preview.GetComponent<Item>().corners)
+        {
+            Ray ray = new Ray(corner.position, Vector3.down);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.collider.tag != "Mesh")
+                {
+                    return false;   
+                }
+            }
+            else
+            {
+                Ray ray2 = new Ray(corner.position, Vector3.up);
+                if (Physics.Raycast(ray2, out RaycastHit hit2))
+                {
+                    if (hit.collider.tag != "Mesh")
+                    {
+                        return false;   
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    
+    private void OnDrawGizmosSelected() {
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.collider.gameObject.tag == "Mesh")
+            {
+                Gizmos.color = Color.green;
+            }
+            else
+            {
+                Gizmos.color = Color.red;   
+            }
+            Gizmos.DrawRay(hit.point, Camera.main.transform.position);
+        }
+        
+        // foreach "point" in an item
+        foreach (var corner in _preview.GetComponent<Item>().corners)
+        {
+            Gizmos.DrawRay(corner.position, Vector3.down);
+        }
     }
 
     private void OnEnable() {

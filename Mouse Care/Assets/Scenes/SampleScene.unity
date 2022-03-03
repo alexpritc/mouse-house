@@ -203,15 +203,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3468aee5730309e4dac79e25d0daa58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _xSize: 10
-  _zSize: 5
+  _xSize: 20
+  _zSize: 10
   _xSpacing: 2
   _zSpacing: 2
   _yModifier: 0.9
   _gradient:
     serializedVersion: 2
-    key0: {r: 0.24344225, g: 0.745283, b: 0.2285066, a: 1}
-    key1: {r: 0.19962774, g: 0.6320754, b: 0.18783373, a: 1}
+    key0: {r: 0.8018868, g: 0.7822607, b: 0.59385014, a: 1}
+    key1: {r: 0.7735849, g: 0.7523612, b: 0.56559277, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -672,7 +672,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: 8751586612399875012, guid: b1c9b7a9c8a159b439498c495d92d42b,
     type: 3}
-  _isItemSelected: 1
   _previewMat: {fileID: 2100000, guid: 713fc5b6e0172014eaee74c5c552f8ea, type: 2}
   _previewMatRed: {fileID: 2100000, guid: a9e6395a3a510184d8e2daaf68c8717d, type: 2}
   _meshLayer:

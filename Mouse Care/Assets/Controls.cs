@@ -189,6 +189,34 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GameManager"",
+            ""id"": ""30db338e-2296-49b2-881d-da0451ef269b"",
+            ""actions"": [
+                {
+                    ""name"": ""ToggleItemPlaceMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""81fb357a-8b80-48e0-abf5-ee23d8317036"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c8adbff9-7ac0-45ed-a125-3bbafd6525da"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleItemPlaceMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -204,6 +232,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Item = asset.FindActionMap("Item", throwIfNotFound: true);
         m_Item_PlaceItem = m_Item.FindAction("PlaceItem", throwIfNotFound: true);
         m_Item_RotateItem = m_Item.FindAction("RotateItem", throwIfNotFound: true);
+        // GameManager
+        m_GameManager = asset.FindActionMap("GameManager", throwIfNotFound: true);
+        m_GameManager_ToggleItemPlaceMode = m_GameManager.FindAction("ToggleItemPlaceMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -365,6 +396,39 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         }
     }
     public ItemActions @Item => new ItemActions(this);
+
+    // GameManager
+    private readonly InputActionMap m_GameManager;
+    private IGameManagerActions m_GameManagerActionsCallbackInterface;
+    private readonly InputAction m_GameManager_ToggleItemPlaceMode;
+    public struct GameManagerActions
+    {
+        private @Controls m_Wrapper;
+        public GameManagerActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ToggleItemPlaceMode => m_Wrapper.m_GameManager_ToggleItemPlaceMode;
+        public InputActionMap Get() { return m_Wrapper.m_GameManager; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameManagerActions set) { return set.Get(); }
+        public void SetCallbacks(IGameManagerActions instance)
+        {
+            if (m_Wrapper.m_GameManagerActionsCallbackInterface != null)
+            {
+                @ToggleItemPlaceMode.started -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnToggleItemPlaceMode;
+                @ToggleItemPlaceMode.performed -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnToggleItemPlaceMode;
+                @ToggleItemPlaceMode.canceled -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnToggleItemPlaceMode;
+            }
+            m_Wrapper.m_GameManagerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ToggleItemPlaceMode.started += instance.OnToggleItemPlaceMode;
+                @ToggleItemPlaceMode.performed += instance.OnToggleItemPlaceMode;
+                @ToggleItemPlaceMode.canceled += instance.OnToggleItemPlaceMode;
+            }
+        }
+    }
+    public GameManagerActions @GameManager => new GameManagerActions(this);
     public interface ICameraActions
     {
         void OnRotateCamera(InputAction.CallbackContext context);
@@ -377,5 +441,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     {
         void OnPlaceItem(InputAction.CallbackContext context);
         void OnRotateItem(InputAction.CallbackContext context);
+    }
+    public interface IGameManagerActions
+    {
+        void OnToggleItemPlaceMode(InputAction.CallbackContext context);
     }
 }

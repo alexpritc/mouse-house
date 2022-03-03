@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour {
         set => _isInPlaceItemMode = value;
     }
 
+    private Controls _controls;
+    
     void Awake() {
 
         if (s_instance != null) {
@@ -32,6 +34,8 @@ public class GameManager : MonoBehaviour {
         }
 
         s_instance = this;
+        _controls = new Controls();
+        _controls.GameManager.ToggleItemPlaceMode.performed += ctx => IsInPlaceItemMode = !_isInPlaceItemMode;
     }
 
     public event Action onTick;
@@ -40,5 +44,13 @@ public class GameManager : MonoBehaviour {
         if (onTick != null) {
             onTick();
         }
+    }
+    
+    private void OnEnable() {
+        _controls.Enable();
+    }
+
+    private void OnDisable() {
+        _controls.Disable();
     }
 }

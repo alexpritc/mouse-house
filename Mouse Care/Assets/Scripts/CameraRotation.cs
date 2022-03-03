@@ -69,7 +69,7 @@ public class CameraRotation : MonoBehaviour {
 
     void FixedUpdate() {
         
-        if (_isPanning)
+        if (_isPanning && !GameManager.Instance.IsInPlaceItemMode)
         {
             _direction = _touchStart - cursorWorldPosOnNCP;
             transform.Translate(_direction * _movementSpeed, Space.Self);
