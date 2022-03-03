@@ -11,10 +11,7 @@ public class PlaceItems : MonoBehaviour
     [SerializeField] private GameObject _cubePrefab;
     
     private Controls _controls;
-
-    [SerializeField] private bool _isItemSelected;
-
-
+    
     private GameObject _preview;
     [SerializeField] private Material _previewMat;
     [SerializeField] private Material _previewMatRed;
@@ -35,7 +32,7 @@ public class PlaceItems : MonoBehaviour
         _preview.GetComponent<MeshRenderer>().receiveShadows = false;
         Destroy(_preview.GetComponent<NavMeshObstacle>());
         
-        if (!_isItemSelected)
+        if (!GameManager.Instance.IsInPlaceItemMode)
         {
             _preview.SetActive(false);
         }
@@ -45,12 +42,13 @@ public class PlaceItems : MonoBehaviour
         _controls = new Controls();
 
         _controls.Item.PlaceItem.performed += ctx => PlaceItem();
+        _controls.Item.RotateItem.performed += ctx => RotateItem();
         _preview = null;
     }
 
     private void Update()
     {
-        if (_isItemSelected)
+        if (GameManager.Instance.IsInPlaceItemMode)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -58,9 +56,6 @@ public class PlaceItems : MonoBehaviour
                 if (!_preview.activeSelf)
                 {
                     _preview.SetActive(true);
-
-                    _preview.transform.rotation = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, 
-                        _cubePrefab.transform.rotation.w);
                 }
                 
                 if (hit.collider.gameObject.tag == "Mesh")
@@ -70,53 +65,25 @@ public class PlaceItems : MonoBehaviour
                     {
                         _canSpawn = false;
                         _preview.GetComponent<MeshRenderer>().material = _previewMatRed;
-
-                        Ray ray2 = new Ray(hit.point, hit.point - Camera.main.transform.position);
-                    
-                        if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity, _meshLayer.value))
-                        {
-                            Quaternion rot = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
-                                _cubePrefab.transform.rotation.w);
-                            
-                            StartCoroutine(UpdateRotation(_preview, _preview.transform.rotation, rot));
-                        }
                     }
                     else
                     {
                         _canSpawn = true;
-                        
                         _preview.GetComponent<MeshRenderer>().material = _previewMat;
-                    
-                        Quaternion rot = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z,
-                            _cubePrefab.transform.rotation.w);
-                        
-                        StartCoroutine(UpdateRotation(_preview, _preview.transform.rotation, rot));
                     }
                 }
                 else
                 {
                     _canSpawn = false;
                     _preview.GetComponent<MeshRenderer>().material = _previewMatRed;
-
-                    Ray ray2 = new Ray(hit.point, hit.point - Camera.main.transform.position);
-                    
-                    if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity, _meshLayer.value))
-                    {
-                        Quaternion rot = new Quaternion(hit2.normal.x, hit2.normal.y, hit2.normal.z,
-                            _cubePrefab.transform.rotation.w);
-                        
-                        StartCoroutine(UpdateRotation(_preview, _preview.transform.rotation, rot));
-                    }
                 }
                 
                 _preview.transform.position =
                     hit.point + new Vector3(0f, _preview.transform.localScale.y / 2, 0f);
-
             }
             else
             {
                 _canSpawn = false;
-                StopAllCoroutines();
                 _preview.SetActive(false);
             }
         }
@@ -141,18 +108,27 @@ public class PlaceItems : MonoBehaviour
     
     private void PlaceItem()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (GameManager.Instance.IsInPlaceItemMode)
         {
-            if (hit.collider.gameObject.tag == "Mesh" && _canSpawn)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                GameObject go = Instantiate(_cubePrefab, hit.point + new Vector3(0f,_cubePrefab.transform.localScale.y / 2,0f),
-                    new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, _cubePrefab.transform.rotation.w));
-                
-                _preview.transform.rotation = new Quaternion(hit.normal.x, hit.normal.y, hit.normal.z, 
-                    _cubePrefab.transform.rotation.w);
-                _canSpawn = false;
-            }
+                if (hit.collider.gameObject.tag == "Mesh" && _canSpawn)
+                {
+                    GameObject go = Instantiate(_cubePrefab, hit.point,
+                        new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y, _preview.transform.rotation.z, _preview.transform.rotation.w));
+                    
+                    _canSpawn = false;
+                }
+            }   
+        }
+    }
+
+    private void RotateItem()
+    {
+        if (GameManager.Instance.IsInPlaceItemMode)
+        {
+            _preview.transform.Rotate(_preview.transform.up, 90f);
         }
     }
 

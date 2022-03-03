@@ -154,6 +154,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ea41191-e727-4524-841a-80e0cef0b3d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +174,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PlaceItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b245886-b4c9-46f4-b8c2-d30a2e900b60"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -183,6 +203,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         // Item
         m_Item = asset.FindActionMap("Item", throwIfNotFound: true);
         m_Item_PlaceItem = m_Item.FindAction("PlaceItem", throwIfNotFound: true);
+        m_Item_RotateItem = m_Item.FindAction("RotateItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -308,11 +329,13 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Item;
     private IItemActions m_ItemActionsCallbackInterface;
     private readonly InputAction m_Item_PlaceItem;
+    private readonly InputAction m_Item_RotateItem;
     public struct ItemActions
     {
         private @Controls m_Wrapper;
         public ItemActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @PlaceItem => m_Wrapper.m_Item_PlaceItem;
+        public InputAction @RotateItem => m_Wrapper.m_Item_RotateItem;
         public InputActionMap Get() { return m_Wrapper.m_Item; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -325,6 +348,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @PlaceItem.started -= m_Wrapper.m_ItemActionsCallbackInterface.OnPlaceItem;
                 @PlaceItem.performed -= m_Wrapper.m_ItemActionsCallbackInterface.OnPlaceItem;
                 @PlaceItem.canceled -= m_Wrapper.m_ItemActionsCallbackInterface.OnPlaceItem;
+                @RotateItem.started -= m_Wrapper.m_ItemActionsCallbackInterface.OnRotateItem;
+                @RotateItem.performed -= m_Wrapper.m_ItemActionsCallbackInterface.OnRotateItem;
+                @RotateItem.canceled -= m_Wrapper.m_ItemActionsCallbackInterface.OnRotateItem;
             }
             m_Wrapper.m_ItemActionsCallbackInterface = instance;
             if (instance != null)
@@ -332,6 +358,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @PlaceItem.started += instance.OnPlaceItem;
                 @PlaceItem.performed += instance.OnPlaceItem;
                 @PlaceItem.canceled += instance.OnPlaceItem;
+                @RotateItem.started += instance.OnRotateItem;
+                @RotateItem.performed += instance.OnRotateItem;
+                @RotateItem.canceled += instance.OnRotateItem;
             }
         }
     }
@@ -347,5 +376,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     public interface IItemActions
     {
         void OnPlaceItem(InputAction.CallbackContext context);
+        void OnRotateItem(InputAction.CallbackContext context);
     }
 }

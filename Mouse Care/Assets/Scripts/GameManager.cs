@@ -18,6 +18,12 @@ public class GameManager : MonoBehaviour {
         get => _gameClock;
         set => _gameClock = value;
     }
+    
+    private bool _isInPlaceItemMode = true;
+    public bool IsInPlaceItemMode{
+        get => _isInPlaceItemMode;
+        set => _isInPlaceItemMode = value;
+    }
 
     void Awake() {
 
