@@ -20,7 +20,7 @@ public class PlaceItems : MonoBehaviour
 
     private float _distanceBetweenItems = 1f;
     private bool _canSpawn;
-    private float _rotationSpeed = 10f;
+    private float _rotationSpeed = 3f;
 
     private RaycastHit hitLastTimeWasOnMesh;
 

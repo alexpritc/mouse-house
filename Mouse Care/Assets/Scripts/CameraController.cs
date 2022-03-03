@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.Mouse;
 
-public class CameraRotation : MonoBehaviour {
+[RequireComponent(typeof(Rigidbody))]
+public class CameraController : MonoBehaviour {
     private Vector2 touchPos;
 
     [SerializeField] private float _rotationSpeed = 1f;
-    [SerializeField] private float _movementSpeed = 0.5f;
-
+    [SerializeField] private float _panningSpeed = 0.5f;
+    [SerializeField] private float _movementSpeed = 1f;
+    
     private Controls controls;
     
     private bool _isRotating;
@@ -29,6 +31,8 @@ public class CameraRotation : MonoBehaviour {
     private bool _isZooming;
     private float _zoomModifer;
 
+    private Vector2 moveInput;
+    
     private void Awake() {
         _camera = GetComponentInChildren<Camera>();
         controls = new Controls();
@@ -44,10 +48,12 @@ public class CameraRotation : MonoBehaviour {
         controls.Camera.CameraZoom.performed += ctx => _isZooming = true;
         controls.Camera.CameraZoom.performed += ctx => _zoomModifer = ctx.ReadValue<Vector2>().y;
         controls.Camera.CameraZoom.canceled += ctx => _isZooming = false;
+
+        controls.Camera.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        controls.Camera.Movement.canceled += ctx => moveInput = ctx.ReadValue<Vector2>();
     }
 
     // Update is called once per frame
-
     private void Update()
     {
         if (_isZooming)
@@ -67,12 +73,15 @@ public class CameraRotation : MonoBehaviour {
         }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
+        Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
+        transform.Translate(move * _movementSpeed, Space.Self);
         
         if (_isPanning && !GameManager.Instance.IsInPlaceItemMode)
         {
             _direction = _touchStart - cursorWorldPosOnNCP;
-            transform.Translate(_direction * _movementSpeed, Space.Self);
+            transform.Translate(_direction * _panningSpeed, Space.Self);
         }
         else if (_isRotating) {
             _direction = _touchStart - cursorWorldPosOnNCP;
