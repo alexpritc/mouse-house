@@ -20,7 +20,9 @@ public class PlaceItems : MonoBehaviour
 
     private float _distanceBetweenItems = 1f;
     private bool _canSpawn;
-    private float _rotationSpeed = 3f;
+    private float _rotationSpeed = 10f;
+
+    private RaycastHit hitLastTimeWasOnMesh;
 
     private void Start()
     {
@@ -31,6 +33,7 @@ public class PlaceItems : MonoBehaviour
         _preview.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
         _preview.GetComponent<MeshRenderer>().receiveShadows = false;
         Destroy(_preview.GetComponent<NavMeshObstacle>());
+        Destroy(_preview.GetComponentInChildren<NavMeshObstacle>());
         
         if (!GameManager.Instance.IsInPlaceItemMode)
         {
@@ -52,12 +55,12 @@ public class PlaceItems : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
-            { 
+            {
                 if (!_preview.activeSelf)
                 {
                     _preview.SetActive(true);
                 }
-                
+
                 if (hit.collider.gameObject.tag == "Mesh")
                 {
                     if (IsOverlapping(_preview.transform.position) || !IsOnMesh())
@@ -70,6 +73,7 @@ public class PlaceItems : MonoBehaviour
                         _canSpawn = true;
                         _preview.GetComponent<MeshRenderer>().material = _previewMat;
                     }
+                    
                 }
                 else
                 {
@@ -97,17 +101,14 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (_canSpawn)
             {
-                if (hit.collider.gameObject.tag == "Mesh" && _canSpawn)
-                {
-                    GameObject go = Instantiate(_cubePrefab, hit.point,
-                        new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y, _preview.transform.rotation.z, _preview.transform.rotation.w));
-                    
-                    _canSpawn = false;
-                }
-            }   
+                GameObject go = Instantiate(_cubePrefab, _preview.transform.position,
+                    new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
+                        _preview.transform.rotation.z, _preview.transform.rotation.w));
+
+                _canSpawn = false;
+            }
         }
     }
 
@@ -129,45 +130,48 @@ public class PlaceItems : MonoBehaviour
     {
 
         // foreach "point" in an item
-        Collider[] hitColliders = Physics.OverlapSphere(point, _distanceBetweenItems);
-        foreach (var hitCollider in hitColliders)
+        if (_preview.GetComponent<Item>().widths.Length > 1)
         {
-            if (hitCollider.tag != "Mesh")
+            foreach (var width in _preview.GetComponent<Item>().widths)
             {
-                return true;   
+                Collider[] hitColliders = Physics.OverlapSphere(width.position, _distanceBetweenItems);
+                foreach (var hitCollider in hitColliders)
+                {
+                    if (hitCollider.tag != "Mesh")
+                    {
+                        return true;   
+                    }
+                }   
             }
+        }
+        else
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(point, _distanceBetweenItems);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.tag != "Mesh")
+                {
+                    return true;   
+                }
+            }   
         }
 
         return false;
     }
     
+    /// <summary>
+    /// Returns true if the preview object is entirely on top of the mesh
+    /// </summary>
+    /// <returns></returns>
     private bool IsOnMesh()
     {
         // foreach "point" in an item
         foreach (var corner  in _preview.GetComponent<Item>().corners)
         {
             Ray ray = new Ray(corner.position, Vector3.down);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (!Physics.Raycast(ray, out RaycastHit hit, _meshLayer))
             {
-                if (hit.collider.tag != "Mesh")
-                {
-                    return false;   
-                }
-            }
-            else
-            {
-                Ray ray2 = new Ray(corner.position, Vector3.up);
-                if (Physics.Raycast(ray2, out RaycastHit hit2))
-                {
-                    if (hit.collider.tag != "Mesh")
-                    {
-                        return false;   
-                    }
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
