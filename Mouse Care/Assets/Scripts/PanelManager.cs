@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Shop : MonoBehaviour
+public class PanelManager : MonoBehaviour
 {
     [SerializeField] private Animator panelAnimator;
     string clipName;
