@@ -27,6 +27,7 @@ public class Shop : MonoBehaviour
                 currentOpenShop.GetComponent<Image>().color = buttonNormal;
             }
             
+            GameManager.Instance.IsInPlaceItemMode = true;
             shopButton.GetComponent<Image>().color = buttonSelected;
             panelAnimator.CrossFade("Opening", 0.2f);
             currentOpenShop = shopButton;
@@ -38,6 +39,8 @@ public class Shop : MonoBehaviour
             // Only close if pressing the same button twice
             if (currentOpenShop == shopButton)
             {
+                // TODO: Change this later on once buying items has been added
+                GameManager.Instance.IsInPlaceItemMode = false;
                 panelAnimator.CrossFade("Closing", 0.2f);
                 shopButton.GetComponent<Image>().color = buttonNormal;
             }
@@ -48,6 +51,7 @@ public class Shop : MonoBehaviour
                 {
                     currentOpenShop.GetComponent<Image>().color = buttonNormal;
                 }
+                GameManager.Instance.IsInPlaceItemMode = true;
                 shopButton.GetComponent<Image>().color = buttonSelected;
                 currentOpenShop = shopButton;
             }
