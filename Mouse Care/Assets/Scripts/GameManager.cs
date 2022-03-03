@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
         set => _gameClock = value;
     }
     
-    private bool _isInPlaceItemMode = true;
+    private bool _isInPlaceItemMode = false;
     public bool IsInPlaceItemMode{
         get => _isInPlaceItemMode;
         set => _isInPlaceItemMode = value;

@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour {
     private Vector3 _direction;
     private float _groundZ = 0;
     
-    private Camera _camera;
+    [SerializeField] private GameObject _camera;
 
     private Vector2 turn;
 
@@ -31,10 +31,11 @@ public class CameraController : MonoBehaviour {
     private bool _isZooming;
     private float _zoomModifer;
 
+    private float y;
+
     private Vector2 moveInput;
-    
+
     private void Awake() {
-        _camera = GetComponentInChildren<Camera>();
         controls = new Controls();
         
         controls.Camera.GetMouseStartPos.performed += ctx => _touchStart = cursorWorldPosOnNCP;
@@ -51,6 +52,11 @@ public class CameraController : MonoBehaviour {
 
         controls.Camera.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Camera.Movement.canceled += ctx => moveInput = ctx.ReadValue<Vector2>();
+
+        controls.Camera.Up.performed += ctx => y = 1f;
+        controls.Camera.Down.performed += ctx => y = -1f;
+        controls.Camera.Up.canceled += ctx => y = 0f;
+        controls.Camera.Down.canceled += ctx => y = 0f;
     }
 
     // Update is called once per frame
@@ -58,30 +64,20 @@ public class CameraController : MonoBehaviour {
     {
         if (_isZooming)
         {
-            _zoomModifer = Mathf.Clamp(_zoomModifer, -1f, 1f);
-            _zoomModifer = -_zoomModifer;
-            _camera.fieldOfView += _zoomModifer;
-            
-            if (_camera.fieldOfView < 10f)
-            {
-                _camera.fieldOfView = 10f;
-            }
-            else if (_camera.fieldOfView > 40f)
-            {
-                _camera.fieldOfView = 40f;
-            }
+            _zoomModifer = Mathf.Clamp(_zoomModifer, -5f, 5f);
+            _camera.transform.position += _camera.transform.forward * _zoomModifer;
         }
     }
 
     void FixedUpdate()
     {
-        Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
-        transform.Translate(move * _movementSpeed, Space.Self);
+        Vector3 move = new Vector3(moveInput.x, y, moveInput.y);
+        _camera.transform.Translate(move * _movementSpeed, Space.Self);
         
         if (_isPanning && !GameManager.Instance.IsInPlaceItemMode)
         {
             _direction = _touchStart - cursorWorldPosOnNCP;
-            transform.Translate(_direction * _panningSpeed, Space.Self);
+            _camera.transform.Translate(_direction * _panningSpeed, Space.Self);
         }
         else if (_isRotating) {
             _direction = _touchStart - cursorWorldPosOnNCP;

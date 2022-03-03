@@ -80,6 +80,24 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""691953f9-2b48-4126-b785-27f448b598f0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""adc7dde8-fc1a-4117-ae5c-be4c8bf8baee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -203,6 +221,28 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8489ecbb-4fb1-43e9-8be7-46c0e48b62a0"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78fe8ce2-aa2c-4184-971e-fc01767a8320"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -293,6 +333,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Camera_MousePosition = m_Camera.FindAction("MousePosition", throwIfNotFound: true);
         m_Camera_CameraZoom = m_Camera.FindAction("CameraZoom", throwIfNotFound: true);
         m_Camera_Movement = m_Camera.FindAction("Movement", throwIfNotFound: true);
+        m_Camera_Up = m_Camera.FindAction("Up", throwIfNotFound: true);
+        m_Camera_Down = m_Camera.FindAction("Down", throwIfNotFound: true);
         // Item
         m_Item = asset.FindActionMap("Item", throwIfNotFound: true);
         m_Item_PlaceItem = m_Item.FindAction("PlaceItem", throwIfNotFound: true);
@@ -365,6 +407,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Camera_MousePosition;
     private readonly InputAction m_Camera_CameraZoom;
     private readonly InputAction m_Camera_Movement;
+    private readonly InputAction m_Camera_Up;
+    private readonly InputAction m_Camera_Down;
     public struct CameraActions
     {
         private @Controls m_Wrapper;
@@ -375,6 +419,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_Camera_MousePosition;
         public InputAction @CameraZoom => m_Wrapper.m_Camera_CameraZoom;
         public InputAction @Movement => m_Wrapper.m_Camera_Movement;
+        public InputAction @Up => m_Wrapper.m_Camera_Up;
+        public InputAction @Down => m_Wrapper.m_Camera_Down;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -402,6 +448,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMovement;
+                @Up.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnUp;
+                @Up.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnUp;
+                @Up.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnUp;
+                @Down.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnDown;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -424,6 +476,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Up.started += instance.OnUp;
+                @Up.performed += instance.OnUp;
+                @Up.canceled += instance.OnUp;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
             }
         }
     }
@@ -510,6 +568,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnCameraZoom(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
     }
     public interface IItemActions
     {
