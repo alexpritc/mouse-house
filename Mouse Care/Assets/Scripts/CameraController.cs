@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.Mouse;
@@ -9,7 +10,8 @@ using static UnityEngine.InputSystem.Mouse;
 public class CameraController : MonoBehaviour {
     private Vector2 touchPos;
 
-    [SerializeField] private float _rotationSpeed = 1f;
+    [SerializeField] private float _horizontalRotationSpeed = 5f;
+    [SerializeField] private float _verticalRotationSpeed = 2f;
     [SerializeField] private float _panningSpeed = 0.5f;
     [SerializeField] private float _movementSpeed = 1f;
     
@@ -85,40 +87,21 @@ public class CameraController : MonoBehaviour {
             // Standardises rotation speed
             _direction = StandardiseRotationSpeed(_direction);
 
-            transform.Rotate(Vector3.up, _direction.x * _rotationSpeed);
+            // Needs to be way more sensitive for horizontal rotation than vertical
+            float pitch = _cameraPivot.transform.eulerAngles.x + (_direction.y * _verticalRotationSpeed);
+            float yaw = transform.eulerAngles.y + (_direction.x * _horizontalRotationSpeed);
+
+            transform.rotation = Quaternion.Euler(pitch, yaw, 0 );
         }
     }
 
     private Vector3 StandardiseRotationSpeed(Vector3 inVector)
     {
         float x = 0f, y = 0f, z = 0f;
-
-        if (inVector.x < 0)
-        {
-            x = -1f;
-        }
-        else if (inVector.x > 0)
-        {
-            x = 1f;
-        }
-
-        if (inVector.y < 0)
-        {
-            y = -1f;
-        }
-        else if (inVector.y > 0)
-        {
-            y = 1f;
-        }
-
-        if (inVector.z < 0)
-        {
-            z = -1f;
-        }
-        else if (inVector.z > 0)
-        {
-            z = 1f;
-        }
+        
+        x = inVector.x < 0 ? -1 : 1;
+        y = inVector.y < 0 ? -1 : 1;
+        z = inVector.z < 0 ? -1 : 1;
 
         return new Vector3(x, y, z);
 

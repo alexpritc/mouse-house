@@ -124,7 +124,6 @@ public class PlaceItems : MonoBehaviour
 
                 _canSpawn = false;
                 float target = GameManager.Instance.MeritPoints -= _itemPrefab.GetComponent<Item>().Price;
-                Debug.Log(target);
                 StartCoroutine(GameManager.Instance.ModifyPoints(GameManager.Instance.MeritPoints, target, Time.time));
             }
         }
