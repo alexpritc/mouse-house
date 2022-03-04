@@ -1981,7 +1981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5313a336d439074438097c9d50a13b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 3
+  _horizontalRotationSpeed: 2
+  _verticalRotationSpeed: 2
   _panningSpeed: 0.75
   _movementSpeed: 1
   _cameraPivot: {fileID: 994394453}
