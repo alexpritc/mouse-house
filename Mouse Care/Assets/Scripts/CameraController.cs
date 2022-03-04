@@ -20,8 +20,7 @@ public class CameraController : MonoBehaviour {
 
     private Vector3 _touchStart;
     private Vector3 _direction;
-    private float _groundZ = 0;
-    
+
     [SerializeField] private GameObject _cameraPivot;
     [SerializeField] private GameObject _camera;
 
