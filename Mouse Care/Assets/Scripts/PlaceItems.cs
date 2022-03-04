@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 public class PlaceItems : MonoBehaviour
 {
-    [SerializeField] private GameObject _cubePrefab;
+    [SerializeField] private GameObject _itemPrefab;
     
     private Controls _controls;
     
@@ -20,13 +20,13 @@ public class PlaceItems : MonoBehaviour
 
     private float _distanceBetweenItems = 1f;
     private bool _canSpawn;
-    private float _rotationSpeed = 3f;
+    private bool _canAfford;
 
     private RaycastHit hitLastTimeWasOnMesh;
 
     private void Start()
     {
-        _preview = Instantiate(_cubePrefab);
+        _preview = Instantiate(_itemPrefab);
         _preview.gameObject.name = "Preview";
         _preview.GetComponent<Collider>().enabled = false;
         _preview.GetComponent<MeshRenderer>().material = _previewMat;
@@ -53,6 +53,15 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
+            if (_itemPrefab.GetComponent<Item>().Price <= GameManager.Instance.MeritPoints)
+            {
+                _canAfford = true;
+            }
+            else
+            {
+                _canAfford = false;
+            }
+            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
@@ -66,23 +75,29 @@ public class PlaceItems : MonoBehaviour
                     if (IsOverlapping(_preview.transform.position) || !IsOnMesh())
                     {
                         _canSpawn = false;
-                        _preview.GetComponent<MeshRenderer>().material = _previewMatRed;
                     }
                     else
                     {
                         _canSpawn = true;
-                        _preview.GetComponent<MeshRenderer>().material = _previewMat;
                     }
                     
                 }
                 else
                 {
                     _canSpawn = false;
-                    _preview.GetComponent<MeshRenderer>().material = _previewMatRed;
                 }
                 
                 _preview.transform.position =
                     hit.point;
+
+                if (_canSpawn && _canAfford)
+                {
+                    _preview.GetComponent<MeshRenderer>().material = _previewMat;
+                }
+                else
+                {
+                    _preview.GetComponent<MeshRenderer>().material = _previewMatRed;
+                }
             }
             else
             {
@@ -101,13 +116,16 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
-            if (_canSpawn)
+            if (_canSpawn && _canAfford)
             {
-                GameObject go = Instantiate(_cubePrefab, _preview.transform.position,
+                GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
                     new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
                         _preview.transform.rotation.z, _preview.transform.rotation.w));
 
                 _canSpawn = false;
+                float target = GameManager.Instance.MeritPoints -= _itemPrefab.GetComponent<Item>().Price;
+                Debug.Log(target);
+                StartCoroutine(GameManager.Instance.ModifyPoints(GameManager.Instance.MeritPoints, target, Time.time));
             }
         }
     }
@@ -120,12 +138,6 @@ public class PlaceItems : MonoBehaviour
         }
     }
 
-    IEnumerator UpdateRotation(GameObject go, Quaternion from, Quaternion to)
-    {
-        go.transform.rotation = Quaternion.Lerp(from, to, Time.deltaTime * _rotationSpeed);
-        yield return null;
-    }
-    
     private bool IsOverlapping(Vector3 point)
     {
 

@@ -7,6 +7,12 @@ public class Item : MonoBehaviour
     private int _id;
     private string _name;
     private string _description;
+
+    [SerializeField] private int _price;
+    public int Price
+    {
+        get => _price;
+    }
     
     /// <summary>
     /// Used for checking if all of the item is on the mesh

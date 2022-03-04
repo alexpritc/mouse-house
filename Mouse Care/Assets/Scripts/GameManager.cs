@@ -14,16 +14,16 @@ public class GameManager : MonoBehaviour {
         set => s_instance = value;
     }
 
-    private static int s_meritPoints = 10;
+    private int s_meritPoints = 10;
     
-    public static int MeritPoints {
+    public int MeritPoints {
         get => s_meritPoints;
         set => s_meritPoints = value;
     }
     
-    private static int s_mpPerMin = 100;
+    private int s_mpPerMin = 100;
     
-    public static int MpPerMin {
+    public int MpPerMin {
         get => s_mpPerMin;
         set => s_mpPerMin = value;
     }
@@ -64,20 +64,22 @@ public class GameManager : MonoBehaviour {
     void Tick()
     {
         float target = s_meritPoints + s_mpPerMin / 4;
-        StartCoroutine(IncreasePoints(_TextBoxMP, s_meritPoints, target, Time.time));
+        StartCoroutine(ModifyPoints( s_meritPoints, target, Time.time));
     }
     
     void Tock()
     {
         float target = s_mpPerMin + Random.Range(1, 16);
-        StartCoroutine(IncreasePoints(_TextBoxMPMin, s_mpPerMin, target, Time.time, false));
+        StartCoroutine(ModifyPoints(s_mpPerMin, target, Time.time, false));
     }
     
-    public IEnumerator IncreasePoints(TextMeshProUGUI textBox, float startValue, float endValue, float startTime, bool isMP = true, float timeToLerp = 1f)
+    public IEnumerator ModifyPoints(float startValue, float endValue, float startTime, bool isMP = true, float timeToLerp = 1f)
     {
         float percentage = 0f;
         int result = 0;
         
+        TextMeshProUGUI textBox = isMP ? _TextBoxMP : _TextBoxMPMin;
+
         while (percentage < 1f) {
             percentage = (Time.time - startTime) / timeToLerp;
             result = (int)Mathf.Lerp(startValue, endValue, percentage);
@@ -89,8 +91,8 @@ public class GameManager : MonoBehaviour {
             {
                 textBox.GetComponent<Animator>().Play("MPJuice");   
             }
-            
-            textBox.color = textColorIncrease;
+
+            textBox.color = (startValue < endValue) ? textColorIncrease : textColorDecrease;
             textBox.text = result.ToString();
 
             yield return null;
@@ -98,7 +100,7 @@ public class GameManager : MonoBehaviour {
         
         textBox.color = textColorNormal;
     }
-    
+
     private void OnEnable() {
         _controls.Enable();
     }

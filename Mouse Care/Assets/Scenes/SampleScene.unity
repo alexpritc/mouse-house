@@ -1998,7 +1998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9080cc1c736fa4c469fe08840688a17a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cubePrefab: {fileID: 8751586612399875012, guid: b1c9b7a9c8a159b439498c495d92d42b,
+  _itemPrefab: {fileID: 8751586612399875012, guid: b1c9b7a9c8a159b439498c495d92d42b,
     type: 3}
   _previewMat: {fileID: 2100000, guid: 713fc5b6e0172014eaee74c5c552f8ea, type: 2}
   _previewMatRed: {fileID: 2100000, guid: a9e6395a3a510184d8e2daaf68c8717d, type: 2}
