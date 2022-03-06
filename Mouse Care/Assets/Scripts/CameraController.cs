@@ -10,9 +10,9 @@ using static UnityEngine.InputSystem.Mouse;
 public class CameraController : MonoBehaviour {
     private Vector2 touchPos;
 
-    [SerializeField] private float _horizontalRotationSpeed = 5f;
-    [SerializeField] private float _verticalRotationSpeed = 2f;
-    [SerializeField] private float _panningSpeed = 0.5f;
+    [SerializeField] private float _horizontalRotationSpeed = 2f;
+    [SerializeField] private float _verticalRotationSpeed = 1f;
+    [SerializeField] private float _panningSpeed = 0.75f;
     [SerializeField] private float _movementSpeed = 1f;
     
     private Controls controls;
@@ -36,6 +36,9 @@ public class CameraController : MonoBehaviour {
     private float y;
 
     private Vector2 moveInput;
+    
+    private float _verticalThreshold = 0.2f;
+    private float _horizontalThreshold = 0.1f;
 
     private void Awake() {
         controls = new Controls();
@@ -90,8 +93,26 @@ public class CameraController : MonoBehaviour {
             // Needs to be way more sensitive for horizontal rotation than vertical
             float pitch = _cameraPivot.transform.eulerAngles.x + (_direction.y * _verticalRotationSpeed);
             float yaw = transform.eulerAngles.y + (_direction.x * _horizontalRotationSpeed);
+            
+            // clamp pitch
+            pitch = Mathf.Clamp(pitch, 0f, 70f);
 
-            transform.rotation = Quaternion.Euler(pitch, yaw, 0 );
+            Quaternion rot;
+            
+            if (Mathf.Abs(_direction.x) > _horizontalThreshold && Mathf.Abs(_direction.y) > _verticalThreshold)
+            {
+                rot = Quaternion.Euler(pitch, yaw, 0 );
+            }
+            else if (Mathf.Abs(_direction.x) > _horizontalThreshold)
+            {
+                rot = Quaternion.Euler(0, yaw, 0 );
+            }
+            else
+            {
+                rot = Quaternion.Euler(pitch, 0, 0 );
+            }
+
+            transform.rotation = rot;
         }
     }
 
@@ -104,7 +125,6 @@ public class CameraController : MonoBehaviour {
         z = inVector.z < 0 ? -1 : 1;
 
         return new Vector3(x, y, z);
-
     }
 
     private static Vector3 cursorWorldPosOnNCP {
