@@ -32,10 +32,11 @@ public class PlaceItems : MonoBehaviour
     
     public void ResetPreview()
     {
-        if (_preview == null)
+        if (_preview != null)
         {
-            _preview = Instantiate(_itemPrefab);   
+            Destroy(_preview);
         }
+        _preview = Instantiate(_itemPrefab);  
         _preview.gameObject.name = "Preview";
         _preview.GetComponent<Collider>().enabled = false;
         _preview.GetComponent<MeshRenderer>().material = _previewMat;

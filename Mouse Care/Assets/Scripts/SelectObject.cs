@@ -9,9 +9,9 @@ public class SelectObject : MonoBehaviour
     private Controls _controls;
     private GameObject _selected;
 
-    public GameObject CurrentPrompt;
-    public GameObject Prompt;
-    public GameObject PromptCanvas;
+    private GameObject CurrentInfoPanel;
+    public GameObject InfoPanel;
+    public GameObject InfoCanvas;
     
     [SerializeField] private CameraController cc;
     
@@ -35,38 +35,33 @@ public class SelectObject : MonoBehaviour
             if (_selected.tag == "Mouse")
             {
                 cc._target = _selected;
-                cc._isFollowing = true;   
+                cc._isFollowing = true;
+                RemovePrompt();
+                CreatePrompt(_selected.tag);
             }
             else
             {
                 cc._target = null;
                 cc._isFollowing = false;
+                RemovePrompt();
             }
         }
     }
-    
-    public void CreatePrompt(Vector3 position, string message)
+
+    public void CreatePrompt(string message)
     {
-        if (CurrentPrompt == null)
-        {
-            CurrentPrompt = Instantiate(Prompt, PromptCanvas.transform);
-        }
-        else
-        {
-            RemovePrompt();
-        }
-        
-        CurrentPrompt.GetComponent<RectTransform>().anchoredPosition = WorldToPromtUI(position);
-        TextMeshProUGUI promptText = CurrentPrompt.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
+        CurrentInfoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(130f, 100f, 0f);
+        TextMeshProUGUI promptText = CurrentInfoPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         promptText.text = message;
     }
-    
-    private Vector2 WorldToPromtUI(Vector3 position)
-    {
-        RectTransform CanvasRect = PromptCanvas.GetComponent<RectTransform>();
 
-        Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(position);
+    private Vector2 WorldToUI(Vector3 position)
+    {
+        RectTransform CanvasRect = InfoCanvas.GetComponent<RectTransform>();
+
+        Vector2 ViewportPosition = Camera.main.WorldToScreenPoint(position);
         Vector2 WorldObject_ScreenPosition = new Vector2(
             ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
             ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
@@ -76,7 +71,10 @@ public class SelectObject : MonoBehaviour
     
     public void RemovePrompt()
     {
-        Destroy(CurrentPrompt);
+        if (CurrentInfoPanel != null)
+        {
+            Destroy(CurrentInfoPanel);   
+        }
     }
     
     private void OnEnable() {

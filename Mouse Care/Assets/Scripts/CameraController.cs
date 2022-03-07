@@ -88,7 +88,7 @@ public class CameraController : MonoBehaviour {
 
         if (transform.position != _startPos && !_isFollowing)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _startPos, _movementSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, _startPos, _movementSpeed * _panningSpeed);
         }
 
         if (_isZooming)
