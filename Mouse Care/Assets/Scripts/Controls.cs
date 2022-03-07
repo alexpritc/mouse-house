@@ -149,7 +149,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8c03fd67-f216-4af2-942f-7334e7f0f31d"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Hold(duration=0.25)"",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PanCamera"",

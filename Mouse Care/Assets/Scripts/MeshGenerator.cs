@@ -25,7 +25,7 @@ public class MeshGenerator : MonoBehaviour {
     [SerializeField] private int _xSpacing = 1;
     [SerializeField] private int _zSpacing = 1;
     
-    [SerializeField] private float _yModifier = 0.5f;
+    [SerializeField] private float _yModifier = 0.1f;
 
     private NavMeshSurface _navMeshSurface;
 
