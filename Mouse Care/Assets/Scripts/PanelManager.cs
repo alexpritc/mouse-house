@@ -60,7 +60,7 @@ public class PanelManager : MonoBehaviour
         }
     }
     
-    public void PlayPanelAnim(GameObject shopButton)
+    public void OpenShopPanel(GameObject shopButton)
     {
         //Access the Animation clip name
         clipName = panelAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name;

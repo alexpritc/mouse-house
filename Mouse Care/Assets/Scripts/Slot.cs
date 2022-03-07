@@ -23,8 +23,8 @@ public class Slot : MonoBehaviour
     [SerializeField] private Color _buttonColorIsNotUnlocked;
 
     private Animator _animator;
-    private bool _wasTooExpensive;
-    private bool _wasUnlocked;
+    private bool _wasTooExpensive = false;
+    private bool _wasUnlocked = true;
     
     private void Awake()
     {
