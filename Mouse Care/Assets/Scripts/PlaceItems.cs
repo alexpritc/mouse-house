@@ -8,7 +8,13 @@ using UnityEngine.Serialization;
 
 public class PlaceItems : MonoBehaviour
 {
-    [SerializeField] private GameObject _itemPrefab;
+    private GameObject _itemPrefab;
+
+    public GameObject ItemPrefab
+    {
+        get => _itemPrefab;
+        set => _itemPrefab = value;
+    }
     
     private Controls _controls;
     
@@ -23,10 +29,13 @@ public class PlaceItems : MonoBehaviour
     private bool _canAfford;
 
     private RaycastHit hitLastTimeWasOnMesh;
-
-    private void Start()
+    
+    public void ResetPreview()
     {
-        _preview = Instantiate(_itemPrefab);
+        if (_preview == null)
+        {
+            _preview = Instantiate(_itemPrefab);   
+        }
         _preview.gameObject.name = "Preview";
         _preview.GetComponent<Collider>().enabled = false;
         _preview.GetComponent<MeshRenderer>().material = _previewMat;
@@ -108,7 +117,10 @@ public class PlaceItems : MonoBehaviour
         else
         {
             _canSpawn = false;
-            _preview.SetActive(false);
+            if (_preview != null)
+            {
+                _preview.SetActive(false);   
+            }
         }
     }
 
@@ -129,6 +141,11 @@ public class PlaceItems : MonoBehaviour
         }
     }
 
+    private void SelectedItem(GameObject button)
+    {
+        GameManager.Instance.IsInPlaceItemMode = true;
+    }
+    
     private void RotateItem()
     {
         if (GameManager.Instance.IsInPlaceItemMode)

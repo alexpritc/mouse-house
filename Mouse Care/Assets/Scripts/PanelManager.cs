@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviour
 {
-    [SerializeField] private Animator panelAnimator;
+    private Animator panelAnimator;
     string clipName;
     AnimatorClipInfo[] currentClipInfo;
 
@@ -14,10 +15,28 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private Color buttonSelected;
     [SerializeField] private Color buttonNormal;
 
+    private void Start()
+    {
+        panelAnimator = GetComponent<Animator>();
+    }
+
+    public void CloseCurrentPanel(bool isItemSelected)
+    {
+        panelAnimator.CrossFade("Closing", 0.2f);
+        GameManager.Instance.IsInPlaceItemMode = true;
+    }
+    
+    public void OpenCurrentPanel(bool isItemSelected)
+    {
+        panelAnimator.CrossFade("Opening", 0.2f);
+        GameManager.Instance.IsInPlaceItemMode = true;
+    }
+    
     public void PlayPanelAnim(GameObject shopButton)
     {
         //Access the Animation clip name
         clipName = panelAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        GameManager.Instance.IsInPlaceItemMode = false;
         
         // If its closed or closing
         if (clipName == "PanelIdleClosed" || clipName == "PanelClosed")
@@ -26,8 +45,6 @@ public class PanelManager : MonoBehaviour
             {
                 currentOpenShop.GetComponent<Image>().color = buttonNormal;
             }
-            
-            GameManager.Instance.IsInPlaceItemMode = true;
             shopButton.GetComponent<Image>().color = buttonSelected;
             panelAnimator.CrossFade("Opening", 0.2f);
             currentOpenShop = shopButton;
@@ -40,7 +57,6 @@ public class PanelManager : MonoBehaviour
             if (currentOpenShop == shopButton)
             {
                 // TODO: Change this later on once buying items has been added
-                GameManager.Instance.IsInPlaceItemMode = false;
                 panelAnimator.CrossFade("Closing", 0.2f);
                 shopButton.GetComponent<Image>().color = buttonNormal;
             }
@@ -51,7 +67,6 @@ public class PanelManager : MonoBehaviour
                 {
                     currentOpenShop.GetComponent<Image>().color = buttonNormal;
                 }
-                GameManager.Instance.IsInPlaceItemMode = true;
                 shopButton.GetComponent<Image>().color = buttonSelected;
                 currentOpenShop = shopButton;
             }
