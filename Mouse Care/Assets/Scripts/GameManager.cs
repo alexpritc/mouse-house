@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour {
         set => s_instance = value;
     }
 
-    private int s_meritPoints = 10;
-    
+    private int s_meritPoints = 0;
+
+
     public int MeritPoints {
         get => s_meritPoints;
         set => s_meritPoints = value;

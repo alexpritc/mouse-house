@@ -133,14 +133,12 @@ public class PlaceItems : MonoBehaviour
                 GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
                     new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
                         _preview.transform.rotation.z, _preview.transform.rotation.w));
-
-                _canSpawn = false;
                 float target = GameManager.Instance.MeritPoints -= _itemPrefab.GetComponent<Item>().Price;
-                StartCoroutine(GameManager.Instance.ModifyPoints(GameManager.Instance.MeritPoints, target, Time.time));
+                StartCoroutine(GameManager.Instance.ModifyPoints(GameManager.Instance.MeritPoints, target, Time.time, true, 0.1f));
             }
         }
     }
-
+    
     private void SelectedItem(GameObject button)
     {
         GameManager.Instance.IsInPlaceItemMode = true;
