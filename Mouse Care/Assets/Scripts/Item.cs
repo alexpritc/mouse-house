@@ -4,14 +4,31 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    private int _id;
-    private string _name;
-    private string _description;
+    [SerializeField] private int _id;
+    [SerializeField] private string _name;
+    [SerializeField] private string _description;
+
+    [SerializeField] private bool _isUnlocked;
+
+    public bool IsUnlocked
+    {
+        get => _isUnlocked;
+    }
+    
+    public string Name
+    {
+        get => _name;
+    }
 
     [SerializeField] private int _price;
     public int Price
     {
         get => _price;
+    }
+    
+    public string PriceToString
+    {
+        get => _price.ToString();
     }
     
     /// <summary>

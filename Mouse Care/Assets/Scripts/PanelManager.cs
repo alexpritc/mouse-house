@@ -15,6 +15,12 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private Color buttonSelected;
     [SerializeField] private Color buttonNormal;
 
+    [SerializeField] private Shop[] shops;
+    [SerializeField] private GameObject[] buttons;
+
+    public Transform[] slots;
+    private int _currentPage = -1;
+
     private void Start()
     {
         panelAnimator = GetComponent<Animator>();
@@ -31,13 +37,41 @@ public class PanelManager : MonoBehaviour
         panelAnimator.CrossFade("Opening", 0.2f);
         GameManager.Instance.IsInPlaceItemMode = true;
     }
+
+    private int FindShopIndex(GameObject button)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (button.name == buttons[i].name)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private void SetAllShopsInactive()
+    {
+        foreach (var shop in shops)
+        {
+            shop.gameObject.SetActive(false);
+            shop.DestroySlots();
+        }
+    }
     
     public void PlayPanelAnim(GameObject shopButton)
     {
         //Access the Animation clip name
         clipName = panelAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         GameManager.Instance.IsInPlaceItemMode = false;
+
+        _currentPage = 0;
         
+        SetAllShopsInactive();
+        shops[FindShopIndex(shopButton)].gameObject.SetActive(true);
+        shops[FindShopIndex(shopButton)].FillSlots();
+
         // If its closed or closing
         if (clipName == "PanelIdleClosed" || clipName == "PanelClosed")
         {
@@ -59,6 +93,7 @@ public class PanelManager : MonoBehaviour
                 // TODO: Change this later on once buying items has been added
                 panelAnimator.CrossFade("Closing", 0.2f);
                 shopButton.GetComponent<Image>().color = buttonNormal;
+                _currentPage = -1;
             }
             else
             {

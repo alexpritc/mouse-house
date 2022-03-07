@@ -250,6 +250,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c74b379d134af409c76c72da0985cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 0
+  _name: Airport
+  _description: 
+  _isUnlocked: 1
   _price: 10
   corners:
   - {fileID: 8196189281259038338}
