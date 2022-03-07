@@ -36,6 +36,11 @@ public class CameraController : MonoBehaviour {
     private float pitch;
     private float yaw;
 
+    [HideInInspector] public bool _isFollowing;
+    [HideInInspector] public GameObject _target;
+
+    private Vector3 _startPos;
+
     private void Awake() {
         controls = new Controls();
 
@@ -58,6 +63,8 @@ public class CameraController : MonoBehaviour {
         controls.Camera.Down.canceled += ctx => y = 0f;
         
         controls.Camera.MousePosition.performed += ctx => mousePosThisFrame = ctx.ReadValue<Vector2>();
+
+        _startPos = transform.position;
     }
 
     // Update is called once per frame
@@ -67,6 +74,22 @@ public class CameraController : MonoBehaviour {
         
         Vector3 move = new Vector3(moveInput.x, y, moveInput.y);
         _cameraPivot.transform.Translate(move * _movementSpeed, Space.Self);
+
+        if (_isFollowing && (move != Vector3.zero) || _isPanning )
+        {
+            _isFollowing = false;
+        }
+        
+        if (_isFollowing)
+        {
+            Vector3 targetMove = new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, targetMove, _movementSpeed);
+        }
+
+        if (transform.position != _startPos && !_isFollowing)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _startPos, _movementSpeed);
+        }
 
         if (_isZooming)
         {

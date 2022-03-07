@@ -4810,6 +4810,8 @@ MonoBehaviour:
   _movementSpeed: 1
   _cameraPivot: {fileID: 994394453}
   _camera: {fileID: 963194225}
+  _isFollowing: 0
+  _target: {fileID: 0}
 --- !u!54 &1251391797
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5597,6 +5599,7 @@ GameObject:
   - component: {fileID: 1629711994}
   - component: {fileID: 1629711993}
   - component: {fileID: 1629711995}
+  - component: {fileID: 1629711996}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5652,6 +5655,22 @@ MonoBehaviour:
   textColorNormal: {r: 1, g: 1, b: 1, a: 1}
   textColorIncrease: {r: 0.6665365, g: 0.9433962, b: 0.6185475, a: 1}
   textColorDecrease: {r: 0.9339623, g: 0.6035511, b: 0.60929734, a: 1}
+--- !u!114 &1629711996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629711992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffb4ea69732464343b4e70496e0eec33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentPrompt: {fileID: 0}
+  Prompt: {fileID: 0}
+  PromptCanvas: {fileID: 0}
+  cc: {fileID: 1251391795}
 --- !u!1 &1633134894
 GameObject:
   m_ObjectHideFlags: 0
