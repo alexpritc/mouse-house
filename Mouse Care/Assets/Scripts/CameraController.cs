@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour {
         Vector3 move = new Vector3(moveInput.x, y, moveInput.y);
         _cameraPivot.transform.Translate(move * _movementSpeed, Space.Self);
 
-        if (_isFollowing && (move != Vector3.zero) || _isPanning )
+        if (_isFollowing && (move != Vector3.zero) || _isPanning || GameManager.Instance.IsShopOpen)
         {
             _isFollowing = false;
         }

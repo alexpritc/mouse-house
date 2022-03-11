@@ -80,8 +80,8 @@ public class Mouse : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (NeedsMet())
-        {
+        //if (NeedsMet())
+       // {
             if (!IsMouseWithinTarget()) {
                 Move();
             }
@@ -89,16 +89,16 @@ public class Mouse : MonoBehaviour {
                 // Find new destination
                 Idle(500f);
             }   
-        }
-        else
-        {
-            if (NeedsWater())
-            {
-                // Look for water
-                _status = MouseStates.LookingForWater;
-                _statusUI.text = _status.ToString();
-            }
-        }
+       // }
+        //else
+       // {
+            //if (NeedsWater())
+            //{
+             //   // Look for water
+            //    _status = MouseStates.LookingForWater;
+            //    _statusUI.text = _status.ToString();
+            //}
+       // }
 
         HungerSlider.value = Mathf.Lerp(HungerSlider.value, _hunger, 0.5f);
         ThirstSlider.value = Mathf.Lerp(ThirstSlider.value, _thirst, 0.5f);

@@ -34,6 +34,18 @@ public class GameManager : MonoBehaviour {
         get => _isInPlaceItemMode;
         set => _isInPlaceItemMode = value;
     }
+    
+    private bool _isInFollowingMode = false;
+    public bool IsInFollowingMode{
+        get => _isInFollowingMode;
+        set => _isInFollowingMode = value;
+    }
+    
+    private bool _isShopOpen = false;
+    public bool IsShopOpen{
+        get => _isShopOpen;
+        set => _isShopOpen = value;
+    }
 
     private Controls _controls;
 

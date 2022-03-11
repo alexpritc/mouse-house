@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,10 +21,20 @@ public class SelectObject : MonoBehaviour
         _controls.GameManager.Select.performed += ctx => Select();
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.IsInPlaceItemMode || GameManager.Instance.IsShopOpen)
+        {
+            RemovePrompt();
+            return;
+        }
+    }
+
     void Select()
     {
-        if (GameManager.Instance.IsInPlaceItemMode)
+        if (GameManager.Instance.IsInPlaceItemMode || GameManager.Instance.IsShopOpen)
         {
+            RemovePrompt();
             return;
         }
         

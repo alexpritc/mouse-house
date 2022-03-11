@@ -4785,7 +4785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251391793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 5, z: 15}
+  m_LocalPosition: {x: 20, y: 5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 994394454}
@@ -5720,7 +5720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _howManyMiceToSpawn: 3
-  _mousePrefab: {fileID: 2941249151852926759, guid: 6dcccdc6459da024a9fa5858aeae5b9a,
+  _mousePrefab: {fileID: 2941249151852926759, guid: c2eb66a01f77d7947972e6af4dfd2c56,
     type: 3}
   _target: {fileID: 0}
   _enclosure: {fileID: 230297976}
