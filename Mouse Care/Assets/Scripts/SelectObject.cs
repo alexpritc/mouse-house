@@ -64,9 +64,6 @@ public class SelectObject : MonoBehaviour
     public void CreatePrompt(string message)
     {
         CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
-        CurrentInfoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(130f, 100f, 0f);
-        TextMeshProUGUI promptText = CurrentInfoPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        promptText.text = message;
         CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues(_selected.GetComponentInParent<Mouse>());
     }
 
