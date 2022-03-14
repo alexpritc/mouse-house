@@ -15,6 +15,8 @@ public class SelectObject : MonoBehaviour
     public GameObject InfoCanvas;
     
     [SerializeField] private CameraController cc;
+
+    private GameObject _mouseInfo;
     
     private void Awake() {
         _controls = new Controls();
@@ -63,9 +65,9 @@ public class SelectObject : MonoBehaviour
     {
         CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
         CurrentInfoPanel.GetComponent<RectTransform>().anchoredPosition = new Vector3(130f, 100f, 0f);
-        TextMeshProUGUI promptText = CurrentInfoPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
+        TextMeshProUGUI promptText = CurrentInfoPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         promptText.text = message;
+        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues(_selected.GetComponentInParent<Mouse>());
     }
 
     private Vector2 WorldToUI(Vector3 position)

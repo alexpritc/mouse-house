@@ -21,6 +21,18 @@ public enum MouseStates {
 public class Mouse : MonoBehaviour {
     [SerializeField] private MouseStates _status;
 
+    private string _name;
+    
+    public string Name
+    {
+        get => _name;
+    }
+    
+    public MouseStates Status
+    {
+        get => _status;
+    }
+
     /// <summary>
     /// Higher _hunger means the mouse needs to eat.
     /// </summary>
@@ -30,6 +42,14 @@ public class Mouse : MonoBehaviour {
     /// </summary>
     [Range(0,100)] private float _thirst = 0f;
     
+    public float Hunger
+    {
+        get => _hunger;
+    }
+    public float Thirst
+    {
+        get => _thirst;
+    }
     
     /// <summary>
     /// How far the mouse can see around them
@@ -54,11 +74,6 @@ public class Mouse : MonoBehaviour {
     [Range(0, 100)] private int segments = 100;
 
     private Animator _animator;
-    private TextMeshProUGUI _statusUI;
-    private Canvas _statusCanvas;
-
-    [SerializeField] private Slider HungerSlider;
-    [SerializeField] private Slider ThirstSlider;
 
     private void Start() {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -68,13 +83,20 @@ public class Mouse : MonoBehaviour {
         //_collider = GetComponent<CapsuleCollider>();
         //_collider.radius = _sensoryRadius;
 
-        _statusUI = GetComponentInChildren<TextMeshProUGUI>();
-        _statusCanvas = GetComponentInChildren<Canvas>();
-
-        HungerSlider.value = _hunger;
-        ThirstSlider.value = _thirst;
-        
         _allVertices = _enclosure.MeshGen.GetMesh().vertices;
+        _name = PickRandomName();
+    }
+
+    string PickRandomName()
+    {
+        if (Random.Range(1, 3) % 2 == 0)
+        {
+            return "Dendy";
+        }
+        else
+        {
+            return "Mishmash";
+        }
     }
 
     // Update is called once per frame
@@ -99,10 +121,7 @@ public class Mouse : MonoBehaviour {
             //    _statusUI.text = _status.ToString();
             //}
        // }
-
-        HungerSlider.value = Mathf.Lerp(HungerSlider.value, _hunger, 0.5f);
-        ThirstSlider.value = Mathf.Lerp(ThirstSlider.value, _thirst, 0.5f);
-        _statusCanvas.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+       
     }
     
     ///////// Needs /////////
@@ -152,7 +171,6 @@ public class Mouse : MonoBehaviour {
         if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Walking") {
             _animator.Play("Walking");
             _status = MouseStates.Moving;
-            _statusUI.text = _status.ToString();
         }
 
         AdjustNeeds(ref _hunger, 1f, 250f);
@@ -163,7 +181,6 @@ public class Mouse : MonoBehaviour {
     {
         // Find new destination
         _status = MouseStates.Idle;
-        _statusUI.text = _status.ToString();
 
         if (Random.Range(0f, chance) <= 1f) {
             SetDestination(FindNewDestinationOutsideSensoryRadius());   
