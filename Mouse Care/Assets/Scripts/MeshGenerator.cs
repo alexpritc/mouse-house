@@ -59,7 +59,6 @@ public class MeshGenerator : MonoBehaviour {
 
     void CreateShape()
     {
-
         // Calculate vertices
         int numberOfVertices = (_xSize + 1) * (_zSize + 1);
         

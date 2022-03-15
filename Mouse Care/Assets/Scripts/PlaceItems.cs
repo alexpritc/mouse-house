@@ -23,7 +23,8 @@ public class PlaceItems : MonoBehaviour
     [SerializeField] private Material _previewMatRed;
 
     [SerializeField] private LayerMask _meshLayer;
-
+    [SerializeField] private LayerMask _allLayersExceptWalls;
+    
     private float _distanceBetweenItems = 1f;
     private bool _canSpawn;
     private bool _canAfford;
@@ -73,7 +74,7 @@ public class PlaceItems : MonoBehaviour
             }
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _meshLayer))
             {
                 if (!_preview.activeSelf)
                 {
@@ -197,7 +198,7 @@ public class PlaceItems : MonoBehaviour
 
         return false;
     }
-    
+
     /// <summary>
     /// Returns true if the preview object is entirely on top of the mesh
     /// </summary>
@@ -205,7 +206,7 @@ public class PlaceItems : MonoBehaviour
     private bool IsOnMesh()
     {
         // foreach "point" in an item
-        foreach (var corner  in _preview.GetComponent<Item>().corners)
+        foreach (var corner in _preview.GetComponent<Item>().corners)
         {
             Ray ray = new Ray(corner.position, Vector3.down);
             if (!Physics.Raycast(ray, out RaycastHit hit, _meshLayer))
@@ -215,29 +216,6 @@ public class PlaceItems : MonoBehaviour
         }
 
         return true;
-    }
-    
-    private void OnDrawGizmosSelected() {
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if (hit.collider.gameObject.tag == "Mesh")
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.red;   
-            }
-            Gizmos.DrawRay(hit.point, Camera.main.transform.position);
-        }
-        
-        // foreach "point" in an item
-        foreach (var corner in _preview.GetComponent<Item>().corners)
-        {
-            Gizmos.DrawRay(corner.position, Vector3.down);
-        }
     }
 
     private void OnEnable() {

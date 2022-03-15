@@ -26,8 +26,6 @@ public class CameraController : MonoBehaviour {
     private bool _isZooming;
     private float _zoomModifer;
 
-    private float y;
-
     private Vector2 moveInput;
 
     private Vector2 mousePosThisFrame;
@@ -57,11 +55,6 @@ public class CameraController : MonoBehaviour {
         controls.Camera.Movement.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         controls.Camera.Movement.canceled += ctx => moveInput = ctx.ReadValue<Vector2>();
 
-        controls.Camera.Up.performed += ctx => y = 1f;
-        controls.Camera.Down.performed += ctx => y = -1f;
-        controls.Camera.Up.canceled += ctx => y = 0f;
-        controls.Camera.Down.canceled += ctx => y = 0f;
-        
         controls.Camera.MousePosition.performed += ctx => mousePosThisFrame = ctx.ReadValue<Vector2>();
 
         _startPos = transform.position;
@@ -72,7 +65,7 @@ public class CameraController : MonoBehaviour {
     {
         _direction = mousePosLastFrame - mousePosThisFrame;
         
-        Vector3 move = new Vector3(moveInput.x, y, moveInput.y);
+        Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
         _cameraPivot.transform.Translate(move * _movementSpeed, Space.Self);
 
         if (_isFollowing && (move != Vector3.zero) || _isPanning || GameManager.Instance.IsShopOpen)
