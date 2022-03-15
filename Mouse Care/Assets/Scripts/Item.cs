@@ -10,6 +10,13 @@ public class Item : MonoBehaviour
 
     [SerializeField] private bool _isUnlocked;
 
+    [SerializeField] private float _yPos;
+    
+    public float YPos
+    {
+        get => _yPos;
+    }
+    
     public bool IsUnlocked
     {
         get => _isUnlocked;

@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 5429473845267634169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8583091131240366669}
   - {fileID: 5583811179256547262}
@@ -163,6 +163,7 @@ MonoBehaviour:
   _name: Platform
   _description: A platform for mice to climb onto
   _isUnlocked: 1
+  _yPos: 5
   _price: 20
   corners:
   - {fileID: 8583091131240366669}

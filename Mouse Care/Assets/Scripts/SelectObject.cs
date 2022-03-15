@@ -16,6 +16,8 @@ public class SelectObject : MonoBehaviour
     
     [SerializeField] private CameraController cc;
 
+[SerializeField] private LayerMask _layerMask;
+
     private GameObject _mouseInfo;
     
     private void Awake() {
@@ -39,9 +41,9 @@ public class SelectObject : MonoBehaviour
             RemovePrompt();
             return;
         }
-        
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~_layerMask))
         {
             _selected = hit.collider.gameObject;
             

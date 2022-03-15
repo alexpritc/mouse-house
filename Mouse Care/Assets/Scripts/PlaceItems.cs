@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -23,8 +24,7 @@ public class PlaceItems : MonoBehaviour
     [SerializeField] private Material _previewMatRed;
 
     [SerializeField] private LayerMask _meshLayer;
-    [SerializeField] private LayerMask _allLayersExceptWalls;
-    
+
     private float _distanceBetweenItems = 1f;
     private bool _canSpawn;
     private bool _canAfford;
@@ -99,7 +99,7 @@ public class PlaceItems : MonoBehaviour
                 }
                 
                 _preview.transform.position =
-                    hit.point;
+                    hit.point - new Vector3(0f,_itemPrefab.GetComponent<Item>().YPos,0f);
 
                 if (_canSpawn && _canAfford)
                 {
