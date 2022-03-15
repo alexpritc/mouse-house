@@ -102,11 +102,11 @@ public class PlaceItems : MonoBehaviour
 
                 if (_canSpawn && _canAfford)
                 {
-                    _preview.GetComponent<MeshRenderer>().material = _previewMat;
+                    ChangeMaterial(_preview, _previewMat);
                 }
                 else
                 {
-                    _preview.GetComponent<MeshRenderer>().material = _previewMatRed;
+                    ChangeMaterial(_preview, _previewMatRed);
                 }
             }
             else
@@ -123,6 +123,18 @@ public class PlaceItems : MonoBehaviour
                 _preview.SetActive(false);   
             }
         }
+    }
+
+    private void ChangeMaterial(GameObject go, Material mat)
+    {
+        int length = go.GetComponent<MeshRenderer>().materials.Length;
+        Material[] mats = new Material[length];
+        
+        for (int i = 0; i < length; i++)
+        {
+            mats[i] = mat;
+        }
+        go.GetComponent<MeshRenderer>().materials = mats;
     }
 
     private void PlaceItem()

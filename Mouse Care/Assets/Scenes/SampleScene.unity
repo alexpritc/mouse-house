@@ -6167,7 +6167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsInShop:
   - {fileID: 8751586612399875012, guid: b1c9b7a9c8a159b439498c495d92d42b, type: 3}
-  - {fileID: 142862897066270823, guid: 0f0be65b9baf22049a75d078cc460798, type: 3}
+  - {fileID: 5429473845267634169, guid: bde982d6f16de4445a988b4bb9c685b9, type: 3}
   - {fileID: 8751586612399875012, guid: b1c9b7a9c8a159b439498c495d92d42b, type: 3}
   - {fileID: 8751586612399875012, guid: b1c9b7a9c8a159b439498c495d92d42b, type: 3}
   - {fileID: 8751586612399875012, guid: b1c9b7a9c8a159b439498c495d92d42b, type: 3}
