@@ -38,20 +38,6 @@ public class GameManager : MonoBehaviour {
         get => _enclosurePrefab;
         set => _enclosurePrefab = value;
     }
-    
-    private int s_meritPoints = 0;
-    
-    public int MeritPoints {
-        get => s_meritPoints;
-        set => s_meritPoints = value;
-    }
-    
-    private int s_mpPerMin = 100;
-    
-    public int MpPerMin {
-        get => s_mpPerMin;
-        set => s_mpPerMin = value;
-    }
 
     private bool _isInPlaceItemMode = false;
     public bool IsInPlaceItemMode{
@@ -80,6 +66,26 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject _bedding;
 
     [SerializeField] private TextMeshProUGUI _status;
+
+    private Controls _controls;
+
+    [SerializeField] private TextMeshProUGUI _TextBoxMP;
+    [SerializeField] private TextMeshProUGUI _TextBoxMPMin;
+
+    [SerializeField] private Color textColorNormal;
+    [SerializeField] private Color textColorIncrease;
+    [SerializeField] private Color textColorDecrease;
+
+    void Awake() {
+
+        if (s_instance != null) {
+            Destroy(s_instance.gameObject);
+        }
+
+        s_instance = this;
+        _controls = new Controls();
+        _controls.GameManager.ToggleItemPlaceMode.performed += ctx => IsInPlaceItemMode = !_isInPlaceItemMode;
+    }
     
     public void IncrementStage()
     {
@@ -111,7 +117,7 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
-
+    
     public void FillBedding()
     {
         if (_gameState == GameState.FillBedding)
@@ -130,74 +136,7 @@ public class GameManager : MonoBehaviour {
             }   
         }
     }
-
-    private Controls _controls;
-
-    [SerializeField] private TextMeshProUGUI _TextBoxMP;
-    [SerializeField] private TextMeshProUGUI _TextBoxMPMin;
-
-    [SerializeField] private Color textColorNormal;
-    [SerializeField] private Color textColorIncrease;
-    [SerializeField] private Color textColorDecrease;
-
-    void Awake() {
-
-        if (s_instance != null) {
-            Destroy(s_instance.gameObject);
-        }
-
-        s_instance = this;
-        _controls = new Controls();
-        _controls.GameManager.ToggleItemPlaceMode.performed += ctx => IsInPlaceItemMode = !_isInPlaceItemMode;
-    }
     
-    void Start() {
-        InvokeRepeating("Tick", 1f, 15);
-        
-        // TODO: Remove "tock" once way to modify MP/min has been added
-        InvokeRepeating("Tock", 0f, 5);
-        _TextBoxMPMin.text = s_mpPerMin.ToString();
-    }
-    void Tick()
-    {
-        float target = s_meritPoints + s_mpPerMin / 4;
-        StartCoroutine(ModifyPoints( s_meritPoints, target, Time.time));
-    }
-    
-    void Tock()
-    {
-        float target = s_mpPerMin + Random.Range(1, 16);
-        StartCoroutine(ModifyPoints(s_mpPerMin, target, Time.time, false));
-    }
-    
-    public IEnumerator ModifyPoints(float startValue, float endValue, float startTime, bool isMP = true, float timeToLerp = 1f)
-    {
-        float percentage = 0f;
-        int result = 0;
-        
-        TextMeshProUGUI textBox = isMP ? _TextBoxMP : _TextBoxMPMin;
-
-        while (percentage < 1f) {
-            percentage = (Time.time - startTime) / timeToLerp;
-            result = (int)Mathf.Lerp(startValue, endValue, percentage);
-
-            s_meritPoints = isMP ? result : s_meritPoints;
-            s_mpPerMin = isMP ? s_mpPerMin : result;
-
-            if (textBox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name != "MPJuice")
-            {
-                textBox.GetComponent<Animator>().Play("MPJuice");   
-            }
-
-            textBox.color = (startValue < endValue) ? textColorIncrease : textColorDecrease;
-            textBox.text = result.ToString();
-
-            yield return null;
-        }
-        
-        textBox.color = textColorNormal;
-    }
-
     private void OnEnable() {
         _controls.Enable();
     }

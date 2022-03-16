@@ -25,8 +25,6 @@ public class PlaceItems : MonoBehaviour
 
     [SerializeField] private LayerMask _meshLayer;
     
-    private bool _canAfford;
-
     private RaycastHit hitLastTimeWasOnMesh;
 
     private Item _previewItem;
@@ -72,8 +70,6 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
-            _canAfford = _itemPrefab.GetComponent<Item>().Price <= GameManager.Instance.MeritPoints;
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _meshLayer))
             {
@@ -82,7 +78,7 @@ public class PlaceItems : MonoBehaviour
                     _preview.SetActive(true);
                 }
 
-                if (_canAfford && _previewItem.CanSpawn && IsOnMesh())
+                if (_previewItem.CanSpawn && IsOnMesh())
                 {
                     ChangeMaterial(_preview, _previewMat);
                 }
@@ -124,13 +120,11 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
-            if (IsOnMesh() && _canAfford & _previewItem.CanSpawn)
+            if (IsOnMesh() & _previewItem.CanSpawn)
             {
                 GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
                     new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
                         _preview.transform.rotation.z, _preview.transform.rotation.w));
-                float target = GameManager.Instance.MeritPoints -= _itemPrefab.GetComponent<Item>().Price;
-                StartCoroutine(GameManager.Instance.ModifyPoints(GameManager.Instance.MeritPoints, target, Time.time, true, 0.1f));
             }
         }
     }
