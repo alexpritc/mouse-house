@@ -27,7 +27,7 @@ public class LookIntoEnclosure : MonoBehaviour
         int layerNumber = LayerMask.NameToLayer("Walls");
         int layerMask = 1 << layerNumber;
         
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, target.transform.position - transform.position, characterDistance, layerMask);
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 10f, target.transform.position - transform.position, characterDistance, layerMask);
         
         // Walls are blocking the camera view
         if (hits.Length > 0)
