@@ -8,6 +8,7 @@ TagManager:
   - Food
   - Mesh
   - Mouse
+  - Item
   layers:
   - Default
   - TransparentFX
