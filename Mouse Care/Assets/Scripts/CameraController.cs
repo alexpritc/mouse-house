@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour {
 
     [Header("Only for picking an enclosure screen")] 
     [SerializeField] private bool _rotateEnclosure;
-    [SerializeField] private GameObject _currentEnclosure;
+    public GameObject CurrentEnclosure;
     private void Awake() {
         controls = new Controls();
 
@@ -117,7 +117,7 @@ public class CameraController : MonoBehaviour {
             {
                 yaw += _direction.x * _horizontalRotationSpeed;
 
-                _currentEnclosure.transform.rotation =  Quaternion.Euler(0f, yaw, 0f);  
+                CurrentEnclosure.transform.rotation =  Quaternion.Euler(0f, yaw, 0f);  
             }
             else
             {

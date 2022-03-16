@@ -1425,7 +1425,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2125859579}
         m_TargetAssemblyTypeName: PickEnclosure, Assembly-CSharp
-        m_MethodName: PreviousEnclosure
+        m_MethodName: ConfirmSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1721,7 +1721,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1794,24 +1793,6 @@ Transform:
   m_Father: {fileID: 994394454}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e9384264abf9541b0056867ce99b07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 543450653013666685}
-  - {fileID: 1854918141}
-  - {fileID: 1517975968}
-  - {fileID: 484908324}
-  - {fileID: 1251391794}
 --- !u!1 &994394453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,7 +2132,7 @@ MonoBehaviour:
   _canPan: 0
   _canRot: 1
   _rotateEnclosure: 1
-  _currentEnclosure: {fileID: 919132149483266564}
+  CurrentEnclosure: {fileID: 919132149483266564}
 --- !u!54 &1251391797
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3906,6 +3887,7 @@ MonoBehaviour:
   - {fileID: 645805407}
   _leftButton: {fileID: 2066338677}
   _rightButton: {fileID: 1769504550}
+  _camera: {fileID: 1251391793}
 --- !u!4 &2125859580
 Transform:
   m_ObjectHideFlags: 0

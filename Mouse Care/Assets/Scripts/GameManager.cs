@@ -31,6 +31,14 @@ public class GameManager : MonoBehaviour {
         set => _gameState = value;
     }
     
+    private GameObject _enclosurePrefab;
+
+    public GameObject EnclosurePrefab
+    {
+        get => _enclosurePrefab;
+        set => _enclosurePrefab = value;
+    }
+    
     private int s_meritPoints = 0;
     
     public int MeritPoints {
