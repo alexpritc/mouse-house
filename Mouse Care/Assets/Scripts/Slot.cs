@@ -73,6 +73,7 @@ public class Slot : MonoBehaviour
         else
         {
             _wasUnlocked = false;
+            _button.GetComponent<Image>().color = _buttonColorIsNotUnlocked;
         }
     }
     

@@ -6,6 +6,15 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+public enum GameState {
+    DecorFloor,
+    FillBedding,
+    DecorBedding,
+    DecorRoof,
+    Rating,
+    Feedback
+}
+
 public class GameManager : MonoBehaviour {
     private static GameManager s_instance;
 
@@ -14,9 +23,16 @@ public class GameManager : MonoBehaviour {
         set => s_instance = value;
     }
 
+    private GameState _gameState = GameState.DecorFloor;
+
+    public GameState GameState
+    {
+        get => _gameState;
+        set => _gameState = value;
+    }
+    
     private int s_meritPoints = 0;
-
-
+    
     public int MeritPoints {
         get => s_meritPoints;
         set => s_meritPoints = value;
@@ -33,6 +49,67 @@ public class GameManager : MonoBehaviour {
     public bool IsInPlaceItemMode{
         get => _isInPlaceItemMode;
         set => _isInPlaceItemMode = value;
+    }
+    
+    private bool _isInFollowingMode = false;
+    public bool IsInFollowingMode{
+        get => _isInFollowingMode;
+        set => _isInFollowingMode = value;
+    }
+    
+    private bool _isShopOpen = false;
+    public bool IsShopOpen{
+        get => _isShopOpen;
+        set => _isShopOpen = value;
+    }
+
+    private float _beddingInches = 0;
+    public float BeddingInches{
+        get => _beddingInches;
+        set => _beddingInches = value;
+    }
+
+    [SerializeField] private GameObject _bedding;
+
+    public void IncrementStage()
+    {
+        switch (_gameState)
+        {
+            case GameState.DecorFloor:
+                _gameState = GameState.FillBedding;
+                break;
+            case GameState.FillBedding:
+                _gameState = GameState.DecorBedding;
+                break;
+            case GameState.DecorBedding:
+                _gameState = GameState.DecorRoof;
+                break;
+            case GameState.DecorRoof:
+                _gameState = GameState.Rating;
+                break;
+            case GameState.Rating:
+                _gameState = GameState.Feedback;
+                break;
+        }
+    }
+
+    public void FillBedding()
+    {
+        if (_gameState == GameState.FillBedding)
+        {
+            _beddingInches += 0.2f;
+            if (_beddingInches > 1)
+            {
+                _beddingInches = 0;
+                _bedding.SetActive(false);
+            }
+            else
+            {
+                _bedding.SetActive(true);
+                _bedding.transform.localScale = new Vector3(_bedding.transform.localScale.x, _beddingInches,
+                    _bedding.transform.localScale.z);
+            }   
+        }
     }
 
     private Controls _controls;

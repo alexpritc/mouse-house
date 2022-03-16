@@ -65,6 +65,7 @@ public class PanelManager : MonoBehaviour
         //Access the Animation clip name
         clipName = panelAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         GameManager.Instance.IsInPlaceItemMode = false;
+        GameManager.Instance.IsShopOpen = true;
 
         _currentPage = 0;
         
@@ -94,6 +95,7 @@ public class PanelManager : MonoBehaviour
                 panelAnimator.CrossFade("Closing", 0.2f);
                 shopButton.GetComponent<Image>().color = buttonNormal;
                 _currentPage = -1;
+                GameManager.Instance.IsShopOpen = false;
             }
             else
             {

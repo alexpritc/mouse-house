@@ -306,6 +306,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f26df88-7cee-4412-97ae-68ad1f6319d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -317,6 +326,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ToggleItemPlaceMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""596083e7-d7a3-4d78-b28c-d640a222cf4b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -342,6 +362,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         // GameManager
         m_GameManager = asset.FindActionMap("GameManager", throwIfNotFound: true);
         m_GameManager_ToggleItemPlaceMode = m_GameManager.FindAction("ToggleItemPlaceMode", throwIfNotFound: true);
+        m_GameManager_Select = m_GameManager.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -532,11 +553,13 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GameManager;
     private IGameManagerActions m_GameManagerActionsCallbackInterface;
     private readonly InputAction m_GameManager_ToggleItemPlaceMode;
+    private readonly InputAction m_GameManager_Select;
     public struct GameManagerActions
     {
         private @Controls m_Wrapper;
         public GameManagerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleItemPlaceMode => m_Wrapper.m_GameManager_ToggleItemPlaceMode;
+        public InputAction @Select => m_Wrapper.m_GameManager_Select;
         public InputActionMap Get() { return m_Wrapper.m_GameManager; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -549,6 +572,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @ToggleItemPlaceMode.started -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnToggleItemPlaceMode;
                 @ToggleItemPlaceMode.performed -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnToggleItemPlaceMode;
                 @ToggleItemPlaceMode.canceled -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnToggleItemPlaceMode;
+                @Select.started -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnSelect;
             }
             m_Wrapper.m_GameManagerActionsCallbackInterface = instance;
             if (instance != null)
@@ -556,6 +582,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @ToggleItemPlaceMode.started += instance.OnToggleItemPlaceMode;
                 @ToggleItemPlaceMode.performed += instance.OnToggleItemPlaceMode;
                 @ToggleItemPlaceMode.canceled += instance.OnToggleItemPlaceMode;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
             }
         }
     }
@@ -579,5 +608,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     public interface IGameManagerActions
     {
         void OnToggleItemPlaceMode(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
     }
 }

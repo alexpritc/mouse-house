@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,20 @@ public class Item : MonoBehaviour
     [SerializeField] private string _description;
 
     [SerializeField] private bool _isUnlocked;
+    
+    [SerializeField] private float _yPos;
+
+    public float GetYPos()
+    {
+        if (GameManager.Instance.GameState == GameState.DecorFloor)
+        {
+            return 0f;
+        }
+        else
+        {
+            return _yPos * GameManager.Instance.BeddingInches;
+        }
+    }
 
     public bool IsUnlocked
     {
@@ -35,12 +50,7 @@ public class Item : MonoBehaviour
     /// Used for checking if all of the item is on the mesh
     /// </summary>
     public Transform[] corners;
-    
-    /// <summary>
-    /// Used for checking if the item fits into the space
-    /// </summary>
-    public Transform[] widths;
-    
+
     /// <summary>
     /// How much enrichment this item gives
     /// </summary>
@@ -50,4 +60,29 @@ public class Item : MonoBehaviour
     /// How much stress this item gives
     /// </summary>
     public float _stress;
+
+    private bool _canSpawn = true;
+
+    public bool CanSpawn
+    {
+        get => _canSpawn;
+        set => _canSpawn = value;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            _canSpawn = false;
+        }
+    }
+    
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            _canSpawn = true;
+        }
+    }
 }
