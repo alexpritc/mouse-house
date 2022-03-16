@@ -19,7 +19,8 @@ public class CameraController : MonoBehaviour {
     private bool _isPanning;
     
     private Vector3 _direction;
-
+    private Vector3 move;
+    
     [SerializeField] private GameObject _cameraPivot;
     [SerializeField] private GameObject _camera;
 
@@ -39,6 +40,16 @@ public class CameraController : MonoBehaviour {
 
     private Vector3 _startPos;
 
+    [Header("Camera permissions")]
+    [SerializeField] private bool _canMove;
+    [SerializeField] private bool _canSelectObjects;
+    [SerializeField] private bool _canZoom;
+    [SerializeField] private bool _canPan;
+    [SerializeField] private bool _canRot;
+
+    [Header("Only for picking an enclosure screen")] 
+    [SerializeField] private bool _rotateEnclosure;
+    [SerializeField] private GameObject _currentEnclosure;
     private void Awake() {
         controls = new Controls();
 
@@ -64,43 +75,58 @@ public class CameraController : MonoBehaviour {
     private void Update()
     {
         _direction = mousePosLastFrame - mousePosThisFrame;
-        
-        Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
-        _cameraPivot.transform.Translate(move * _movementSpeed, Space.Self);
 
-        if (_isFollowing && (move != Vector3.zero) || _isPanning || GameManager.Instance.IsShopOpen)
+        if (_canMove)
         {
-            _isFollowing = false;
+            move = new Vector3(moveInput.x, 0f, moveInput.y);
+            _cameraPivot.transform.Translate(move * _movementSpeed, Space.Self);
         }
         
-        if (_isFollowing)
+        if (_canSelectObjects)
         {
-            Vector3 targetMove = new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z);
-            transform.position = Vector3.MoveTowards(transform.position, targetMove, _movementSpeed);
+            if (_isFollowing && (move != Vector3.zero) || _isPanning || GameManager.Instance.IsShopOpen)
+            {
+                _isFollowing = false;
+            }
+        
+            if (_isFollowing)
+            {
+                Vector3 targetMove = new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z);
+                transform.position = Vector3.MoveTowards(transform.position, targetMove, _movementSpeed);
+            }
+            
+            if (transform.position != _startPos && !_isFollowing)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, _startPos, _movementSpeed * _panningSpeed);
+            }   
         }
 
-        if (transform.position != _startPos && !_isFollowing)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, _startPos, _movementSpeed * _panningSpeed);
-        }
-
-        if (_isZooming)
+        if (_isZooming && _canZoom)
         {
             _zoomModifer = Mathf.Clamp(_zoomModifer, -5f, 5f);
             _camera.transform.position += _camera.transform.forward * _zoomModifer;
         }
-        else if (_isPanning && !GameManager.Instance.IsInPlaceItemMode)
+        else if (_isPanning && !GameManager.Instance.IsInPlaceItemMode && _canPan)
         {
             // _direction = _touchStart - cursorWorldPosOnNCP;
             _cameraPivot.transform.Translate(_direction * _panningSpeed, Space.Self);
         }
-        else if (_isRotating)
+        else if (_isRotating && _canRot)
         {
-            pitch += _direction.y * _verticalRotationSpeed;
-            pitch = Mathf.Clamp(pitch, -20f, 70.0f);
-            yaw += _direction.x * _horizontalRotationSpeed;
+            if (_rotateEnclosure)
+            {
+                yaw += _direction.x * _horizontalRotationSpeed;
 
-            transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
+                _currentEnclosure.transform.rotation =  Quaternion.Euler(0f, yaw, 0f);  
+            }
+            else
+            {
+                pitch += _direction.y * _verticalRotationSpeed;
+                pitch = Mathf.Clamp(pitch, -20f, 70.0f);
+                yaw += _direction.x * _horizontalRotationSpeed;
+
+                transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
+            }
         }
 
         mousePosLastFrame = mousePosThisFrame;

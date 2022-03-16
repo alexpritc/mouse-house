@@ -71,24 +71,35 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] private GameObject _bedding;
 
+    [SerializeField] private TextMeshProUGUI _status;
+    
     public void IncrementStage()
     {
         switch (_gameState)
         {
             case GameState.DecorFloor:
                 _gameState = GameState.FillBedding;
+                _status.text = "Fill with bedding";
                 break;
             case GameState.FillBedding:
                 _gameState = GameState.DecorBedding;
+                _status.text = "Decorate your cage";
                 break;
             case GameState.DecorBedding:
                 _gameState = GameState.DecorRoof;
+                _status.text = "Decorate your lid";;
                 break;
             case GameState.DecorRoof:
                 _gameState = GameState.Rating;
+                _status.text = "Rating";
                 break;
             case GameState.Rating:
                 _gameState = GameState.Feedback;
+                _status.text = "Feedback";
+                break;
+            case GameState.Feedback:
+                _gameState = GameState.DecorFloor;
+                _status.text = "Decorate your cage";
                 break;
         }
     }
