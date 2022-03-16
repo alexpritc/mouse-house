@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PickEnclosure : MonoBehaviour
 {
@@ -74,5 +75,6 @@ public class PickEnclosure : MonoBehaviour
     public void ConfirmSelection()
     {
         GameManager.Instance.EnclosurePrefab = _enclosures[_currentEnclosure];
+        SceneManager.LoadScene("DecorateEnclosure");
     }
 }

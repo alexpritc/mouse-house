@@ -64,17 +64,9 @@ public class GameManager : MonoBehaviour {
     }
 
     [SerializeField] private GameObject _bedding;
-
     [SerializeField] private TextMeshProUGUI _status;
 
     private Controls _controls;
-
-    [SerializeField] private TextMeshProUGUI _TextBoxMP;
-    [SerializeField] private TextMeshProUGUI _TextBoxMPMin;
-
-    [SerializeField] private Color textColorNormal;
-    [SerializeField] private Color textColorIncrease;
-    [SerializeField] private Color textColorDecrease;
 
     void Awake() {
 

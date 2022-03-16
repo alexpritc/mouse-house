@@ -9,7 +9,6 @@ public class Slot : MonoBehaviour
 {
     private bool _isUnlocked;
     private Image _preview;
-    [SerializeField] private TextMeshProUGUI _price;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private Button _button;
 
@@ -19,7 +18,6 @@ public class Slot : MonoBehaviour
     private int _id;
 
     [SerializeField] private Color _buttonColorNormal;
-    [SerializeField] private Color _buttonColorCantAfford;
     [SerializeField] private Color _buttonColorIsNotUnlocked;
 
     private Animator _animator;
@@ -62,7 +60,6 @@ public class Slot : MonoBehaviour
     public void SetParams(Shop shop, GameObject prefab)
     {
         _item = prefab.GetComponent<Item>();
-        _price.text = "Select";
         _name.text = _item.Name;
         _shop = shop;
         _prefab = prefab;

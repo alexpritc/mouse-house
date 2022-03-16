@@ -33,8 +33,8 @@ public class ToolTip : MonoBehaviour
         if (currentToolTip == null)
         {
             currentToolTip = Instantiate(_toolTipPrefab, infoCanvas.transform);
-            currentToolTip.transform.position = transform.position + new Vector3(100f, -69f, 0f);
-            currentToolTip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _message;
+            currentToolTip.transform.position = transform.position + new Vector3(150f, -60f, 0f);
+            currentToolTip.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = _message;
         }
         else
         {

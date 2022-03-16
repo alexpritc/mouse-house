@@ -52,7 +52,7 @@ public class MeshGenerator : MonoBehaviour {
         
         CreateShape();
         UpdateMesh();
-        SaveMesh("Assets/Meshes/mesh2.asset");
+        //SaveMesh("Assets/Meshes/mesh2.asset");
 
         _enclosure.MeshGen = this;
     }
@@ -208,10 +208,10 @@ public class MeshGenerator : MonoBehaviour {
         gameObject.GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
     
-    private void SaveMesh(string path) {
-        AssetDatabase.CreateAsset(_mesh, path);
-        AssetDatabase.SaveAssets();
-    }
+    // private void SaveMesh(string path) {
+    //     AssetDatabase.CreateAsset(_mesh, path);
+    //     AssetDatabase.SaveAssets();
+    // }
 
     public Mesh GetMesh() {
         return _mesh;
