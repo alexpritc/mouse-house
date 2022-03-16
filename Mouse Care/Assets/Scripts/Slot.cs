@@ -51,24 +51,6 @@ public class Slot : MonoBehaviour
                 _animator.Play("SlotPulse");
                 _wasUnlocked = true;
             }
-
-            if (_item.Price > GameManager.Instance.MeritPoints)
-            {
-                _button.interactable = false;
-                _button.GetComponent<Image>().color = _buttonColorCantAfford;
-                _wasTooExpensive = true;
-            }
-            else
-            {
-                if (_wasTooExpensive)
-                {
-                    _animator.Play("SlotPulse");
-                }
-                
-                _button.GetComponent<Image>().color = _buttonColorNormal;
-                _button.interactable = true;
-                _wasTooExpensive = false;
-            }
         }
         else
         {
@@ -80,7 +62,7 @@ public class Slot : MonoBehaviour
     public void SetParams(Shop shop, GameObject prefab)
     {
         _item = prefab.GetComponent<Item>();
-        _price.text = _item.PriceToString + " mp";
+        _price.text = "Select";
         _name.text = _item.Name;
         _shop = shop;
         _prefab = prefab;
