@@ -47,7 +47,7 @@ public class SelectObject : MonoBehaviour
         {
             _selected = hit.collider.gameObject;
             
-            if (_selected.tag == "Mouse")
+            if (_selected.tag == "Item")
             {
                 cc._target = _selected;
                 cc._isFollowing = true;
@@ -66,7 +66,7 @@ public class SelectObject : MonoBehaviour
     public void CreatePrompt(string message)
     {
         CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
-        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues(_selected.GetComponentInParent<Mouse>());
+        //CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues(_selected.GetComponentInParent<Mouse>());
     }
 
     private Vector2 WorldToUI(Vector3 position)

@@ -7,25 +7,18 @@ using UnityEngine.UI;
 
 public class DisplayInfoPanelUI : MonoBehaviour
 {
-    [SerializeField] private Slider _hungerSlider;
-    [SerializeField] private Slider _thirstSlider;
     [SerializeField] private TextMeshProUGUI _nameText;
-    [SerializeField] private TextMeshProUGUI _statusText;
-    [HideInInspector] public Mouse mouse;
+    [HideInInspector] public Item Item;
 
-    public void SetInitialValues(Mouse m)
+    public void SetInitialValues(Item i)
     {
-        mouse = m;
-        _nameText.text = mouse.Name;
-        _hungerSlider.value = mouse.Hunger;
-        _thirstSlider.value = mouse.Thirst;
+        Item = i;
+        _nameText.text = Item.Name;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _hungerSlider.value = mouse.Hunger;
-        _thirstSlider.value = mouse.Thirst;
-        _statusText.text = mouse.Status.ToString();
+
     }
 }

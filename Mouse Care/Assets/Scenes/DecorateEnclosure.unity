@@ -1658,10 +1658,10 @@ MonoBehaviour:
   _camera: {fileID: 963194225}
   _isFollowing: 0
   _target: {fileID: 0}
-  _canMove: 1
+  _canMove: 0
   _canSelectObjects: 1
   _canZoom: 1
-  _canPan: 1
+  _canPan: 0
   _canRot: 1
   _rotateEnclosure: 0
   CurrentEnclosure: {fileID: 0}
