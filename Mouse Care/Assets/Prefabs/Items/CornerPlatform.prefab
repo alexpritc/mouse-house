@@ -395,6 +395,7 @@ MonoBehaviour:
   _description: This platform is perfect for fitting into the corners of your enclosure.
   _isUnlocked: 1
   _yPos: 5
+  prefab: {fileID: 8024272126375560158}
   corners:
   - {fileID: 9048208089183286937}
   - {fileID: 7669381509941049025}

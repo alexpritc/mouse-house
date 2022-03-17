@@ -288,6 +288,7 @@ MonoBehaviour:
     use as a step to get to taller platforms.
   _isUnlocked: 1
   _yPos: -0.1
+  prefab: {fileID: 8751586612399875012}
   corners:
   - {fileID: 8196189281259038338}
   - {fileID: 4198861214217535739}

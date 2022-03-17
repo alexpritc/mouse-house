@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SelectObject : MonoBehaviour
@@ -13,6 +14,8 @@ public class SelectObject : MonoBehaviour
     private GameObject CurrentInfoPanel;
     public GameObject InfoPanel;
     public GameObject InfoCanvas;
+
+    [SerializeField] private GameObject _panel;
     
     [SerializeField] private CameraController cc;
 
@@ -79,6 +82,7 @@ public class SelectObject : MonoBehaviour
     {
         CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
         CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
+        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().panelManager = _panel;
     }
 
     private Vector2 WorldToUI(Vector3 position)

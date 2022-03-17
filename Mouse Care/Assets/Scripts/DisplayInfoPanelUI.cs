@@ -12,6 +12,7 @@ public class DisplayInfoPanelUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _stressText;
     [SerializeField] private TextMeshProUGUI _enrichmentText;
     [HideInInspector] public Item Item;
+    public GameObject panelManager;
 
     public void SetInitialValues(Item i)
     {
@@ -25,5 +26,14 @@ public class DisplayInfoPanelUI : MonoBehaviour
         GameManager.Instance.gameObject.GetComponent<SelectObject>().Remove();
         GameManager.Instance.CursorExitUI();
         Destroy(Item.gameObject);
+    }
+
+    public void MoveObject()
+    {
+        panelManager.GetComponent<PlaceItems>().ItemPrefab = Item.prefab;
+        GameManager.Instance.IsInPlaceItemMode = true;
+        GameManager.Instance.CursorExitUI();
+        panelManager.GetComponent<PlaceItems>().ResetPreview(true);
+        Item.gameObject.SetActive(false);
     }
 }

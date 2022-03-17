@@ -137,6 +137,7 @@ MonoBehaviour:
     the minimum requirement for mice, gerbils, and hamsters.
   _isUnlocked: 1
   _yPos: 0
+  prefab: {fileID: 1958475912744696402}
   corners:
   - {fileID: 8405891799939491811}
   - {fileID: 6387563781450971554}

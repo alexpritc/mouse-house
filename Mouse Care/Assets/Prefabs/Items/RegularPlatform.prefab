@@ -183,6 +183,7 @@ MonoBehaviour:
     heavy items ontop of them so that your pet can't burrow underneath and get crushed.
   _isUnlocked: 1
   _yPos: 5
+  prefab: {fileID: 5429473845267634169}
   corners:
   - {fileID: 8583091131240366669}
   - {fileID: 5583811179256547262}

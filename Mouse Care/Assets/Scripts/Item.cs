@@ -10,6 +10,7 @@ public class Item : MonoBehaviour
     [@TextAreaAttribute(5,10)]  [SerializeField] private string _description;
     [SerializeField] private bool _isUnlocked;
     [SerializeField] private float _yPos;
+    public GameObject prefab;
 
     public float GetYPos()
     {

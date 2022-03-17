@@ -29,12 +29,15 @@ public class PlaceItems : MonoBehaviour
 
     private Item _previewItem;
 
-    public void ResetPreview()
+    public bool isMovingExistingItem;
+
+    public void ResetPreview(bool isExistingItem)
     {
         if (_preview != null)
         {
             Destroy(_preview);
         }
+        
         _preview = Instantiate(_itemPrefab);  
         _preview.gameObject.name = "Preview";
 
@@ -51,11 +54,13 @@ public class PlaceItems : MonoBehaviour
         //Destroy(_preview.GetComponentInChildren<Rigidbody>());
 
         _previewItem = _preview.GetComponent<Item>();
-        
+
         if (!GameManager.Instance.IsInPlaceItemMode)
         {
             _preview.SetActive(false);
         }
+
+        isMovingExistingItem = isExistingItem;
     }
 
     private void Awake() {
@@ -125,6 +130,13 @@ public class PlaceItems : MonoBehaviour
                 GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
                     new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
                         _preview.transform.rotation.z, _preview.transform.rotation.w));
+
+                if (isMovingExistingItem)
+                {
+                    go.SetActive(true);
+                    GameManager.Instance.IsInPlaceItemMode = false;
+                    isMovingExistingItem = false;
+                }
             }
         }
     }
