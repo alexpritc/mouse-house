@@ -18,11 +18,13 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        DisplayToolTip();
         GameManager.Instance.CursorEnterUI();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        RemoveToolTip();
         GameManager.Instance.CursorExitUI();
     }
     
