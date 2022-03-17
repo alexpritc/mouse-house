@@ -7,6 +7,8 @@ public class LookIntoEnclosure : MonoBehaviour
     public Transform[] targets;
     private List<Transform> obstructions;
 
+    private bool isEnabled;
+    
     void Start()
     {
         obstructions = new List<Transform>();
@@ -14,9 +16,12 @@ public class LookIntoEnclosure : MonoBehaviour
  
     private void LateUpdate()
     {
-        foreach (var target in targets)
+        if (isEnabled)
         {
-            ViewObstructed(target);   
+            foreach (var target in targets)
+            {
+                ViewObstructed(target);   
+            }   
         }
     }
 
@@ -62,6 +67,25 @@ public class LookIntoEnclosure : MonoBehaviour
                 }
                 obstructions.Clear();
             }
+        }
+    }
+
+    public void ToggleXray()
+    {
+        isEnabled = !isEnabled;
+
+        if (isEnabled == false)
+        {
+            if (obstructions != null && obstructions.Count > 0)
+            {
+                // Repaint all the previous obstructions. Because some of the stuff might be not blocking anymore
+                for (int i = 0; i < obstructions.Count; i++)
+                {
+                    obstructions[i].gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                }
+
+                obstructions.Clear();
+            }   
         }
     }
 }
