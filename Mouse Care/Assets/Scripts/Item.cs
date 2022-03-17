@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private int _id;
     [SerializeField] private string _name;
-    [SerializeField] private string _description;
-
     [SerializeField] private bool _isUnlocked;
-    
     [SerializeField] private float _yPos;
 
     public float GetYPos()
@@ -35,17 +31,6 @@ public class Item : MonoBehaviour
         get => _name;
     }
 
-    [SerializeField] private int _price;
-    public int Price
-    {
-        get => _price;
-    }
-    
-    public string PriceToString
-    {
-        get => _price.ToString();
-    }
-    
     /// <summary>
     /// Used for checking if all of the item is on the mesh
     /// </summary>
