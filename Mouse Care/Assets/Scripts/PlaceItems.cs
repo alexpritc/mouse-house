@@ -123,7 +123,7 @@ public class PlaceItems : MonoBehaviour
 
     private void PlaceItem()
     {
-        if (GameManager.Instance.IsInPlaceItemMode)
+        if (GameManager.Instance.IsInPlaceItemMode && !GameManager.Instance.IsCursorOverUI)
         {
             if (IsOnMesh() & _previewItem.CanSpawn)
             {

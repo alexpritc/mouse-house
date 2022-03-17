@@ -289,6 +289,8 @@ MonoBehaviour:
   _isUnlocked: 1
   _yPos: -0.1
   prefab: {fileID: 8751586612399875012}
+  ChangeableMaterial: {fileID: 0}
+  _changeableMaterialIndex: 1
   corners:
   - {fileID: 8196189281259038338}
   - {fileID: 4198861214217535739}

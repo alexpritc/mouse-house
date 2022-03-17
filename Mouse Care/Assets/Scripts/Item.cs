@@ -11,7 +11,8 @@ public class Item : MonoBehaviour
     [SerializeField] private bool _isUnlocked;
     [SerializeField] private float _yPos;
     public GameObject prefab;
-
+    [SerializeField] private int _changeableMaterialIndex;
+    
     public float GetYPos()
     {
         if (GameManager.Instance.GameState == GameState.DecorFloor)
@@ -22,6 +23,15 @@ public class Item : MonoBehaviour
         {
             return _yPos * GameManager.Instance.BeddingInches;
         }
+    }
+
+    public void ChangeColour(Color newColour)
+    {
+        GetComponent<MeshRenderer>().materials[_changeableMaterialIndex].color = newColour;
+    }
+    public Color GetColour()
+    {
+        return GetComponent<MeshRenderer>().materials[_changeableMaterialIndex].color;
     }
 
     public bool IsUnlocked

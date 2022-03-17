@@ -36,4 +36,14 @@ public class DisplayInfoPanelUI : MonoBehaviour
         panelManager.GetComponent<PlaceItems>().ResetPreview(true);
         Item.gameObject.SetActive(false);
     }
+
+    public void UpdateColour(Color newColour)
+    {
+        Item.ChangeColour(newColour);
+    }
+
+    public Color GetItemColour()
+    {
+        return Item.GetColour();
+    }
 }
