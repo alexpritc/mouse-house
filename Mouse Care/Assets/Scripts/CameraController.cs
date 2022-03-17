@@ -84,7 +84,7 @@ public class CameraController : MonoBehaviour {
         
         if (_canSelectObjects)
         {
-            if (_isFollowing && (move != Vector3.zero) || _isPanning || GameManager.Instance.IsShopOpen)
+            if (_isFollowing && (move != Vector3.zero) || (_isPanning && _canPan)|| GameManager.Instance.IsShopOpen)
             {
                 _isFollowing = false;
             }

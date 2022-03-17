@@ -45,6 +45,24 @@ public class GameManager : MonoBehaviour {
         set => _isInPlaceItemMode = value;
     }
     
+    
+    private bool _isCursorOverUI = false;
+    public bool IsCursorOverUI{
+        get => _isCursorOverUI;
+        set => _isCursorOverUI = value;
+    }
+
+    public void CursorEnterUI()
+    {
+        _isCursorOverUI = true;
+    }
+
+    public void CursorExitUI()
+    {
+        _isCursorOverUI = false;
+    }
+
+    
     private bool _isInFollowingMode = false;
     public bool IsInFollowingMode{
         get => _isInFollowingMode;

@@ -42,31 +42,43 @@ public class SelectObject : MonoBehaviour
             return;
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~_layerMask))
+        if (!GameManager.Instance.IsCursorOverUI)
         {
-            _selected = hit.collider.gameObject;
-            
-            if (_selected.tag == "Item")
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask))
             {
-                cc._target = _selected;
-                cc._isFollowing = true;
-                RemovePrompt();
-                CreatePrompt(_selected.tag);
+                _selected = hit.collider.transform.parent.gameObject;
+
+                if (_selected.tag == "Item")
+                {
+                    cc._target = _selected;
+                    cc._isFollowing = true;
+                    RemovePrompt();
+                    CreatePrompt();
+                }
+                else if (_selected.tag != "UI")
+                {
+                    Remove();
+                }
             }
             else
             {
-                cc._target = null;
-                cc._isFollowing = false;
-                RemovePrompt();
+                Remove();
             }
         }
     }
 
-    public void CreatePrompt(string message)
+    public void Remove()
+    {
+        cc._target = null;
+        cc._isFollowing = false;
+        RemovePrompt();
+    }
+    
+    public void CreatePrompt()
     {
         CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
-        //CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues(_selected.GetComponentInParent<Mouse>());
+        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
     }
 
     private Vector2 WorldToUI(Vector3 position)

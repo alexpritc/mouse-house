@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ToolTip : MonoBehaviour
+public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private string _message;
     [SerializeField] private GameObject _toolTipPrefab;
@@ -13,6 +13,19 @@ public class ToolTip : MonoBehaviour
 
     private GameObject currentToolTip;
 
+    [SerializeField] private float _xOffset = 160f;
+    [SerializeField] private float _yOffset = -60f;
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GameManager.Instance.CursorEnterUI();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GameManager.Instance.CursorExitUI();
+    }
+    
     public void DisplayToolTip()
     {
         Invoke("Display", 1f);
@@ -32,8 +45,15 @@ public class ToolTip : MonoBehaviour
     {
         if (currentToolTip == null)
         {
-            currentToolTip = Instantiate(_toolTipPrefab, infoCanvas.transform);
-            currentToolTip.transform.position = transform.position + new Vector3(150f, -60f, 0f);
+            if (infoCanvas == null)
+            {
+                currentToolTip = Instantiate(_toolTipPrefab, transform.parent);
+            }
+            else
+            {
+                currentToolTip = Instantiate(_toolTipPrefab, infoCanvas.transform);
+            }
+            currentToolTip.transform.position = transform.position + new Vector3(_xOffset, _yOffset, 0f);
             currentToolTip.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = _message;
         }
         else

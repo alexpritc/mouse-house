@@ -30,6 +30,50 @@ Transform:
   m_Father: {fileID: 4616907730190585155}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4605024188655991185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 513364096081839599}
+  - component: {fileID: 1610042395142013228}
+  m_Layer: 10
+  m_Name: Selection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &513364096081839599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4605024188655991185}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -4.05, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4616907730190585155}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1610042395142013228
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4605024188655991185}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.71, y: 4.89, z: 7.93}
+  m_Center: {x: -4.02, y: 2.04, z: 0}
 --- !u!1 &5429473845267634169
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,6 +113,7 @@ Transform:
   - {fileID: 1211048386816503525}
   - {fileID: 1487240511201480682}
   - {fileID: 2304064844732696063}
+  - {fileID: 513364096081839599}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,12 +178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c74b379d134af409c76c72da0985cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 1
   _name: Platform
-  _description: A platform for mice to climb onto
+  _description: Platforms add different levels to an enclosure. You must put any
+    heavy items ontop of them so that your pet can't burrow underneath and get crushed.
   _isUnlocked: 1
   _yPos: 5
-  _price: 5
   corners:
   - {fileID: 8583091131240366669}
   - {fileID: 5583811179256547262}

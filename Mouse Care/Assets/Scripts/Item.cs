@@ -6,6 +6,8 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     [SerializeField] private string _name;
+    //TextAreaAttribute(int minLines, int maxLines);
+    [@TextAreaAttribute(5,10)]  [SerializeField] private string _description;
     [SerializeField] private bool _isUnlocked;
     [SerializeField] private float _yPos;
 
@@ -30,7 +32,11 @@ public class Item : MonoBehaviour
     {
         get => _name;
     }
-
+    public string Description
+    {
+        get => _description;
+    }
+    
     /// <summary>
     /// Used for checking if all of the item is on the mesh
     /// </summary>
