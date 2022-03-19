@@ -277,15 +277,6 @@
             "id": "30db338e-2296-49b2-881d-da0451ef269b",
             "actions": [
                 {
-                    "name": "ToggleItemPlaceMode",
-                    "type": "Button",
-                    "id": "81fb357a-8b80-48e0-abf5-ee23d8317036",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Select",
                     "type": "Button",
                     "id": "9f26df88-7cee-4412-97ae-68ad1f6319d7",
@@ -296,17 +287,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "c8adbff9-7ac0-45ed-a125-3bbafd6525da",
-                    "path": "<Keyboard>/b",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ToggleItemPlaceMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "596083e7-d7a3-4d78-b28c-d640a222cf4b",

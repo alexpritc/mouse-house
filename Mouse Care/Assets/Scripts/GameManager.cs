@@ -31,12 +31,12 @@ public class GameManager : MonoBehaviour {
         set => _gameState = value;
     }
     
-    private GameObject _enclosurePrefab;
+    private GameObject _enclosure;
 
-    public GameObject EnclosurePrefab
+    public GameObject Enclosure
     {
-        get => _enclosurePrefab;
-        set => _enclosurePrefab = value;
+        get => _enclosure;
+        set => _enclosure = value;
     }
 
     private bool _isInPlaceItemMode = false;
@@ -81,49 +81,61 @@ public class GameManager : MonoBehaviour {
         set => _beddingInches = value;
     }
 
-    [SerializeField] private GameObject _bedding;
-    [SerializeField] private TextMeshProUGUI _status;
+    private GameObject _bedding;
 
     private Controls _controls;
 
-    void Awake() {
+    private float _beddingMultiplier;
 
-        if (s_instance != null) {
-            Destroy(s_instance.gameObject);
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            // If Instance is ever not its first 'this',
+            //  destroy it.
+            Destroy(gameObject);
         }
-
-        s_instance = this;
-        _controls = new Controls();
-        _controls.GameManager.ToggleItemPlaceMode.performed += ctx => IsInPlaceItemMode = !_isInPlaceItemMode;
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            _controls = new Controls();
+        }
     }
-    
+
+    public void SpawnEnclosure(GameObject prefab)
+    {
+        SceneManager.LoadScene("DecorateEnclosure");
+        Enclosure = Instantiate(prefab, transform);
+        
+        _bedding = Enclosure.GetComponent<Enclosure>().Bedding;
+        _beddingMultiplier = Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y;
+        
+        GetComponent<LookIntoEnclosure>().targets = Enclosure.GetComponent<Enclosure>().Targets;
+        GetComponent<LookIntoEnclosure>().radius = Enclosure.GetComponent<Enclosure>().Radius;
+    }
+
     public void IncrementStage()
     {
         switch (_gameState)
         {
             case GameState.DecorFloor:
                 _gameState = GameState.FillBedding;
-                _status.text = "Fill with bedding";
                 break;
             case GameState.FillBedding:
                 _gameState = GameState.DecorBedding;
-                _status.text = "Decorate your cage";
                 break;
             case GameState.DecorBedding:
                 _gameState = GameState.DecorRoof;
-                _status.text = "Decorate your lid";;
                 break;
             case GameState.DecorRoof:
                 _gameState = GameState.Rating;
-                _status.text = "Rating";
                 break;
             case GameState.Rating:
                 _gameState = GameState.Feedback;
-                _status.text = "Feedback";
                 break;
             case GameState.Feedback:
                 _gameState = GameState.DecorFloor;
-                _status.text = "Decorate your cage";
                 break;
         }
     }
@@ -141,7 +153,7 @@ public class GameManager : MonoBehaviour {
             else
             {
                 _bedding.SetActive(true);
-                _bedding.transform.localScale = new Vector3(_bedding.transform.localScale.x, _beddingInches,
+                _bedding.transform.localScale = new Vector3(_bedding.transform.localScale.x, _beddingInches * _beddingMultiplier,
                     _bedding.transform.localScale.z);
             }   
         }

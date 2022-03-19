@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7267429253075802789}
   - component: {fileID: 7267429253075802788}
-  - component: {fileID: 7267429253075802787}
+  - component: {fileID: 463582648}
   m_Layer: 11
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,9 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a1982994ae103346888e21c4e2e71de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bedding: {fileID: 0}
-  _status: {fileID: 0}
---- !u!114 &7267429253075802787
+--- !u!114 &463582648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,14 +53,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7267429253075802791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffb4ea69732464343b4e70496e0eec33, type: 3}
+  m_Script: {fileID: 11500000, guid: b4e9384264abf9541b0056867ce99b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InfoPanel: {fileID: 2336960733548335096, guid: 846009ff722225f408648bb0a9a6a4c3,
-    type: 3}
-  InfoCanvas: {fileID: 0}
-  _panel: {fileID: 0}
-  cc: {fileID: 0}
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 1056
+  targets: []
+  radius: 0

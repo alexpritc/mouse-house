@@ -19,10 +19,10 @@ public class SelectObject : MonoBehaviour
     
     [SerializeField] private CameraController cc;
 
-[SerializeField] private LayerMask _layerMask;
+    [SerializeField] private LayerMask _layerMask;
 
     private GameObject _mouseInfo;
-    
+
     private void Awake() {
         _controls = new Controls();
         _controls.GameManager.Select.performed += ctx => Select();
@@ -41,17 +41,23 @@ public class SelectObject : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode || GameManager.Instance.IsShopOpen)
         {
-            RemovePrompt();
+            Remove();
             return;
         }
-
+        
         if (!GameManager.Instance.IsCursorOverUI)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask))
             {
+                if (_selected != null)
+                {
+                    _selected.GetComponent<Outline>().enabled = false;
+                }
+                
                 _selected = hit.collider.transform.parent.gameObject;
-
+                _selected.GetComponent<Outline>().enabled = true;
+                
                 if (_selected.tag == "Item")
                 {
                     cc._target = _selected;
@@ -73,6 +79,10 @@ public class SelectObject : MonoBehaviour
 
     public void Remove()
     {
+        if (_selected != null)
+        {
+            _selected.GetComponent<Outline>().enabled = false;
+        }
         cc._target = null;
         cc._isFollowing = false;
         RemovePrompt();

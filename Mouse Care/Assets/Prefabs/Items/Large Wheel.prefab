@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2736582025847895230}
   - component: {fileID: 3834170192581775160}
   - component: {fileID: 2793530545590009781}
+  - component: {fileID: 4215472343824645927}
   m_Layer: 0
   m_Name: Large Wheel
   m_TagString: Item
@@ -60,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 1958475912744696402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.75, y: 2.75, z: 2.75}
   m_Children:
   - {fileID: 8405891799939491811}
   - {fileID: 6387563781450971554}
@@ -176,6 +177,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4215472343824645927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958475912744696402}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5015692183699749353
 GameObject:
   m_ObjectHideFlags: 0

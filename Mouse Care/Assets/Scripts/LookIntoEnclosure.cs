@@ -5,6 +5,7 @@ using UnityEngine;
 public class LookIntoEnclosure : MonoBehaviour
 {
     public Transform[] targets;
+    public float radius;
     private List<Transform> obstructions;
 
     private bool isEnabled;
@@ -13,26 +14,26 @@ public class LookIntoEnclosure : MonoBehaviour
     {
         obstructions = new List<Transform>();
     }
- 
+
     private void LateUpdate()
     {
         if (isEnabled)
         {
             foreach (var target in targets)
             {
-                ViewObstructed(target);   
-            }   
+                ViewObstructedSphere(target);   
+            }
         }
     }
-
-    void ViewObstructed(Transform target)
+    
+    void ViewObstructedSphere(Transform target)
     {
-        float characterDistance = Vector3.Distance(transform.position, target.transform.position);
+        float characterDistance = Vector3.Distance(Camera.main.transform.position, target.transform.position);
         
         int layerNumber = LayerMask.NameToLayer("Walls");
         int layerMask = 1 << layerNumber;
         
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 5f, target.transform.position - transform.position, characterDistance, layerMask);
+        RaycastHit[] hits = Physics.SphereCastAll(Camera.main.transform.position, radius, target.transform.position - Camera.main.transform.position, characterDistance, layerMask);
         
         // Walls are blocking the camera view
         if (hits.Length > 0)
@@ -72,12 +73,10 @@ public class LookIntoEnclosure : MonoBehaviour
 
     public void ToggleXray()
     {
-        
         isEnabled = !isEnabled;
 
         if (isEnabled == false)
         {
-            Debug.Log("Xray disabled");
             if (obstructions != null && obstructions.Count > 0)
             {
                 // Repaint all the previous obstructions. Because some of the stuff might be not blocking anymore
@@ -89,9 +88,14 @@ public class LookIntoEnclosure : MonoBehaviour
                 obstructions.Clear();
             }   
         }
-        else
+    }
+    
+    private void OnDrawGizmosSelected() {
+
+
+        foreach (var target in targets)
         {
-            Debug.Log("Xray enabled");
+            Gizmos.DrawRay(target.position, Camera.main.transform.position);
         }
     }
 }

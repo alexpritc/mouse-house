@@ -5,29 +5,41 @@ using UnityEngine;
 
 public class Enclosure : MonoBehaviour
 {
-    private int _id;
-    private string _name;
-
+    [SerializeField] private string _name;
+    [@TextAreaAttribute(5,10)] [SerializeField] private string _description;
+    
     /// <summary>
     /// Floorspace of enclosure in squared inches
     /// </summary>
-    private int _size;
+    [SerializeField] private string _floorspace;
     
-    private float _water;
-    private float _food;
-    private float _enrichment;
-    /// <summary>
-    /// Type of bedding
-    /// </summary>
-    private string _bedding;
     /// <summary>
     /// How much bedding is in the enclosure
     /// </summary>
-    private float _beddingInInches;
-    private int _maxMiceCapacity;
-
-    [HideInInspector] public Item[] ItemsInEnclosure;
-    [HideInInspector] public Mouse[] MiceInEnclosure;
+    [SerializeField] private int _beddingInInches;
     
-    [HideInInspector] public MeshGenerator MeshGen;
+    public Transform[] Targets;
+
+    public GameObject Bedding;
+
+    public float Radius;
+
+    public string Name
+    {
+        get => _name;
+    }
+    public string Description
+    {
+        get => _description;
+    }
+    
+    public string Floorspace
+    {
+        get => _floorspace;
+    }
+
+    public int BeddingInInches
+    {
+        get => _beddingInInches;
+    }
 }

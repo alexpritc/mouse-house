@@ -34,15 +34,9 @@ public class MeshGenerator : MonoBehaviour {
 
     [HideInInspector] public Vector3[] _gridPositions;
 
-    [SerializeField] private Enclosure _enclosure;
-
     void Start()
     {
-        if (_mesh != null) {
-            _enclosure.MeshGen = this;
-            return;
-        }
-        
+
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
 
@@ -53,8 +47,6 @@ public class MeshGenerator : MonoBehaviour {
         CreateShape();
         UpdateMesh();
         //SaveMesh("Assets/Meshes/mesh2.asset");
-
-        _enclosure.MeshGen = this;
     }
 
     void CreateShape()
