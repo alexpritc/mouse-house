@@ -19,6 +19,8 @@ public class DisplayInfoPanelUI : MonoBehaviour
         Item = i;
         _nameText.text = Item.Name;
         _descriptionText.text = Item.Description;
+        _stressText.text = Item._stress;
+        _enrichmentText.text = Item._enrichment;
     }
 
     public void DestroyGameObject()

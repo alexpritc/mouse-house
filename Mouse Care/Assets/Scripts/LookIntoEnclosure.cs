@@ -32,7 +32,7 @@ public class LookIntoEnclosure : MonoBehaviour
         int layerNumber = LayerMask.NameToLayer("Walls");
         int layerMask = 1 << layerNumber;
         
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 10f, target.transform.position - transform.position, characterDistance, layerMask);
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 5f, target.transform.position - transform.position, characterDistance, layerMask);
         
         // Walls are blocking the camera view
         if (hits.Length > 0)
@@ -72,10 +72,12 @@ public class LookIntoEnclosure : MonoBehaviour
 
     public void ToggleXray()
     {
+        
         isEnabled = !isEnabled;
 
         if (isEnabled == false)
         {
+            Debug.Log("Xray disabled");
             if (obstructions != null && obstructions.Count > 0)
             {
                 // Repaint all the previous obstructions. Because some of the stuff might be not blocking anymore
@@ -86,6 +88,10 @@ public class LookIntoEnclosure : MonoBehaviour
 
                 obstructions.Clear();
             }   
+        }
+        else
+        {
+            Debug.Log("Xray enabled");
         }
     }
 }

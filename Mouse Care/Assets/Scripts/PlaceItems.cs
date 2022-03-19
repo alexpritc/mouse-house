@@ -51,9 +51,15 @@ public class PlaceItems : MonoBehaviour
         _preview.GetComponent<MeshRenderer>().receiveShadows = false;
         Destroy(_preview.GetComponent<NavMeshObstacle>());
         Destroy(_preview.GetComponentInChildren<NavMeshObstacle>());
+
         //Destroy(_preview.GetComponentInChildren<Rigidbody>());
 
         _previewItem = _preview.GetComponent<Item>();
+
+        if (_previewItem.canPlaceOnTopOf)
+        {
+            Destroy(_preview.transform.GetChild(0).gameObject);
+        }
 
         if (!GameManager.Instance.IsInPlaceItemMode)
         {

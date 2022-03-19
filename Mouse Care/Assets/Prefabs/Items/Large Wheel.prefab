@@ -138,13 +138,15 @@ MonoBehaviour:
   _isUnlocked: 1
   _yPos: 0
   prefab: {fileID: 1958475912744696402}
+  _changeableMaterialIndex: 0
+  canPlaceOnTopOf: 0
   corners:
   - {fileID: 8405891799939491811}
   - {fileID: 6387563781450971554}
   - {fileID: 6790719698840976756}
   - {fileID: 1078503967407129548}
-  _enrichment: 0
-  _stress: 0
+  _enrichment: high
+  _stress: none
 --- !u!65 &3834170192581775160
 BoxCollider:
   m_ObjectHideFlags: 0

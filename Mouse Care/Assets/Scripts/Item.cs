@@ -12,6 +12,8 @@ public class Item : MonoBehaviour
     [SerializeField] private float _yPos;
     public GameObject prefab;
     [SerializeField] private int _changeableMaterialIndex;
+
+    public bool canPlaceOnTopOf;
     
     public float GetYPos()
     {
@@ -56,12 +58,12 @@ public class Item : MonoBehaviour
     /// <summary>
     /// How much enrichment this item gives
     /// </summary>
-    public float _enrichment;
+    public string _enrichment;
     
     /// <summary>
     /// How much stress this item gives
     /// </summary>
-    public float _stress;
+    public string _stress;
 
     private bool _canSpawn = true;
 
