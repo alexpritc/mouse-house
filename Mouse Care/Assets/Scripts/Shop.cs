@@ -15,6 +15,8 @@ using UnityEngine;
     private PanelManager _panelManager;
 
     private List<GameObject> currentSlots;
+    
+    [SerializeField] private StatusPanelController _statusPanelController;
 
     private void Awake()
     {
@@ -63,5 +65,6 @@ using UnityEngine;
         _placeItems.ItemPrefab = itemPrefab;
         _placeItems.ResetPreview(false);
         _panelManager.CloseCurrentPanel(true);
+        _statusPanelController.ChangeMessage("Placing " + itemPrefab.GetComponent<Item>().Name);
     }
 }

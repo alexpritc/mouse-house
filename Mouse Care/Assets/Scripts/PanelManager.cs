@@ -21,6 +21,8 @@ public class PanelManager : MonoBehaviour
     public Transform[] slots;
     private int _currentPage = -1;
 
+    
+    
     private void Start()
     {
         panelAnimator = GetComponent<Animator>();

@@ -30,6 +30,7 @@ public class PlaceItems : MonoBehaviour
     private Item _previewItem;
 
     public bool isMovingExistingItem;
+    
 
     public void ResetPreview(bool isExistingItem)
     {

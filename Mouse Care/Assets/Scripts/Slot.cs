@@ -23,7 +23,7 @@ public class Slot : MonoBehaviour
     private Animator _animator;
     private bool _wasTooExpensive = false;
     private bool _wasUnlocked = true;
-    
+
     private void Awake()
     {
         _button.onClick.AddListener(Click);

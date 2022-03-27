@@ -44,8 +44,7 @@ public class GameManager : MonoBehaviour {
         get => _isInPlaceItemMode;
         set => _isInPlaceItemMode = value;
     }
-    
-    
+
     private bool _isCursorOverUI = false;
     public bool IsCursorOverUI{
         get => _isCursorOverUI;
