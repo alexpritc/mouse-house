@@ -155,8 +155,8 @@ public class GameManager : MonoBehaviour {
     
     public void FillBedding()
     {
-        if (_gameState == GameState.FillBedding)
-        {
+        //if (_gameState == GameState.FillBedding)
+        //{
             _beddingInches += 0.2f;
             if (_beddingInches > 1)
             {
@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour {
                 _bedding.transform.localScale = new Vector3(_bedding.transform.localScale.x, _beddingInches * _beddingMultiplier,
                     _bedding.transform.localScale.z);
             }   
-        }
+        //}
     }
     
     private void OnEnable() {
