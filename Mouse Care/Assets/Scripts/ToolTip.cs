@@ -17,6 +17,8 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private float _xOffset = 160f;
     [SerializeField] private float _yOffset = -60f;
 
+    [SerializeField] private bool _hasToolTip = true;
+    
     private void Awake()
     {
         GetComponent<Button>().onClick.AddListener(RemoveToolTip);   
@@ -24,28 +26,40 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        DisplayToolTip();
+        if (_hasToolTip)
+        {
+            DisplayToolTip();   
+        }
         GameManager.Instance.CursorEnterUI();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        RemoveToolTip();
+        if (_hasToolTip)
+        {
+            RemoveToolTip();   
+        }
         GameManager.Instance.CursorExitUI();
     }
     
     public void DisplayToolTip()
     {
-        Invoke("Display", 1f);
+        if (_hasToolTip)
+        {
+            Invoke("Display", 1f);   
+        }
     }
 
     public void RemoveToolTip()
     {
-        CancelInvoke("Display");
-        
-        if (currentToolTip != null)
+        if (_hasToolTip)
         {
-            currentToolTip.SetActive(false);
+            CancelInvoke("Display");
+        
+            if (currentToolTip != null)
+            {
+                currentToolTip.SetActive(false);
+            }   
         }
     }
 

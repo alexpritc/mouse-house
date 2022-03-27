@@ -611,6 +611,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 1430280979}
   _xOffset: 160
   _yOffset: -60
+  _hasToolTip: 1
 --- !u!114 &194473498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2116,8 +2117,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -8.841091, y: -79.444374}
-  m_SizeDelta: {x: 67.1035, y: 31.3638}
+  m_AnchoredPosition: {x: -9.677, y: -79.444374}
+  m_SizeDelta: {x: 70.9248, y: 31.3638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1162959433
 MonoBehaviour:
@@ -3047,6 +3048,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 1430280979}
   _xOffset: 160
   _yOffset: -60
+  _hasToolTip: 1
 --- !u!1 &1725470266 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c9818db8328e2a346997f7e101c95132,
@@ -3713,6 +3715,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 1430280979}
   _xOffset: -60
   _yOffset: -60
+  _hasToolTip: 1
 --- !u!1 &2097017322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3911,6 +3914,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 1430280979}
   _xOffset: 160
   _yOffset: -60
+  _hasToolTip: 1
 --- !u!1 &2109229854
 GameObject:
   m_ObjectHideFlags: 0
@@ -4109,6 +4113,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 1430280979}
   _xOffset: 160
   _yOffset: -60
+  _hasToolTip: 1
 --- !u!1 &627086343183799493
 GameObject:
   m_ObjectHideFlags: 0

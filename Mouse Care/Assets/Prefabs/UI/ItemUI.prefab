@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 4214241305425852521}
   - component: {fileID: 7515705118903040101}
   - component: {fileID: 2691075277240077811}
+  - component: {fileID: 7584939335092553682}
   m_Layer: 5
   m_Name: ItemUI
   m_TagString: Untagged
@@ -204,6 +205,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7584939335092553682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691075277240077810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4ef49d48599a341a9eada2736ad391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: Select toy
+  _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
+    type: 3}
+  infoCanvas: {fileID: 0}
+  _xOffset: 160
+  _yOffset: -60
+  _hasToolTip: 0
 --- !u!1 &3308814219364804700
 GameObject:
   m_ObjectHideFlags: 0

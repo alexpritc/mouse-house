@@ -164,6 +164,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 0}
   _xOffset: -20
   _yOffset: -62
+  _hasToolTip: 1
 --- !u!1 &1447146348496903037
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +330,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 0}
   _xOffset: 80
   _yOffset: -125
+  _hasToolTip: 1
 --- !u!114 &6128087916768434678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,6 +685,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 0}
   _xOffset: -20
   _yOffset: -125
+  _hasToolTip: 1
 --- !u!114 &7374735854361489944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2311,6 +2314,7 @@ MonoBehaviour:
   infoCanvas: {fileID: 0}
   _xOffset: -20
   _yOffset: 60
+  _hasToolTip: 1
 --- !u!1 &8360829920449475783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2983,6 +2987,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.r
       value: 0.38431376
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943086071482724, guid: 4214b57e615806c448ba9d993d629531,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943086071482724, guid: 4214b57e615806c448ba9d993d629531,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2130943086141217042, guid: 4214b57e615806c448ba9d993d629531,
         type: 3}
