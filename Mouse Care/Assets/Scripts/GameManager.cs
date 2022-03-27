@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour {
 
     private float _beddingMultiplier;
 
+    private GameObject _prefab;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -110,7 +112,14 @@ public class GameManager : MonoBehaviour {
     public void SpawnEnclosure(GameObject prefab)
     {
         SceneManager.LoadScene("DecorateEnclosure");
-        Enclosure = Instantiate(prefab, transform);
+
+        _prefab = prefab;
+        Invoke("SetEnclosure", 0.5f);
+    }
+
+    private void SetEnclosure()
+    {
+        Enclosure = Instantiate(_prefab, transform);
         
         _bedding = Enclosure.GetComponent<Enclosure>().Bedding;
         _beddingMultiplier = Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y;
@@ -118,7 +127,7 @@ public class GameManager : MonoBehaviour {
         GetComponent<LookIntoEnclosure>().targets = Enclosure.GetComponent<Enclosure>().Targets;
         GetComponent<LookIntoEnclosure>().radius = Enclosure.GetComponent<Enclosure>().Radius;
     }
-
+    
     public void IncrementStage()
     {
         switch (_gameState)

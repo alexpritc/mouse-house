@@ -91,6 +91,7 @@ public class SelectObject : MonoBehaviour
     public void CreatePrompt()
     {
         CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
+        CurrentInfoPanel.transform.position += new Vector3(100f, 2f, 0f);
         CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
         CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().panelManager = _panel;
     }
