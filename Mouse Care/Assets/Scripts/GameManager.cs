@@ -52,16 +52,21 @@ public class GameManager : MonoBehaviour {
         set => _isCursorOverUI = value;
     }
 
+    public Texture2D cursorNormal;
+    public Texture2D cursorInteract;
+    public CursorMode cursorMode = CursorMode.Auto;
+
     public void CursorEnterUI()
     {
         _isCursorOverUI = true;
+        Cursor.SetCursor(cursorInteract, Vector2.zero, cursorMode);
     }
 
     public void CursorExitUI()
     {
         _isCursorOverUI = false;
+        Cursor.SetCursor(cursorNormal, Vector2.zero, cursorMode);
     }
-
     
     private bool _isInFollowingMode = false;
     public bool IsInFollowingMode{

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -15,6 +16,11 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [SerializeField] private float _xOffset = 160f;
     [SerializeField] private float _yOffset = -60f;
+
+    private void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(RemoveToolTip);   
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

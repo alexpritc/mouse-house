@@ -14,6 +14,13 @@ public class DisplayInfoPanelUI : MonoBehaviour
     [HideInInspector] public Item Item;
     public GameObject panelManager;
 
+    private SelectObject so;
+    
+    private void Awake()
+    {
+        so = GameObject.FindObjectOfType<SelectObject>();
+    }
+
     public void SetInitialValues(Item i)
     {
         Item = i;
@@ -25,7 +32,8 @@ public class DisplayInfoPanelUI : MonoBehaviour
 
     public void DestroyGameObject()
     {
-        GameManager.Instance.gameObject.GetComponent<SelectObject>().Remove();
+        so.Remove();
+        //GameManager.Instance.gameObject.GetComponent<SelectObject>().Remove();
         GameManager.Instance.CursorExitUI();
         Destroy(Item.gameObject);
     }

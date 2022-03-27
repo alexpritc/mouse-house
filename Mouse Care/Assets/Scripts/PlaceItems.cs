@@ -81,6 +81,11 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
+            if (_preview == null)
+            {
+                return;
+            }
+            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _meshLayer))
             {
@@ -131,6 +136,11 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode && !GameManager.Instance.IsCursorOverUI)
         {
+            if (_preview == null)
+            {
+                return;
+            }
+            
             if (IsOnMesh() & _previewItem.CanSpawn)
             {
                 GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
@@ -156,6 +166,11 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
+            if (_preview == null)
+            {
+                return;
+            }
+            
             _preview.transform.Rotate(_preview.transform.up, 90f);
         }
     }
