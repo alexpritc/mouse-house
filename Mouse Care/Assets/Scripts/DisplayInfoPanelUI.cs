@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class DisplayInfoPanelUI : MonoBehaviour
     public GameObject panelManager;
 
     private SelectObject so;
+
+    public Transform ItemTransForm;
     
     private void Awake()
     {
@@ -40,10 +43,11 @@ public class DisplayInfoPanelUI : MonoBehaviour
 
     public void MoveObject()
     {
+        ItemTransForm = Item.gameObject.transform;
         panelManager.GetComponent<PlaceItems>().ItemPrefab = Item.prefab;
         GameManager.Instance.IsInPlaceItemMode = true;
         GameManager.Instance.CursorExitUI();
-        panelManager.GetComponent<PlaceItems>().ResetPreview(true);
+        panelManager.GetComponent<PlaceItems>().ResetPreview(ItemTransForm, true);
         Item.gameObject.SetActive(false);
     }
 

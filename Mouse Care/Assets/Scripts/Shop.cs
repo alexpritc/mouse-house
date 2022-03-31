@@ -63,7 +63,7 @@ using UnityEngine;
     public void NewItemSelected(GameObject itemPrefab)
     {
         _placeItems.ItemPrefab = itemPrefab;
-        _placeItems.ResetPreview(false);
+        _placeItems.ResetPreview(itemPrefab.transform);
         _panelManager.CloseCurrentPanel(true);
         _statusPanelController.ChangeMessage("Placing " + itemPrefab.GetComponent<Item>().Name);
     }

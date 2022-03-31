@@ -11,6 +11,8 @@ public class StatusPanelController : MonoBehaviour
 
     private TextMeshProUGUI tmp;
 
+    private string _clipName;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,14 +27,14 @@ public class StatusPanelController : MonoBehaviour
         {
             if (!lastFrame)
             {
-                _animator.Play("Opening");
+                _animator.CrossFade("Opening", 0.2f);
             }
         }
         else
         {
             if (lastFrame)
             {
-                _animator.Play("Closing");
+                _animator.CrossFade("Closing", 0.2f);
             }
         }
         
@@ -41,7 +43,7 @@ public class StatusPanelController : MonoBehaviour
 
     public void ClosePanel()
     {
-        _animator.Play("Closing");
+        _animator.CrossFade("Closing", 0.2f);
         GameManager.Instance.IsInPlaceItemMode = false;
         GameManager.Instance.IsShopOpen = false;
     }

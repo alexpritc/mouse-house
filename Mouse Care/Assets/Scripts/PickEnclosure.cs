@@ -18,7 +18,7 @@ public class PickEnclosure : MonoBehaviour
     
     [Header("Move the camera")]
     [SerializeField] private GameObject _camera;
-    [SerializeField] private float _movementSpeed = 1f;
+    [SerializeField] private float _movementSpeed = 100f;
     
     private void Awake()
     {
@@ -29,11 +29,9 @@ public class PickEnclosure : MonoBehaviour
 
     private void Update()
     {
-
         Vector3 targetMove = new Vector3(_enclosuresInScene[_currentEnclosure].transform.position.x,
             _camera.transform.position.y, _camera.transform.position.z);
-        _camera.transform.position = Vector3.MoveTowards(_camera.transform.position, targetMove, _movementSpeed);
-
+        _camera.transform.position = Vector3.MoveTowards(_camera.transform.position, targetMove, _movementSpeed * Time.deltaTime);
     }
 
     public void NextEnclosure()

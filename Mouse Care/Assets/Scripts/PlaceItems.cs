@@ -30,9 +30,12 @@ public class PlaceItems : MonoBehaviour
     private Item _previewItem;
 
     public bool isMovingExistingItem;
+    public Transform ExistingItemTransform;
+
+    private bool _lastFrame;
     
 
-    public void ResetPreview(bool isExistingItem)
+    public void ResetPreview(Transform itemTransform, bool isExistingItem = false)
     {
         if (_preview != null)
         {
@@ -51,9 +54,7 @@ public class PlaceItems : MonoBehaviour
         _preview.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
         _preview.GetComponent<MeshRenderer>().receiveShadows = false;
         Destroy(_preview.GetComponent<NavMeshObstacle>());
-        Destroy(_preview.GetComponentInChildren<NavMeshObstacle>());
-
-        //Destroy(_preview.GetComponentInChildren<Rigidbody>());
+        Destroy(_preview.GetComponentInChildren<NavMeshObstacle>()); 
 
         _previewItem = _preview.GetComponent<Item>();
 
@@ -68,6 +69,7 @@ public class PlaceItems : MonoBehaviour
         }
 
         isMovingExistingItem = isExistingItem;
+        ExistingItemTransform = itemTransform;
     }
 
     private void Awake() {
@@ -119,6 +121,21 @@ public class PlaceItems : MonoBehaviour
                 _preview.SetActive(false);   
             }
         }
+
+        if (_lastFrame)
+        {
+            // Was in place item mode but no longer is
+            if (!GameManager.Instance.IsInPlaceItemMode)
+            {
+                // Need to reset the position of this item
+                if (isMovingExistingItem)
+                {
+                    ResetExistingItem();
+                }
+            }
+        }
+
+        _lastFrame = GameManager.Instance.IsInPlaceItemMode;
     }
 
     private void ChangeMaterial(GameObject go, Material mat)
@@ -157,7 +174,16 @@ public class PlaceItems : MonoBehaviour
             }
         }
     }
-    
+
+    private void ResetExistingItem()
+    {
+        GameObject go = Instantiate(_itemPrefab, ExistingItemTransform.position,
+            ExistingItemTransform.rotation);
+        
+        go.SetActive(true);
+        isMovingExistingItem = false;
+    }
+
     private void SelectedItem(GameObject button)
     {
         GameManager.Instance.IsInPlaceItemMode = true;
