@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene("DecorateEnclosure");
 
         _prefab = prefab;
-        Invoke("SetEnclosure", 0.5f);
+        Invoke("SetEnclosure", 0.25f);
     }
 
     private void SetEnclosure()

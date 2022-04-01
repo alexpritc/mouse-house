@@ -55,10 +55,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07d1f7af51a5164d8b594e9bcb33377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Large DIY Enclosure
-  _description: 
-  _floorspace: 
-  _beddingInInches: 0
+  _name: Wooden Enclosure
+  _description: "A popular handmade enclosure, made from Swedish flatpack furniture.
+    \n\nThe glass front allows for a deep layer of substrate for burrowing."
+  _floorspace: 877 sq inches
+  _internalDimensions: 39.5'' x 22'' x 18.5''
+  _beddingInInches: 12"
   Targets:
   - {fileID: 8783812853321775366}
   - {fileID: 5631882817167097153}

@@ -56,10 +56,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07d1f7af51a5164d8b594e9bcb33377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Bin cage
-  _description: 
-  _floorspace: 
-  _beddingInInches: 0
+  _name: Bin Cage
+  _description: "This DIY Bin cage is popular with those who have less space in their
+    pet rooms. \n\nWhat it lacks in floorspace, it makes up for in height. It is
+    perfect for hanging toys and deep bedding."
+  _floorspace: 615 sq inches
+  _internalDimensions: 31.5" x 19.5" x 19.5"
+  _beddingInInches: 15"
   Targets:
   - {fileID: 6007400756536456668}
   - {fileID: 5992253008340786749}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -11,21 +12,34 @@ public class PickEnclosure : MonoBehaviour
     [SerializeField] private GameObject[] _enclosuresInScene;
     [SerializeField] private GameObject[] _enclosurePrefabs;
     private int _currentEnclosure;
+    public GameObject EnclosureInfoPanel;
 
     [Header("Buttons")]
+    [SerializeField] private GameObject _leftButtonIcon;
     [SerializeField] private GameObject _leftButton;
+    
+    [SerializeField] private GameObject _rightButtonIcon;
     [SerializeField] private GameObject _rightButton;
     
     [Header("Move the camera")]
     [SerializeField] private GameObject _camera;
     [SerializeField] private float _movementSpeed = 100f;
-    
+
     private void Awake()
     {
         _currentEnclosure = 0;
-        _leftButton.SetActive(false);
-        _rightButton.SetActive(true);
+        
+        SetButtonComponents(_leftButton, _leftButtonIcon, false);
+        SetButtonComponents(_rightButton, _rightButtonIcon, true);
     }
+
+    private void SetButtonComponents(GameObject button, GameObject buttonIcon, bool enabled)
+    {
+        button.GetComponent<Button>().enabled = enabled;
+        button.GetComponent<Image>().enabled = enabled;
+        buttonIcon.GetComponent<Image>().enabled = enabled;
+    }
+    
 
     private void Update()
     {
@@ -38,28 +52,32 @@ public class PickEnclosure : MonoBehaviour
     {
         _currentEnclosure++;
         NewEnclosure();
+        
+        Debug.Log("current: " + _currentEnclosure + " of " + _enclosuresInScene.Length);
 
         // Hide/show the correct buttons
-        _leftButton.SetActive(true);
+        SetButtonComponents(_leftButton, _leftButtonIcon, true);
         if (_currentEnclosure == _enclosuresInScene.Length - 1)
         {
-            _rightButton.SetActive(false);
+            SetButtonComponents(_rightButton, _rightButtonIcon, false);
         }
     }
 
     public void PreviousEnclosure()
     {
         _currentEnclosure--;
+
         NewEnclosure();
         
+        Debug.Log("current: " + _currentEnclosure + " of " + _enclosuresInScene.Length);
+        
         // Hide/show the correct buttons
-        _rightButton.SetActive(true);
+        SetButtonComponents(_rightButton, _rightButtonIcon, true);
         if (_currentEnclosure == 0)
         {
-            _leftButton.SetActive(false);
+            SetButtonComponents(_leftButton, _leftButtonIcon, false);
         }
     }
-
 
     void NewEnclosure()
     {
@@ -69,8 +87,11 @@ public class PickEnclosure : MonoBehaviour
         
         // Be able to modify the rotation of the new current enclosure
         _camera.GetComponent<CameraController>().CurrentEnclosure = _enclosuresInScene[_currentEnclosure];
+
+        EnclosureInfoPanel.GetComponent<DisplayEnclosurePanelUI>().SetInitialValues(_enclosuresInScene[_currentEnclosure]
+            .GetComponent<Enclosure>());
     }
-    
+
     public void ConfirmSelection()
     {
         GameManager.Instance.SpawnEnclosure(_enclosurePrefabs[_currentEnclosure]);

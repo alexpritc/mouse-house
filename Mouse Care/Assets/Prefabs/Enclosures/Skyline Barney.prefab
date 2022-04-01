@@ -665,10 +665,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07d1f7af51a5164d8b594e9bcb33377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Medium Wire Bar Cage
-  _description: 
-  _floorspace: 
-  _beddingInInches: 0
+  _name: Wirebar Cage
+  _description: "A 7mm spaced wirebar cage available from most pet stores. \n\nThe
+    base height is 6.3\", which means it can't hold deep bedding."
+  _floorspace: 760 sq inches
+  _internalDimensions: "38\" x 20\u2033 x 16\u2033"
+  _beddingInInches: 6"
   Targets:
   - {fileID: 1481055766}
   Bedding: {fileID: 7697283690888185795}

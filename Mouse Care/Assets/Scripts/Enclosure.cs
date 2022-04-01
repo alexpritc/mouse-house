@@ -9,14 +9,21 @@ public class Enclosure : MonoBehaviour
     [@TextAreaAttribute(5,10)] [SerializeField] private string _description;
     
     /// <summary>
-    /// Floorspace of enclosure in squared inches
+    /// Floorspace of enclosure
     /// </summary>
     [SerializeField] private string _floorspace;
-    
+
+    /// <summary>
+    /// Internal dimensions
+    /// </summary>
+    [SerializeField] private string _internalDimensions;
+
+
     /// <summary>
     /// How much bedding is in the enclosure
     /// </summary>
-    [SerializeField] private int _beddingInInches;
+    [SerializeField] private string _beddingInInches;
+
     
     public Transform[] Targets;
 
@@ -28,6 +35,7 @@ public class Enclosure : MonoBehaviour
     {
         get => _name;
     }
+    
     public string Description
     {
         get => _description;
@@ -37,8 +45,13 @@ public class Enclosure : MonoBehaviour
     {
         get => _floorspace;
     }
-
-    public int BeddingInInches
+    
+    public string Dimensions
+    {
+        get => _internalDimensions;
+    }
+    
+    public string BeddingInInches
     {
         get => _beddingInInches;
     }
