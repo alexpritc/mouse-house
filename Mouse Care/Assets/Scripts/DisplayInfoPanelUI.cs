@@ -2,30 +2,62 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DisplayInfoPanelUI : MonoBehaviour
 {
-    [SerializeField] private Slider _hungerSlider;
-    [SerializeField] private Slider _thirstSlider;
     [SerializeField] private TextMeshProUGUI _nameText;
-    [SerializeField] private TextMeshProUGUI _statusText;
-    [HideInInspector] public Mouse mouse;
+    [SerializeField] private TextMeshProUGUI _descriptionText;
+    [SerializeField] private TextMeshProUGUI _stressText;
+    [SerializeField] private TextMeshProUGUI _enrichmentText;
+    [HideInInspector] public Item Item;
+    public GameObject panelManager;
 
-    public void SetInitialValues(Mouse m)
+    private SelectObject so;
+
+    public Transform ItemTransForm;
+    
+    private void Awake()
     {
-        mouse = m;
-        _nameText.text = mouse.Name;
-        _hungerSlider.value = mouse.Hunger;
-        _thirstSlider.value = mouse.Thirst;
+        so = GameObject.FindObjectOfType<SelectObject>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetInitialValues(Item i)
     {
-        _hungerSlider.value = mouse.Hunger;
-        _thirstSlider.value = mouse.Thirst;
-        _statusText.text = mouse.Status.ToString();
+        Item = i;
+        _nameText.text = Item.Name;
+        _descriptionText.text = Item.Description;
+        _stressText.text = Item._stress;
+        _enrichmentText.text = Item._enrichment;
+    }
+
+    public void DestroyGameObject()
+    {
+        so.Remove();
+        //GameManager.Instance.gameObject.GetComponent<SelectObject>().Remove();
+        GameManager.Instance.CursorExitUI();
+        Destroy(Item.gameObject);
+    }
+
+    public void MoveObject()
+    {
+        ItemTransForm = Item.gameObject.transform;
+        panelManager.GetComponent<PlaceItems>().ItemPrefab = Item.prefab;
+        GameManager.Instance.IsInPlaceItemMode = true;
+        GameManager.Instance.CursorExitUI();
+        panelManager.GetComponent<PlaceItems>().ResetPreview(ItemTransForm, true);
+        Item.gameObject.SetActive(false);
+    }
+
+    public void UpdateColour(Color newColour)
+    {
+        Item.ChangeColour(newColour);
+    }
+
+    public Color GetItemColour()
+    {
+        return Item.GetColour();
     }
 }

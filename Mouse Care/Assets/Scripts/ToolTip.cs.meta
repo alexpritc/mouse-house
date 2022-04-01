@@ -3,7 +3,10 @@ guid: dc4ef49d48599a341a9eada2736ad391
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
+      type: 3}
+  - infoCanvas: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

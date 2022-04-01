@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SelectObject : MonoBehaviour
@@ -13,13 +14,15 @@ public class SelectObject : MonoBehaviour
     private GameObject CurrentInfoPanel;
     public GameObject InfoPanel;
     public GameObject InfoCanvas;
+
+    [SerializeField] private GameObject _panel;
     
     [SerializeField] private CameraController cc;
 
-[SerializeField] private LayerMask _layerMask;
+    [SerializeField] private LayerMask _layerMask;
 
     private GameObject _mouseInfo;
-    
+
     private void Awake() {
         _controls = new Controls();
         _controls.GameManager.Select.performed += ctx => Select();
@@ -38,35 +41,59 @@ public class SelectObject : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode || GameManager.Instance.IsShopOpen)
         {
-            RemovePrompt();
+            Remove();
             return;
         }
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~_layerMask))
+        
+        if (!GameManager.Instance.IsCursorOverUI)
         {
-            _selected = hit.collider.gameObject;
-            
-            if (_selected.tag == "Mouse")
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask))
             {
-                cc._target = _selected;
-                cc._isFollowing = true;
-                RemovePrompt();
-                CreatePrompt(_selected.tag);
+                if (_selected != null)
+                {
+                    _selected.GetComponent<Outline>().enabled = false;
+                }
+                
+                _selected = hit.collider.transform.parent.gameObject;
+                _selected.GetComponent<Outline>().enabled = true;
+                
+                if (_selected.tag == "Item")
+                {
+                    cc._target = _selected;
+                    cc._isFollowing = true;
+                    RemovePrompt();
+                    CreatePrompt();
+                }
+                else if (_selected.tag != "UI")
+                {
+                    Remove();
+                }
             }
             else
             {
-                cc._target = null;
-                cc._isFollowing = false;
-                RemovePrompt();
+                Remove();
             }
         }
     }
 
-    public void CreatePrompt(string message)
+    public void Remove()
+    {
+        if (_selected != null)
+        {
+            _selected.GetComponent<Outline>().enabled = false;
+        }
+        cc._target = null;
+        cc._isFollowing = false;
+        RemovePrompt();
+    }
+    
+    public void CreatePrompt()
     {
         CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
-        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues(_selected.GetComponentInParent<Mouse>());
+        CurrentInfoPanel.transform.position += new Vector3(100f, 2f, 0f);
+        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
+        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().panelManager = _panel;
     }
 
     private Vector2 WorldToUI(Vector3 position)

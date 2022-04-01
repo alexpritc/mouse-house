@@ -25,18 +25,23 @@ public class PlaceItems : MonoBehaviour
 
     [SerializeField] private LayerMask _meshLayer;
     
-    private bool _canAfford;
-
     private RaycastHit hitLastTimeWasOnMesh;
 
     private Item _previewItem;
 
-    public void ResetPreview()
+    public bool isMovingExistingItem;
+    public Transform ExistingItemTransform;
+
+    private bool _lastFrame;
+    
+
+    public void ResetPreview(Transform itemTransform, bool isExistingItem = false)
     {
         if (_preview != null)
         {
             Destroy(_preview);
         }
+        
         _preview = Instantiate(_itemPrefab);  
         _preview.gameObject.name = "Preview";
 
@@ -49,15 +54,22 @@ public class PlaceItems : MonoBehaviour
         _preview.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
         _preview.GetComponent<MeshRenderer>().receiveShadows = false;
         Destroy(_preview.GetComponent<NavMeshObstacle>());
-        Destroy(_preview.GetComponentInChildren<NavMeshObstacle>());
-        //Destroy(_preview.GetComponentInChildren<Rigidbody>());
+        Destroy(_preview.GetComponentInChildren<NavMeshObstacle>()); 
 
         _previewItem = _preview.GetComponent<Item>();
-        
+
+        if (_previewItem.canPlaceOnTopOf)
+        {
+            Destroy(_preview.transform.GetChild(0).gameObject);
+        }
+
         if (!GameManager.Instance.IsInPlaceItemMode)
         {
             _preview.SetActive(false);
         }
+
+        isMovingExistingItem = isExistingItem;
+        ExistingItemTransform = itemTransform;
     }
 
     private void Awake() {
@@ -72,8 +84,11 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
-            _canAfford = _itemPrefab.GetComponent<Item>().Price <= GameManager.Instance.MeritPoints;
-
+            if (_preview == null)
+            {
+                return;
+            }
+            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _meshLayer))
             {
@@ -82,7 +97,7 @@ public class PlaceItems : MonoBehaviour
                     _preview.SetActive(true);
                 }
 
-                if (_canAfford && _previewItem.CanSpawn && IsOnMesh())
+                if (_previewItem.CanSpawn && IsOnMesh())
                 {
                     ChangeMaterial(_preview, _previewMat);
                 }
@@ -106,6 +121,21 @@ public class PlaceItems : MonoBehaviour
                 _preview.SetActive(false);   
             }
         }
+
+        if (_lastFrame)
+        {
+            // Was in place item mode but no longer is
+            if (!GameManager.Instance.IsInPlaceItemMode)
+            {
+                // Need to reset the position of this item
+                if (isMovingExistingItem)
+                {
+                    ResetExistingItem();
+                }
+            }
+        }
+
+        _lastFrame = GameManager.Instance.IsInPlaceItemMode;
     }
 
     private void ChangeMaterial(GameObject go, Material mat)
@@ -122,19 +152,38 @@ public class PlaceItems : MonoBehaviour
 
     private void PlaceItem()
     {
-        if (GameManager.Instance.IsInPlaceItemMode)
+        if (GameManager.Instance.IsInPlaceItemMode && !GameManager.Instance.IsCursorOverUI)
         {
-            if (IsOnMesh() && _canAfford & _previewItem.CanSpawn)
+            if (_preview == null)
+            {
+                return;
+            }
+            
+            if (IsOnMesh() & _previewItem.CanSpawn)
             {
                 GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
                     new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
                         _preview.transform.rotation.z, _preview.transform.rotation.w));
-                float target = GameManager.Instance.MeritPoints -= _itemPrefab.GetComponent<Item>().Price;
-                StartCoroutine(GameManager.Instance.ModifyPoints(GameManager.Instance.MeritPoints, target, Time.time, true, 0.1f));
+
+                if (isMovingExistingItem)
+                {
+                    go.SetActive(true);
+                    GameManager.Instance.IsInPlaceItemMode = false;
+                    isMovingExistingItem = false;
+                }
             }
         }
     }
-    
+
+    private void ResetExistingItem()
+    {
+        GameObject go = Instantiate(_itemPrefab, ExistingItemTransform.position,
+            ExistingItemTransform.rotation);
+        
+        go.SetActive(true);
+        isMovingExistingItem = false;
+    }
+
     private void SelectedItem(GameObject button)
     {
         GameManager.Instance.IsInPlaceItemMode = true;
@@ -144,6 +193,11 @@ public class PlaceItems : MonoBehaviour
     {
         if (GameManager.Instance.IsInPlaceItemMode)
         {
+            if (_preview == null)
+            {
+                return;
+            }
+            
             _preview.transform.Rotate(_preview.transform.up, 90f);
         }
     }

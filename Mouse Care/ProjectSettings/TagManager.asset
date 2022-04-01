@@ -9,6 +9,7 @@ TagManager:
   - Mesh
   - Mouse
   - Item
+  - UI
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - InputMouse
   - Mesh
   - Walls
-  - 
-  - 
+  - ItemsSelection
+  - GameManager
   - 
   - 
   - 

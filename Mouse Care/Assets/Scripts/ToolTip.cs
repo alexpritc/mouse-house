@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ToolTip : MonoBehaviour
+public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private string _message;
     [SerializeField] private GameObject _toolTipPrefab;
@@ -13,18 +14,52 @@ public class ToolTip : MonoBehaviour
 
     private GameObject currentToolTip;
 
+    [SerializeField] private float _xOffset = 160f;
+    [SerializeField] private float _yOffset = -60f;
+
+    [SerializeField] private bool _hasToolTip = true;
+    
+    private void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(RemoveToolTip);   
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_hasToolTip)
+        {
+            DisplayToolTip();   
+        }
+        GameManager.Instance.CursorEnterUI();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (_hasToolTip)
+        {
+            RemoveToolTip();   
+        }
+        GameManager.Instance.CursorExitUI();
+    }
+    
     public void DisplayToolTip()
     {
-        Invoke("Display", 1f);
+        if (_hasToolTip)
+        {
+            Invoke("Display", 1f);   
+        }
     }
 
     public void RemoveToolTip()
     {
-        CancelInvoke("Display");
-        
-        if (currentToolTip != null)
+        if (_hasToolTip)
         {
-            currentToolTip.SetActive(false);
+            CancelInvoke("Display");
+        
+            if (currentToolTip != null)
+            {
+                currentToolTip.SetActive(false);
+            }   
         }
     }
 
@@ -32,9 +67,16 @@ public class ToolTip : MonoBehaviour
     {
         if (currentToolTip == null)
         {
-            currentToolTip = Instantiate(_toolTipPrefab, infoCanvas.transform);
-            currentToolTip.transform.position = transform.position + new Vector3(100f, -69f, 0f);
-            currentToolTip.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _message;
+            if (infoCanvas == null)
+            {
+                currentToolTip = Instantiate(_toolTipPrefab, transform.parent);
+            }
+            else
+            {
+                currentToolTip = Instantiate(_toolTipPrefab, infoCanvas.transform);
+            }
+            currentToolTip.transform.position = transform.position + new Vector3(_xOffset, _yOffset, 0f);
+            currentToolTip.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = _message;
         }
         else
         {

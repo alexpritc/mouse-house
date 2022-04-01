@@ -82,8 +82,7 @@ public class Mouse : MonoBehaviour {
         _animator = GetComponent<Animator>();
         //_collider = GetComponent<CapsuleCollider>();
         //_collider.radius = _sensoryRadius;
-
-        _allVertices = _enclosure.MeshGen.GetMesh().vertices;
+        
         _name = PickRandomName();
     }
 

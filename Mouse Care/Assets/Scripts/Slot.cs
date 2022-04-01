@@ -9,7 +9,6 @@ public class Slot : MonoBehaviour
 {
     private bool _isUnlocked;
     private Image _preview;
-    [SerializeField] private TextMeshProUGUI _price;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private Button _button;
 
@@ -19,13 +18,12 @@ public class Slot : MonoBehaviour
     private int _id;
 
     [SerializeField] private Color _buttonColorNormal;
-    [SerializeField] private Color _buttonColorCantAfford;
     [SerializeField] private Color _buttonColorIsNotUnlocked;
 
     private Animator _animator;
     private bool _wasTooExpensive = false;
     private bool _wasUnlocked = true;
-    
+
     private void Awake()
     {
         _button.onClick.AddListener(Click);
@@ -51,24 +49,6 @@ public class Slot : MonoBehaviour
                 _animator.Play("SlotPulse");
                 _wasUnlocked = true;
             }
-
-            if (_item.Price > GameManager.Instance.MeritPoints)
-            {
-                _button.interactable = false;
-                _button.GetComponent<Image>().color = _buttonColorCantAfford;
-                _wasTooExpensive = true;
-            }
-            else
-            {
-                if (_wasTooExpensive)
-                {
-                    _animator.Play("SlotPulse");
-                }
-                
-                _button.GetComponent<Image>().color = _buttonColorNormal;
-                _button.interactable = true;
-                _wasTooExpensive = false;
-            }
         }
         else
         {
@@ -80,7 +60,6 @@ public class Slot : MonoBehaviour
     public void SetParams(Shop shop, GameObject prefab)
     {
         _item = prefab.GetComponent<Item>();
-        _price.text = _item.PriceToString + " mp";
         _name.text = _item.Name;
         _shop = shop;
         _prefab = prefab;

@@ -31,24 +31,40 @@ public class GameManager : MonoBehaviour {
         set => _gameState = value;
     }
     
-    private int s_meritPoints = 0;
-    
-    public int MeritPoints {
-        get => s_meritPoints;
-        set => s_meritPoints = value;
-    }
-    
-    private int s_mpPerMin = 100;
-    
-    public int MpPerMin {
-        get => s_mpPerMin;
-        set => s_mpPerMin = value;
+    private GameObject _enclosure;
+
+    public GameObject Enclosure
+    {
+        get => _enclosure;
+        set => _enclosure = value;
     }
 
     private bool _isInPlaceItemMode = false;
     public bool IsInPlaceItemMode{
         get => _isInPlaceItemMode;
         set => _isInPlaceItemMode = value;
+    }
+
+    private bool _isCursorOverUI = false;
+    public bool IsCursorOverUI{
+        get => _isCursorOverUI;
+        set => _isCursorOverUI = value;
+    }
+
+    public Texture2D cursorNormal;
+    public Texture2D cursorInteract;
+    public CursorMode cursorMode = CursorMode.Auto;
+
+    public void CursorEnterUI()
+    {
+        _isCursorOverUI = true;
+        Cursor.SetCursor(cursorInteract, Vector2.zero, cursorMode);
+    }
+
+    public void CursorExitUI()
+    {
+        _isCursorOverUI = false;
+        Cursor.SetCursor(cursorNormal, Vector2.zero, cursorMode);
     }
     
     private bool _isInFollowingMode = false;
@@ -69,8 +85,49 @@ public class GameManager : MonoBehaviour {
         set => _beddingInches = value;
     }
 
-    [SerializeField] private GameObject _bedding;
+    private GameObject _bedding;
 
+    private Controls _controls;
+
+    private float _beddingMultiplier;
+
+    private GameObject _prefab;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            // If Instance is ever not its first 'this',
+            //  destroy it.
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            _controls = new Controls();
+        }
+    }
+
+    public void SpawnEnclosure(GameObject prefab)
+    {
+        SceneManager.LoadScene("DecorateEnclosure");
+
+        _prefab = prefab;
+        Invoke("SetEnclosure", 0.5f);
+    }
+
+    private void SetEnclosure()
+    {
+        Enclosure = Instantiate(_prefab, transform);
+        
+        _bedding = Enclosure.GetComponent<Enclosure>().Bedding;
+        _beddingMultiplier = Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y;
+        
+        GetComponent<LookIntoEnclosure>().targets = Enclosure.GetComponent<Enclosure>().Targets;
+        GetComponent<LookIntoEnclosure>().radius = Enclosure.GetComponent<Enclosure>().Radius;
+    }
+    
     public void IncrementStage()
     {
         switch (_gameState)
@@ -90,13 +147,16 @@ public class GameManager : MonoBehaviour {
             case GameState.Rating:
                 _gameState = GameState.Feedback;
                 break;
+            case GameState.Feedback:
+                _gameState = GameState.DecorFloor;
+                break;
         }
     }
-
+    
     public void FillBedding()
     {
-        if (_gameState == GameState.FillBedding)
-        {
+        //if (_gameState == GameState.FillBedding)
+        //{
             _beddingInches += 0.2f;
             if (_beddingInches > 1)
             {
@@ -106,79 +166,12 @@ public class GameManager : MonoBehaviour {
             else
             {
                 _bedding.SetActive(true);
-                _bedding.transform.localScale = new Vector3(_bedding.transform.localScale.x, _beddingInches,
+                _bedding.transform.localScale = new Vector3(_bedding.transform.localScale.x, _beddingInches * _beddingMultiplier,
                     _bedding.transform.localScale.z);
             }   
-        }
-    }
-
-    private Controls _controls;
-
-    [SerializeField] private TextMeshProUGUI _TextBoxMP;
-    [SerializeField] private TextMeshProUGUI _TextBoxMPMin;
-
-    [SerializeField] private Color textColorNormal;
-    [SerializeField] private Color textColorIncrease;
-    [SerializeField] private Color textColorDecrease;
-
-    void Awake() {
-
-        if (s_instance != null) {
-            Destroy(s_instance.gameObject);
-        }
-
-        s_instance = this;
-        _controls = new Controls();
-        _controls.GameManager.ToggleItemPlaceMode.performed += ctx => IsInPlaceItemMode = !_isInPlaceItemMode;
+        //}
     }
     
-    void Start() {
-        InvokeRepeating("Tick", 1f, 15);
-        
-        // TODO: Remove "tock" once way to modify MP/min has been added
-        InvokeRepeating("Tock", 0f, 5);
-        _TextBoxMPMin.text = s_mpPerMin.ToString();
-    }
-    void Tick()
-    {
-        float target = s_meritPoints + s_mpPerMin / 4;
-        StartCoroutine(ModifyPoints( s_meritPoints, target, Time.time));
-    }
-    
-    void Tock()
-    {
-        float target = s_mpPerMin + Random.Range(1, 16);
-        StartCoroutine(ModifyPoints(s_mpPerMin, target, Time.time, false));
-    }
-    
-    public IEnumerator ModifyPoints(float startValue, float endValue, float startTime, bool isMP = true, float timeToLerp = 1f)
-    {
-        float percentage = 0f;
-        int result = 0;
-        
-        TextMeshProUGUI textBox = isMP ? _TextBoxMP : _TextBoxMPMin;
-
-        while (percentage < 1f) {
-            percentage = (Time.time - startTime) / timeToLerp;
-            result = (int)Mathf.Lerp(startValue, endValue, percentage);
-
-            s_meritPoints = isMP ? result : s_meritPoints;
-            s_mpPerMin = isMP ? s_mpPerMin : result;
-
-            if (textBox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name != "MPJuice")
-            {
-                textBox.GetComponent<Animator>().Play("MPJuice");   
-            }
-
-            textBox.color = (startValue < endValue) ? textColorIncrease : textColorDecrease;
-            textBox.text = result.ToString();
-
-            yield return null;
-        }
-        
-        textBox.color = textColorNormal;
-    }
-
     private void OnEnable() {
         _controls.Enable();
     }

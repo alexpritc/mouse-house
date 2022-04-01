@@ -34,15 +34,9 @@ public class MeshGenerator : MonoBehaviour {
 
     [HideInInspector] public Vector3[] _gridPositions;
 
-    [SerializeField] private Enclosure _enclosure;
-
     void Start()
     {
-        if (_mesh != null) {
-            _enclosure.MeshGen = this;
-            return;
-        }
-        
+
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
 
@@ -52,9 +46,7 @@ public class MeshGenerator : MonoBehaviour {
         
         CreateShape();
         UpdateMesh();
-        SaveMesh("Assets/Meshes/mesh2.asset");
-
-        _enclosure.MeshGen = this;
+        //SaveMesh("Assets/Meshes/mesh2.asset");
     }
 
     void CreateShape()
@@ -208,10 +200,10 @@ public class MeshGenerator : MonoBehaviour {
         gameObject.GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
     
-    private void SaveMesh(string path) {
-        AssetDatabase.CreateAsset(_mesh, path);
-        AssetDatabase.SaveAssets();
-    }
+    // private void SaveMesh(string path) {
+    //     AssetDatabase.CreateAsset(_mesh, path);
+    //     AssetDatabase.SaveAssets();
+    // }
 
     public Mesh GetMesh() {
         return _mesh;
