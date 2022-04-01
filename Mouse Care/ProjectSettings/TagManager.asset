@@ -10,6 +10,7 @@ TagManager:
   - Mouse
   - Item
   - UI
+  - Walls
   layers:
   - Default
   - TransparentFX

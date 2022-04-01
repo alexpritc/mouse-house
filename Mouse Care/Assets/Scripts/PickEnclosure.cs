@@ -28,6 +28,8 @@ public class PickEnclosure : MonoBehaviour
     private void Awake()
     {
         _currentEnclosure = 0;
+        EnclosureInfoPanel.GetComponent<DisplayEnclosurePanelUI>().SetInitialValues(_enclosuresInScene[_currentEnclosure]
+            .GetComponent<Enclosure>());
         
         SetButtonComponents(_leftButton, _leftButtonIcon, false);
         SetButtonComponents(_rightButton, _rightButtonIcon, true);
