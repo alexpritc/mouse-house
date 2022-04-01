@@ -1770,11 +1770,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfoPanelEnclosure
       objectReference: {fileID: 0}
-    - target: {fileID: 5457457425913688531, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_text
-      value: 6 - 8 mice
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6999c524d392e245aa2417aa805d0c9, type: 3}
 --- !u!224 &985917859 stripped
