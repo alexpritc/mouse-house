@@ -55,10 +55,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07d1f7af51a5164d8b594e9bcb33377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Large DIY Enclosure
-  _description: 
-  _floorspace: 
-  _beddingInInches: 0
+  _name: Wooden Enclosure
+  _description: "A popular handmade enclosure, made from Swedish flatpack furniture.
+    \nThe glass front allows for a deep layer of substrate for burrowing."
+  _floorspace: 877 sq inches
+  _internalDimensions: 39.5'' x 22'' x 18.5''
+  _beddingInInches: 12"
+  _mice: 6 - 8 mice
   Targets:
   - {fileID: 8783812853321775366}
   - {fileID: 5631882817167097153}
@@ -169,7 +172,7 @@ GameObject:
   - component: {fileID: 2605644963521413477}
   m_Layer: 9
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -403,7 +406,7 @@ GameObject:
   - component: {fileID: 4027228792316852239}
   m_Layer: 9
   m_Name: Lid
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -543,7 +546,7 @@ GameObject:
   - component: {fileID: 4820542771400359680}
   m_Layer: 9
   m_Name: Front
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -682,7 +685,7 @@ GameObject:
   - component: {fileID: 6372176285555067797}
   m_Layer: 9
   m_Name: Back
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -777,7 +780,7 @@ GameObject:
   - component: {fileID: 8877127835389416486}
   m_Layer: 9
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

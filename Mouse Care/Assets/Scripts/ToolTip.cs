@@ -54,6 +54,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (_hasToolTip)
         {
+            GameManager.Instance.CursorExitUI();
             CancelInvoke("Display");
         
             if (currentToolTip != null)

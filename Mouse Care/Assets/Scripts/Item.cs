@@ -75,7 +75,7 @@ public class Item : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Item"))
+        if (other.CompareTag("Item") || other.CompareTag("Walls"))
         {
             _canSpawn = false;
         }
@@ -84,7 +84,7 @@ public class Item : MonoBehaviour
     
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Item"))
+        if (other.CompareTag("Item") || other.CompareTag("Walls"))
         {
             _canSpawn = true;
         }
