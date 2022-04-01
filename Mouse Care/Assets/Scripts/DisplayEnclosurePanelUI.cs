@@ -12,6 +12,7 @@ public class DisplayEnclosurePanelUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _descriptionText;
     [SerializeField] private TextMeshProUGUI _internalDimensionsText;
     [SerializeField] private TextMeshProUGUI _floorspaceText;
+    [SerializeField] private TextMeshProUGUI _miceText;
     [HideInInspector] public Enclosure Enclosure;
 
     public void SetInitialValues(Enclosure e)
@@ -21,5 +22,6 @@ public class DisplayEnclosurePanelUI : MonoBehaviour
         _descriptionText.text = Enclosure.Description;
         _floorspaceText.text = Enclosure.Floorspace;
         _internalDimensionsText.text = Enclosure.Dimensions;
+        _miceText.text = Enclosure.Mice;
     }
 }

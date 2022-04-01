@@ -666,11 +666,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Wirebar Cage
-  _description: "A 7mm spaced wirebar cage available from most pet stores. \n\nThe
+  _description: "A 7mm spaced wirebar cage available from most pet stores. \nThe
     base height is 6.3\", which means it can't hold deep bedding."
   _floorspace: 760 sq inches
   _internalDimensions: "38\" x 20\u2033 x 16\u2033"
   _beddingInInches: 6"
+  _mice: 4 - 6 mice
   Targets:
   - {fileID: 1481055766}
   Bedding: {fileID: 7697283690888185795}

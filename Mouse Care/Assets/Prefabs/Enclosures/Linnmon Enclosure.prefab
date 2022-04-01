@@ -57,10 +57,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Wooden Enclosure
   _description: "A popular handmade enclosure, made from Swedish flatpack furniture.
-    \n\nThe glass front allows for a deep layer of substrate for burrowing."
+    \nThe glass front allows for a deep layer of substrate for burrowing."
   _floorspace: 877 sq inches
   _internalDimensions: 39.5'' x 22'' x 18.5''
   _beddingInInches: 12"
+  _mice: 6 - 8 mice
   Targets:
   - {fileID: 8783812853321775366}
   - {fileID: 5631882817167097153}

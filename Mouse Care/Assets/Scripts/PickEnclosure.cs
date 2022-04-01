@@ -52,8 +52,6 @@ public class PickEnclosure : MonoBehaviour
     {
         _currentEnclosure++;
         NewEnclosure();
-        
-        Debug.Log("current: " + _currentEnclosure + " of " + _enclosuresInScene.Length);
 
         // Hide/show the correct buttons
         SetButtonComponents(_leftButton, _leftButtonIcon, true);
@@ -68,9 +66,7 @@ public class PickEnclosure : MonoBehaviour
         _currentEnclosure--;
 
         NewEnclosure();
-        
-        Debug.Log("current: " + _currentEnclosure + " of " + _enclosuresInScene.Length);
-        
+
         // Hide/show the correct buttons
         SetButtonComponents(_rightButton, _rightButtonIcon, true);
         if (_currentEnclosure == 0)

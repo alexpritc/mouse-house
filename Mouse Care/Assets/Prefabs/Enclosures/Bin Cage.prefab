@@ -57,12 +57,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Bin Cage
-  _description: "This DIY Bin cage is popular with those who have less space in their
-    pet rooms. \n\nWhat it lacks in floorspace, it makes up for in height. It is
-    perfect for hanging toys and deep bedding."
+  _description: 'This DIY Bin cage is popular with those who have less space in their
+    pet rooms.
+
+    What it lacks in floorspace, it makes up for in verticality.'
   _floorspace: 615 sq inches
   _internalDimensions: 31.5" x 19.5" x 19.5"
   _beddingInInches: 15"
+  _mice: 4 mice
   Targets:
   - {fileID: 6007400756536456668}
   - {fileID: 5992253008340786749}

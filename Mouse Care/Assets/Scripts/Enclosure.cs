@@ -24,6 +24,11 @@ public class Enclosure : MonoBehaviour
     /// </summary>
     [SerializeField] private string _beddingInInches;
 
+    /// <summary>
+    /// How many mice can this enclosure comfortably hold
+    /// </summary>
+    [SerializeField] private string _mice;
+
     
     public Transform[] Targets;
 
@@ -54,5 +59,10 @@ public class Enclosure : MonoBehaviour
     public string BeddingInInches
     {
         get => _beddingInInches;
+    }
+    
+    public string Mice
+    {
+        get => _mice;
     }
 }

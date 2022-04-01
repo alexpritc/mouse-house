@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 175647884}
   - component: {fileID: 175647883}
   - component: {fileID: 175647882}
+  - component: {fileID: 175647886}
   m_Layer: 5
   m_Name: Left Button
   m_TagString: Untagged
@@ -228,7 +229,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2125859579}
         m_TargetAssemblyTypeName: PickEnclosure, Assembly-CSharp
-        m_MethodName: NextEnclosure
+        m_MethodName: PreviousEnclosure
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -276,6 +277,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175647880}
   m_CullTransparentMesh: 1
+--- !u!95 &175647886
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175647880}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: db3891aea5ae1254181994968b35f7f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &230009664
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +405,7 @@ MonoBehaviour:
   _floorspace: 
   _internalDimensions: 
   _beddingInInches: 
+  _mice: 
   Targets: []
   Bedding: {fileID: 0}
   Radius: 0
@@ -798,7 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 963194227}
-  _leftButton: {fileID: 0}
+  _leftButton: {fileID: 175647886}
   _confirmButton: {fileID: 715006316}
   InfoPanel: {fileID: 1233552231}
 --- !u!1 &347087680
@@ -1639,41 +1660,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1446147982}
     m_Modifications:
-    - target: {fileID: 440674442665521090, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 440674442665521090, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.6784314
-      objectReference: {fileID: 0}
-    - target: {fileID: 440674442665521090, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 440674442665521090, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.38431373
-      objectReference: {fileID: 0}
-    - target: {fileID: 759137856006293959, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_Name
-      value: BG
-      objectReference: {fileID: 0}
-    - target: {fileID: 1581062459930719878, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 287.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1581062459930719878, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 42.7
-      objectReference: {fileID: 0}
     - target: {fileID: 2336960733548335079, guid: c6999c524d392e245aa2417aa805d0c9,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1784,33 +1770,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfoPanelEnclosure
       objectReference: {fileID: 0}
-    - target: {fileID: 2336960733548335096, guid: c6999c524d392e245aa2417aa805d0c9,
+    - target: {fileID: 5457457425913688531, guid: c6999c524d392e245aa2417aa805d0c9,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_text
+      value: 6 - 8 mice
       objectReference: {fileID: 0}
-    - target: {fileID: 3098861820032165164, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3302894048157960484, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 3302894048157960484, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686372073392929908, guid: c6999c524d392e245aa2417aa805d0c9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3098861820032165164, guid: c6999c524d392e245aa2417aa805d0c9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6999c524d392e245aa2417aa805d0c9, type: 3}
 --- !u!224 &985917859 stripped
 RectTransform:
@@ -1922,25 +1887,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 985917858}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1233552231
+--- !u!95 &1233552231 stripped
 Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1233552231, guid: c6999c524d392e245aa2417aa805d0c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 985917858}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233552230}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 47b2b09bb0d1baf4997e108d0b500463, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1251391793
 GameObject:
   m_ObjectHideFlags: 0
