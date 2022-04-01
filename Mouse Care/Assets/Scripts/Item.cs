@@ -17,9 +17,9 @@ public class Item : MonoBehaviour
     
     public float GetYPos()
     {
-        if (GameManager.Instance.GameState == GameState.DecorFloor)
+        if (GameManager.Instance.BeddingInches == 0f)
         {
-            return 0f;
+            return _yPos;
         }
         else
         {

@@ -395,7 +395,7 @@ MonoBehaviour:
   _name: Corner Platform
   _description: This platform is perfect for fitting into the corners of your enclosure.
   _isUnlocked: 1
-  _yPos: 5
+  _yPos: 0
   prefab: {fileID: 8024272126375560158}
   _changeableMaterialIndex: 0
   canPlaceOnTopOf: 1
