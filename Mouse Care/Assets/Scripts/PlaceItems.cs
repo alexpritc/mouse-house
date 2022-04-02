@@ -107,7 +107,7 @@ public class PlaceItems : MonoBehaviour
                 }
 
                 _preview.transform.position =
-                    hit.point - new Vector3(0f, _previewItem.GetYPos(), 0f);
+                    hit.point - new Vector3(_previewItem.XOffset, _previewItem.GetYPos(), _previewItem.ZOffset);
             }
             else
             {

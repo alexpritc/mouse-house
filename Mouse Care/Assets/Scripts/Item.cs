@@ -14,6 +14,19 @@ public class Item : MonoBehaviour
     [SerializeField] private int _changeableMaterialIndex;
 
     public bool canPlaceOnTopOf;
+
+    [SerializeField] private float _xOffset = 0f;
+    [SerializeField] private float _zOffset = 0f;
+
+    public float XOffset
+    {
+        get => _xOffset;
+    }
+    
+    public float ZOffset
+    {
+        get => _zOffset;
+    }
     
     public float GetYPos()
     {

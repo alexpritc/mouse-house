@@ -2774,6 +2774,9 @@ MonoBehaviour:
   - {fileID: 8230822631956205017, guid: aa59c63d6925a0146815b982d20f73f9, type: 3}
   - {fileID: 2910931022121109444, guid: fa751fc0230f1b149abe6e8804c3c0ba, type: 3}
   - {fileID: 4502781726421034703, guid: 29b4ef4d29c2e224cb483ff6ef104747, type: 3}
+  - {fileID: 6571561008392935032, guid: 15dcde2bb90b0f346a98d5af709feda4, type: 3}
+  - {fileID: 8066363667966654253, guid: 866a4aaa1944ef04dbc524f8a22b7fbb, type: 3}
+  - {fileID: 2187441252197314719, guid: 0c80fde215d63ea4caa05381cf2e035e, type: 3}
   itemUI: {fileID: 2691075277240077810, guid: 6e5493e907a4f2e44b6faf2852abe25a, type: 3}
   _panel: {fileID: 63826766}
   _statusPanelController: {fileID: 409232477}
@@ -3223,6 +3226,7 @@ MonoBehaviour:
   - {fileID: 5429473845267634169, guid: bde982d6f16de4445a988b4bb9c685b9, type: 3}
   - {fileID: 8024272126375560158, guid: 2bf7ae2253445b84fbcc84d6eed1393f, type: 3}
   - {fileID: 2463699302608154118, guid: 2ea388e55e31daa46824814ec2160172, type: 3}
+  - {fileID: 430105530728239288, guid: 8352c6673c3ac2b439cf241a480a8dd8, type: 3}
   itemUI: {fileID: 2691075277240077810, guid: 6e5493e907a4f2e44b6faf2852abe25a, type: 3}
   _panel: {fileID: 63826766}
   _statusPanelController: {fileID: 409232477}
