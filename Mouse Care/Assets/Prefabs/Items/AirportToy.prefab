@@ -291,14 +291,18 @@ MonoBehaviour:
   _yPos: -0.1
   prefab: {fileID: 8751586612399875012}
   _changeableMaterialIndex: 1
+  _preview: {fileID: 21300000, guid: 3b4aa1a0a6ab2384cb2bc2a63ca827d7, type: 3}
   canPlaceOnTopOf: 0
+  _xOffset: 0
+  _zOffset: 0
+  _itemType: 0
+  _enrichment: low
+  _stress: none
   corners:
   - {fileID: 8196189281259038338}
   - {fileID: 4198861214217535739}
   - {fileID: 7925569633706188555}
   - {fileID: 6956981717618472798}
-  _enrichment: low
-  _stress: none
 --- !u!65 &3692690031278775048
 BoxCollider:
   m_ObjectHideFlags: 0

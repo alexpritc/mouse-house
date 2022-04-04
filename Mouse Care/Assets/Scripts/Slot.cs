@@ -8,7 +8,7 @@ using TMPro;
 public class Slot : MonoBehaviour
 {
     private bool _isUnlocked;
-    private Image _preview;
+    [SerializeField] private Image _preview;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private Button _button;
 
@@ -31,7 +31,6 @@ public class Slot : MonoBehaviour
 
     private void Start()
     {
-        _preview = GetComponent<Image>();
         _animator = GetComponent<Animator>();
     }
 
@@ -63,8 +62,12 @@ public class Slot : MonoBehaviour
         _name.text = _item.Name;
         _shop = shop;
         _prefab = prefab;
-        _preview = _item.Preview;
         
+        if (_item.Preview != null)
+        {
+            _preview.sprite = _item.Preview;   
+        }
+
         _button.interactable = _item.IsUnlocked;
         _isUnlocked = _item.IsUnlocked;
     }

@@ -22,7 +22,7 @@ public class Item : MonoBehaviour
     [SerializeField] private float _yPos;
     public GameObject prefab;
     [SerializeField] private int _changeableMaterialIndex;
-    [SerializeField] private Image _preview;
+    [SerializeField] private Sprite _preview;
     public bool canPlaceOnTopOf;
 
     [SerializeField] private float _xOffset = 0f;
@@ -104,7 +104,7 @@ public class Item : MonoBehaviour
         set => _itemType = value;
     }
     
-    public Image Preview
+    public Sprite Preview
     {
         get => _preview;
     }
