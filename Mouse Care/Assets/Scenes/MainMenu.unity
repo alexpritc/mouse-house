@@ -254,8 +254,8 @@ MonoBehaviour:
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
   infoCanvas: {fileID: 1446147985}
-  _xOffset: 0
-  _yOffset: -75
+  _xOffset: 60
+  _yOffset: -120
   _hasToolTip: 1
 --- !u!114 &277214735
 MonoBehaviour:
@@ -899,8 +899,8 @@ MonoBehaviour:
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
   infoCanvas: {fileID: 1446147985}
-  _xOffset: 0
-  _yOffset: -75
+  _xOffset: 60
+  _yOffset: -120
   _hasToolTip: 1
 --- !u!114 &1093424422
 MonoBehaviour:
@@ -1052,8 +1052,8 @@ MonoBehaviour:
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
   infoCanvas: {fileID: 1446147985}
-  _xOffset: 0
-  _yOffset: -75
+  _xOffset: 60
+  _yOffset: -140
   _hasToolTip: 1
 --- !u!114 &1227929346
 MonoBehaviour:
