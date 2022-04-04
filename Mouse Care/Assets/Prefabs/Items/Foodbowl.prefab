@@ -180,9 +180,12 @@ MonoBehaviour:
   prefab: {fileID: 8418734521880020837}
   _changeableMaterialIndex: 1
   canPlaceOnTopOf: 0
-  corners: []
+  _xOffset: 0
+  _zOffset: 0
+  _itemType: 3
   _enrichment: Low
   _stress: Low
+  corners: []
 --- !u!114 &4859685027056228338
 MonoBehaviour:
   m_ObjectHideFlags: 0

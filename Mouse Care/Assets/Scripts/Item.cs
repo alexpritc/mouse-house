@@ -2,9 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+
+public enum ItemType {
+    Decoration,
+    Exercise,
+    Housing,
+    Forage,
+}
 
 public class Item : MonoBehaviour
 {
+
     [SerializeField] private string _name;
     //TextAreaAttribute(int minLines, int maxLines);
     [@TextAreaAttribute(5,10)]  [SerializeField] private string _description;
@@ -18,6 +27,18 @@ public class Item : MonoBehaviour
     [SerializeField] private float _xOffset = 0f;
     [SerializeField] private float _zOffset = 0f;
 
+    [Header("Ratings")] [SerializeField] private ItemType _itemType;
+    
+    /// <summary>
+    /// How much enrichment this item gives
+    /// </summary>
+    public string _enrichment;
+    
+    /// <summary>
+    /// How much stress this item gives
+    /// </summary>
+    public string _stress;
+    
     public float XOffset
     {
         get => _xOffset;
@@ -68,16 +89,6 @@ public class Item : MonoBehaviour
     /// </summary>
     public Transform[] corners;
 
-    /// <summary>
-    /// How much enrichment this item gives
-    /// </summary>
-    public string _enrichment;
-    
-    /// <summary>
-    /// How much stress this item gives
-    /// </summary>
-    public string _stress;
-
     private bool _canSpawn = true;
 
     public bool CanSpawn
@@ -86,6 +97,12 @@ public class Item : MonoBehaviour
         set => _canSpawn = value;
     }
 
+    public ItemType ItemType
+    {
+        get => _itemType;
+        set => _itemType = value;
+    }
+    
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Item") || other.CompareTag("Walls"))

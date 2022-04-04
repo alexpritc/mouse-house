@@ -36,7 +36,7 @@ public class DisplayInfoPanelUI : MonoBehaviour
     public void DestroyGameObject()
     {
         so.Remove();
-        //GameManager.Instance.gameObject.GetComponent<SelectObject>().Remove();
+        GameManager.Instance.RemoveFromItems(Item);
         GameManager.Instance.CursorExitUI();
         Destroy(Item.gameObject);
     }
@@ -47,8 +47,10 @@ public class DisplayInfoPanelUI : MonoBehaviour
         panelManager.GetComponent<PlaceItems>().ItemPrefab = Item.prefab;
         GameManager.Instance.IsInPlaceItemMode = true;
         GameManager.Instance.CursorExitUI();
+        GameManager.Instance.RemoveFromItems(Item);
         panelManager.GetComponent<PlaceItems>().ResetPreview(ItemTransForm, true);
         Item.gameObject.SetActive(false);
+        
     }
 
     public void UpdateColour(Color newColour)

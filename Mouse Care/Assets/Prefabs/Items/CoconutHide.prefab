@@ -136,9 +136,10 @@ MonoBehaviour:
   canPlaceOnTopOf: 0
   _xOffset: 0
   _zOffset: 0
-  corners: []
+  _itemType: 2
   _enrichment: Low
   _stress: Low
+  corners: []
 --- !u!114 &890439622942749508
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -258,8 +258,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000018555, y: -9.48}
-  m_SizeDelta: {x: 32.413, y: 2.8614}
+  m_AnchoredPosition: {x: -0.025393, y: -11.1902}
+  m_SizeDelta: {x: 23.7335, y: 5.8436}
   m_Pivot: {x: 0.50000006, y: 0.5000001}
 --- !u!222 &3308814219364804697
 CanvasRenderer:
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Airport toy
+  m_text: Item name goes here :)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34452405da6d1244f9c95e614e31514d, type: 2}
   m_sharedMaterial: {fileID: -5993047741169541596, guid: 34452405da6d1244f9c95e614e31514d,

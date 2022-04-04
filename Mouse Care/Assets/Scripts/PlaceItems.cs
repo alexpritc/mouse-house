@@ -163,8 +163,10 @@ public class PlaceItems : MonoBehaviour
             {
                 GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
                     new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
-                        _preview.transform.rotation.z, _preview.transform.rotation.w));
+                        _preview.transform.rotation.z, _preview.transform.rotation.w), GameManager.Instance.transform);
 
+                GameManager.Instance.AddToItems(go.GetComponent<Item>());
+                
                 if (isMovingExistingItem)
                 {
                     go.SetActive(true);

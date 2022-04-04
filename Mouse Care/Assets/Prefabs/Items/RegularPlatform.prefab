@@ -187,13 +187,16 @@ MonoBehaviour:
   prefab: {fileID: 5429473845267634169}
   _changeableMaterialIndex: 0
   canPlaceOnTopOf: 1
+  _xOffset: 0
+  _zOffset: 0
+  _itemType: 0
+  _enrichment: low
+  _stress: none
   corners:
   - {fileID: 8583091131240366669}
   - {fileID: 5583811179256547262}
   - {fileID: 1211048386816503525}
   - {fileID: 1487240511201480682}
-  _enrichment: low
-  _stress: none
 --- !u!65 &6828826746023687710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -309,8 +312,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.4814773, y: 0.18, z: 7.935132}
-  m_Center: {x: 0, y: 4.41, z: -0.00000023841858}
+  m_Size: {x: 4.4814773, y: 0.23351203, z: 7.9351325}
+  m_Center: {x: 0, y: 4.4367576, z: -0.00000042385525}
 --- !u!1 &7183058500233299371
 GameObject:
   m_ObjectHideFlags: 0
