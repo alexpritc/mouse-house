@@ -13,4 +13,14 @@ public class TraverseScenesViaGameManager : MonoBehaviour
     {
         GameManager.Instance.BackToDecorating();
     }
+
+    public void PickEnclosure()
+    {
+        GameManager.Instance.PickEnclosure();
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

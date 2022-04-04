@@ -11,6 +11,16 @@ public class DisplayRating : MonoBehaviour
     private int _total;
     private int _current = 00000;
     
+    public Camera Camera;
+
+    private float _viewportWidthNormal = 0f;
+    private float _viewportWidthInfoMode = 0.3f;
+    
+    private float x = 0f;
+    private float speed = 0.0000001f;
+
+    [SerializeField] private Animator RecommendationsPanel;
+    public bool toggle;
     void Awake()
     {
         _scoreTextbox = GetComponent<TextMeshProUGUI>();
@@ -24,8 +34,33 @@ public class DisplayRating : MonoBehaviour
         {
             StartCoroutine(AddToScoreDisplay());
         }
+        
+        if (toggle)
+        {
+            x = Mathf.Lerp(_viewportWidthInfoMode, _viewportWidthNormal, speed * Time.deltaTime);
+        }
+        else
+        {
+            x = Mathf.Lerp(_viewportWidthNormal, _viewportWidthInfoMode, speed * Time.deltaTime);
+        }
+        
+        Camera.rect = new Rect(x, 0.0f, 1.0f, 1.0f);
     }
 
+    public void ToggleRecommendations()
+    {
+        toggle = !toggle;
+
+        if (toggle)
+        {
+            RecommendationsPanel.CrossFade("Hidden_To_Visible", 0.2f);
+        }
+        else
+        {
+            RecommendationsPanel.CrossFade("Visible_To_Hidden", 0.2f);
+        }
+    }
+    
     private IEnumerator AddToScoreDisplay()
     {
         string temp = "";
@@ -77,11 +112,19 @@ public class DisplayRating : MonoBehaviour
             _letterTextbox.text = "S";
         }
 
-        if (_current > GameManager.Instance.Score)
+        if (_current >= GameManager.Instance.Score)
         {
             _current = GameManager.Instance.Score;
+            
+            string clipInfo = RecommendationsPanel.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+
+            if (clipInfo != "Visible" && clipInfo != "Hidden_To_Visible")
+            {
+                RecommendationsPanel.CrossFade("Hidden_To_Visible", 0.2f); 
+                toggle = true;
+            }
         }
-        
+
         _scoreTextbox.text = temp + _current.ToString();
         yield return new WaitForEndOfFrame();
     }

@@ -8,7 +8,7 @@ public class LookIntoEnclosure : MonoBehaviour
     public float radius;
     private List<Transform> obstructions;
 
-    private bool isEnabled;
+    public bool isEnabled;
     
     void Start()
     {

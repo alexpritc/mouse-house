@@ -63,6 +63,7 @@ public class Slot : MonoBehaviour
         _name.text = _item.Name;
         _shop = shop;
         _prefab = prefab;
+        _preview = _item.Preview;
         
         _button.interactable = _item.IsUnlocked;
         _isUnlocked = _item.IsUnlocked;

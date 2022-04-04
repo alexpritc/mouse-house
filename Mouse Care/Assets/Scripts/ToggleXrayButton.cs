@@ -11,6 +11,15 @@ public class ToggleXrayButton : MonoBehaviour
     
     private void Awake()
     {
+        if (GameManager.Instance.GetComponent<LookIntoEnclosure>().isEnabled)
+        {
+            icon.sprite = on;
+        }
+        else
+        {
+            icon.sprite = off;
+        }
+        
         GetComponent<Button>().onClick.AddListener(Click);
     }
 

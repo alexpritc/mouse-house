@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public enum ItemType {
     Decoration,
@@ -21,7 +22,7 @@ public class Item : MonoBehaviour
     [SerializeField] private float _yPos;
     public GameObject prefab;
     [SerializeField] private int _changeableMaterialIndex;
-
+    [SerializeField] private Image _preview;
     public bool canPlaceOnTopOf;
 
     [SerializeField] private float _xOffset = 0f;
@@ -101,6 +102,11 @@ public class Item : MonoBehaviour
     {
         get => _itemType;
         set => _itemType = value;
+    }
+    
+    public Image Preview
+    {
+        get => _preview;
     }
     
     private void OnTriggerStay(Collider other)
