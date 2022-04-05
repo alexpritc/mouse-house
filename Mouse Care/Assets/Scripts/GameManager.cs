@@ -479,6 +479,16 @@ public class GameManager : MonoBehaviour {
     {
         SceneManager.LoadScene("PickEnclosure");
     }
+    
+    public void Settings()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+    
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 
     // Controls
     private void OnEnable() {

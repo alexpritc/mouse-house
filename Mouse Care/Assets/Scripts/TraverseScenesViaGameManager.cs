@@ -23,4 +23,14 @@ public class TraverseScenesViaGameManager : MonoBehaviour
     {
         Application.Quit();
     }
+    
+    public void Settings()
+    {
+        GameManager.Instance.Settings();
+    }
+    
+    public void MainMenu()
+    {
+        GameManager.Instance.MainMenu();
+    }
 }

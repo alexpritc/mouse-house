@@ -102,7 +102,7 @@ MonoBehaviour:
   _name: Branch
   _description: For a naturalistic enclosure
   _isUnlocked: 1
-  _yPos: -2
+  _yPos: -1
   prefab: {fileID: 430105530728239288}
   _changeableMaterialIndex: 0
   _preview: {fileID: 21300000, guid: 9b02f76589fcd894e807759403f85409, type: 3}

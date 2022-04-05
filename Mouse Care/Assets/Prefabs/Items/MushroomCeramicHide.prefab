@@ -146,9 +146,9 @@ MonoBehaviour:
   _name: Mushroom Hide
   _description: Cutesy mushroom forest hide.
   _isUnlocked: 1
-  _yPos: -2
+  _yPos: -1
   prefab: {fileID: 6571561008392935032}
-  _changeableMaterialIndex: 0
+  _changeableMaterialIndex: 1
   _preview: {fileID: 21300000, guid: aad4506d4fc8cec4aaee3cb2e09b44af, type: 3}
   canPlaceOnTopOf: 0
   _xOffset: 0
