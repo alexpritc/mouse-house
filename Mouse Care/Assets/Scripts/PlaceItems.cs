@@ -55,7 +55,8 @@ public class PlaceItems : MonoBehaviour
         _preview.GetComponent<MeshRenderer>().receiveShadows = false;
         Destroy(_preview.GetComponent<NavMeshObstacle>());
         Destroy(_preview.GetComponentInChildren<NavMeshObstacle>()); 
-
+        Destroy(_preview.GetComponentInChildren<AudioSource>()); 
+        
         _previewItem = _preview.GetComponent<Item>();
 
         if (_previewItem.canPlaceOnTopOf)
@@ -107,7 +108,7 @@ public class PlaceItems : MonoBehaviour
                 }
 
                 _preview.transform.position =
-                    hit.point - new Vector3(0f, _previewItem.GetYPos(), 0f);
+                    hit.point - new Vector3(_previewItem.XOffset, _previewItem.GetYPos(), _previewItem.ZOffset);
             }
             else
             {
@@ -163,8 +164,10 @@ public class PlaceItems : MonoBehaviour
             {
                 GameObject go = Instantiate(_itemPrefab, _preview.transform.position,
                     new Quaternion(_preview.transform.rotation.x, _preview.transform.rotation.y,
-                        _preview.transform.rotation.z, _preview.transform.rotation.w));
+                        _preview.transform.rotation.z, _preview.transform.rotation.w), GameManager.Instance.transform);
 
+                GameManager.Instance.AddToItems(go.GetComponent<Item>());
+                
                 if (isMovingExistingItem)
                 {
                     go.SetActive(true);

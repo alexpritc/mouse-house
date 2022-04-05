@@ -7,6 +7,7 @@ MonoImporter:
   - _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
       type: 3}
   - infoCanvas: {instanceID: 0}
+  - _clickAudioClip: {fileID: 8300000, guid: 9345544b328400449b6e67f631eb392b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

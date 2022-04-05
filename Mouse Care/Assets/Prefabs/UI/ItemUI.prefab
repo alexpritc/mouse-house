@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.08150634, y: 2.0523012}
+  m_AnchoredPosition: {x: 0, y: 2.2}
   m_SizeDelta: {x: 16.3828, y: 17.1179}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8401806496552971081
@@ -58,14 +58,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 62d8b40dfa8be744a835bc5cfe04d77c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 7515705118903040101}
   - component: {fileID: 2691075277240077811}
   - component: {fileID: 7584939335092553682}
+  - component: {fileID: 1783871205765925068}
   m_Layer: 5
   m_Name: ItemUI
   m_TagString: Untagged
@@ -105,7 +106,7 @@ RectTransform:
   m_GameObject: {fileID: 2691075277240077810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1308814221588684999}
   - {fileID: 5227869572013264568}
@@ -138,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18dc013654340fd438e820d5470a0a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _preview: {fileID: 3172893333873673348}
   _name: {fileID: 3308814219364804698}
   _button: {fileID: 2691075277240077811}
   _buttonColorNormal: {r: 0.22352943, g: 0.42352945, b: 0.4156863, a: 1}
@@ -224,6 +226,35 @@ MonoBehaviour:
   _xOffset: 160
   _yOffset: -60
   _hasToolTip: 0
+--- !u!114 &1783871205765925068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691075277240077810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7515705118903040101}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SlotPulse
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3308814219364804700
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,8 +289,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000018555, y: -9.48}
-  m_SizeDelta: {x: 32.413, y: 2.8614}
+  m_AnchoredPosition: {x: -0.025393, y: -11.1902}
+  m_SizeDelta: {x: 23.7335, y: 5.8436}
   m_Pivot: {x: 0.50000006, y: 0.5000001}
 --- !u!222 &3308814219364804697
 CanvasRenderer:
@@ -289,7 +320,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Airport toy
+  m_text: Item name goes here :)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34452405da6d1244f9c95e614e31514d, type: 2}
   m_sharedMaterial: {fileID: -5993047741169541596, guid: 34452405da6d1244f9c95e614e31514d,

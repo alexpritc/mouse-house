@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 7116026017597210206}
   - component: {fileID: 4041866927718811032}
   - component: {fileID: 5755704085239800339}
+  - component: {fileID: 5954946069030860751}
   m_Layer: 0
   m_Name: CornerPlatform
   m_TagString: Item
@@ -395,10 +396,16 @@ MonoBehaviour:
   _name: Corner Platform
   _description: This platform is perfect for fitting into the corners of your enclosure.
   _isUnlocked: 1
-  _yPos: 5
+  _yPos: 0
   prefab: {fileID: 8024272126375560158}
   _changeableMaterialIndex: 0
+  _preview: {fileID: 21300000, guid: c66d194f3cf3d19429c30e643852b8f6, type: 3}
   canPlaceOnTopOf: 1
+  _xOffset: 0
+  _zOffset: 0
+  _itemType: 0
+  _enrichment: low
+  _stress: none
   corners:
   - {fileID: 9048208089183286937}
   - {fileID: 7669381509941049025}
@@ -406,8 +413,6 @@ MonoBehaviour:
   - {fileID: 7779714941279033066}
   - {fileID: 4038769276817438056}
   - {fileID: 3290292635974877527}
-  _enrichment: low
-  _stress: none
 --- !u!65 &6675974105479230691
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -520,3 +525,100 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!82 &5954946069030860751
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8024272126375560158}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 4262873200065571633, guid: b71ebecd8ea19e841b94cef669fc7a73,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 31a0a8741eab1094e9fd44c2c8474669, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

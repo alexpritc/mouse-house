@@ -18,12 +18,20 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private float _yOffset = -60f;
 
     [SerializeField] private bool _hasToolTip = true;
+
+    [SerializeField] private AudioClip _clickAudioClip;
     
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(RemoveToolTip);   
+        GetComponent<Button>().onClick.AddListener(Click);   
     }
 
+    public void Click()
+    {
+        GameManager.Instance.PlayAudio(0);
+        RemoveToolTip();
+    }
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (_hasToolTip)
