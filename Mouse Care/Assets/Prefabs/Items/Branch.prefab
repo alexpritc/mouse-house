@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1444460858095362738, guid: 3ecae97b6a7dee348820ab2e7451428c, type: 3}
+  - {fileID: -1444460858095362738, guid: 077504f7ac9287146a75d5adca095413, type: 3}
   - {fileID: 6677887660863235774, guid: 3ecae97b6a7dee348820ab2e7451428c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -105,12 +105,14 @@ MonoBehaviour:
   _yPos: -2
   prefab: {fileID: 430105530728239288}
   _changeableMaterialIndex: 0
+  _preview: {fileID: 0}
   canPlaceOnTopOf: 0
   _xOffset: 0
   _zOffset: 0
-  corners: []
+  _itemType: 0
   _enrichment: High
   _stress: Low
+  corners: []
 --- !u!114 &7021600834655233764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,8 +142,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4074515, y: 0.31851757, z: 0.13106337}
-  m_Center: {x: -0.14312285, y: -0.00830359, z: -0.0028735548}
+  m_Size: {x: 1.5614042, y: 0.13106334, z: 0.31049404}
+  m_Center: {x: -0.20056018, y: -0.032138158, z: 0.14588957}
 --- !u!54 &4095282838904987405
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -200,5 +202,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4074515, y: 0.31851757, z: 0.13106337}
-  m_Center: {x: -0.14312285, y: -0.00830359, z: -0.0028735548}
+  m_Size: {x: 1.5614042, y: 0.13106334, z: 0.31049404}
+  m_Center: {x: -0.20056018, y: -0.032138158, z: 0.14588957}

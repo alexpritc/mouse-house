@@ -140,6 +140,7 @@ MonoBehaviour:
   _yPos: 0
   prefab: {fileID: 1958475912744696402}
   _changeableMaterialIndex: 0
+  _preview: {fileID: 21300000, guid: 1e769ad998d94354a93d73713973bfbc, type: 3}
   canPlaceOnTopOf: 0
   _xOffset: 0
   _zOffset: 0
