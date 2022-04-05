@@ -36,6 +36,7 @@ public class ScreenshotHandler : MonoBehaviour
     {
         yield return new WaitUntil(() => dr.Camera.rect.x <= 0.01f);
         _canvas.SetActive(false);
+        // TODO: Play camera sound effect
         _path = "/Screenshots/MouseHouse-" +
                 System.DateTime.UtcNow.ToLocalTime().ToString("dd-MM-yyyy-HH-mm-ss") + ".png";
         ScreenCapture.CaptureScreenshot("Assets" + _path);
