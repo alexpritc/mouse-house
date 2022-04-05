@@ -8,6 +8,7 @@ using UnityEngine;
 /// <summary>
 /// Credit: Code Monkey on YouTube.
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class ScreenshotHandler : MonoBehaviour
 {
     private static ScreenshotHandler _instance;
@@ -21,6 +22,11 @@ public class ScreenshotHandler : MonoBehaviour
     
     private string _path = "";
 
+    AudioSource _audioSource
+    {
+        get { return GetComponent<AudioSource>(); }
+    }
+    
     void Awake()
     {
         _instance = this;
@@ -36,17 +42,17 @@ public class ScreenshotHandler : MonoBehaviour
     {
         yield return new WaitUntil(() => dr.Camera.rect.x <= 0.01f);
         _canvas.SetActive(false);
-        // TODO: Play camera sound effect
-        _path = "/Screenshots/MouseHouse-" +
+        _audioSource.Play();
+        _path = Application.persistentDataPath + "/MouseHouse-" +
                 System.DateTime.UtcNow.ToLocalTime().ToString("dd-MM-yyyy-HH-mm-ss") + ".png";
-        ScreenCapture.CaptureScreenshot("Assets" + _path);
-        Debug.Log("Saved screenshot at " + Application.dataPath + _path);
+        ScreenCapture.CaptureScreenshot(_path);
+        Debug.Log("Saved screenshot at " + _path);
         StartCoroutine(TurnOnCanvas(_path));
     }
     
     IEnumerator TurnOnCanvas(string path)
     {
-        yield return new WaitUntil(() => File.Exists(Application.dataPath + path));
+        yield return new WaitUntil(() => File.Exists(path));
         _canvas.SetActive(true);
     }
 }

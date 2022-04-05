@@ -257,6 +257,7 @@ MonoBehaviour:
   _xOffset: 60
   _yOffset: -140
   _hasToolTip: 1
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &27158320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +522,7 @@ MonoBehaviour:
   _xOffset: 60
   _yOffset: -120
   _hasToolTip: 1
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &283895773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1328,6 +1330,7 @@ MonoBehaviour:
   _xOffset: 60
   _yOffset: -120
   _hasToolTip: 1
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &794298257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2632,7 +2635,7 @@ GameObject:
   - component: {fileID: 1446147983}
   - component: {fileID: 1446147986}
   m_Layer: 5
-  m_Name: Canvas UI Active
+  m_Name: Settings Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3409,6 +3412,7 @@ MonoBehaviour:
   _xOffset: -30
   _yOffset: -80
   _hasToolTip: 1
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &2130207376
 MonoBehaviour:
   m_ObjectHideFlags: 0

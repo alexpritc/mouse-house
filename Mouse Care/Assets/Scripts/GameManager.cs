@@ -29,8 +29,11 @@ public class GameManager : MonoBehaviour {
     public Texture2D cursorInteract;
     public CursorMode cursorMode = CursorMode.Auto;
 
+    [SerializeField] private AudioClip[] _audioClips;
+    
     public void CursorEnterUI()
     {
+        PlayAudio(1);
         _isCursorOverUI = true;
         Cursor.SetCursor(cursorInteract, Vector2.zero, cursorMode);
     }
@@ -488,6 +491,19 @@ public class GameManager : MonoBehaviour {
     public void MainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+    
+    [SerializeField] private AudioSource _uiAudioSource;
+    public void PlayAudio(AudioClip clip)
+    {
+        _uiAudioSource.clip = clip;
+        _uiAudioSource.Play();
+    }
+    
+    public void PlayAudio(int clip)
+    {
+        _uiAudioSource.clip = _audioClips[clip];
+        _uiAudioSource.Play();
     }
 
     // Controls
