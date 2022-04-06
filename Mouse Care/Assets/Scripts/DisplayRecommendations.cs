@@ -21,7 +21,15 @@ public class DisplayRecommendations : MonoBehaviour
     void Awake()
     {
         SetButtonComponents(_leftButton, _leftButtonIcon, false);
-        SetButtonComponents(_rightButton, _rightButtonIcon, true);
+        
+        if (GameManager.Instance.Recommendations.Count -1 == 0)
+        {
+            SetButtonComponents(_rightButton, _rightButtonIcon, false);
+        }
+        else
+        {
+            SetButtonComponents(_rightButton, _rightButtonIcon, true);   
+        }
         UpdateTextbox();
     }
 

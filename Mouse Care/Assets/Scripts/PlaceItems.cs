@@ -83,6 +83,11 @@ public class PlaceItems : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.isGamePaused)
+        {
+            return;
+        }
+        
         if (GameManager.Instance.IsInPlaceItemMode)
         {
             if (_preview == null)

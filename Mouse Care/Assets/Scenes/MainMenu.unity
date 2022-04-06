@@ -253,11 +253,7 @@ MonoBehaviour:
   _message: Settings
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1446147985}
-  _xOffset: 60
-  _yOffset: -80
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &277214735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,11 +523,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7267429253075802788, guid: 648a98d2559ac254ea4b94bef295cab9,
-        type: 3}
-      propertyPath: _audioClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: f2b0798fb6ab3f140a54a4cfee18110e, type: 3}
     - target: {fileID: 7267429253075802789, guid: 648a98d2559ac254ea4b94bef295cab9,
         type: 3}
       propertyPath: m_RootOrder
@@ -904,11 +895,7 @@ MonoBehaviour:
   _message: Quit
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1446147985}
-  _xOffset: 60
-  _yOffset: -80
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &1093424422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,11 +1045,7 @@ MonoBehaviour:
   _message: Play!
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1446147985}
-  _xOffset: 60
-  _yOffset: -100
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &1227929346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,7 +1306,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 963194227}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

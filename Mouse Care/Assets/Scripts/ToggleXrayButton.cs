@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ToggleXrayButton : MonoBehaviour
 {
-
     public Image icon;
     public Sprite on, off;
     

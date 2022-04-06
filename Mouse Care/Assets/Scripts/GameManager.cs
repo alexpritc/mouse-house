@@ -78,6 +78,41 @@ public class GameManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
             _controls = new Controls();
             _items = new List<Item>();
+            Instance.GetComponent<LookIntoEnclosure>().isEnabled = true;
+            _controls.GameManager.Menu.performed += ctx => OpenMenu();
+        }
+    }
+
+    [SerializeField] private GameObject _pauseMenu;
+
+    public bool isGamePaused;
+    
+    public void OpenMenu()
+    {
+        if (SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "Settings")
+        {
+            if (_pauseMenu.GetComponent<MainMenu>().isMenuOpen)
+            {
+                // Go back to main menu
+                if (_pauseMenu.GetComponent<MainMenu>().isSettingsOpen)
+                {
+                    _pauseMenu.GetComponent<MainMenu>().CloseSettings();
+                    _pauseMenu.GetComponent<MainMenu>().OpenMainMenu();
+                }
+                // Close pause menu entirely
+                else
+                {
+                    isGamePaused = false;
+                    _pauseMenu.GetComponent<MainMenu>().CloseMainMenu();
+                    _pauseMenu.GetComponent<MainMenu>().CloseSettings();   
+                }
+            }
+            else
+            {
+                isGamePaused = true;
+                _pauseMenu.GetComponent<MainMenu>().CloseSettings();
+                _pauseMenu.GetComponent<MainMenu>().OpenMainMenu();
+            }
         }
     }
     

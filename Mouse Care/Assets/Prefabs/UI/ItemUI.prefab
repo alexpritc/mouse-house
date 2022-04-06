@@ -106,7 +106,7 @@ RectTransform:
   m_GameObject: {fileID: 2691075277240077810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 1308814221588684999}
   - {fileID: 5227869572013264568}
@@ -226,6 +226,7 @@ MonoBehaviour:
   _xOffset: 160
   _yOffset: -60
   _hasToolTip: 0
+  _clickAudioClip: {fileID: 0}
 --- !u!114 &1783871205765925068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,8 +290,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.025393, y: -11.1902}
-  m_SizeDelta: {x: 23.7335, y: 5.8436}
+  m_AnchoredPosition: {x: 0.000079274, y: -10.074}
+  m_SizeDelta: {x: 21.667, y: 3.281}
   m_Pivot: {x: 0.50000006, y: 0.5000001}
 --- !u!222 &3308814219364804697
 CanvasRenderer:
@@ -320,7 +321,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Item name goes here :)
+  m_text: Apple Ceramic Hide
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34452405da6d1244f9c95e614e31514d, type: 2}
   m_sharedMaterial: {fileID: -5993047741169541596, guid: 34452405da6d1244f9c95e614e31514d,
@@ -348,12 +349,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
+  m_fontSize: 2.6
   m_fontSizeBase: 3
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 2
+  m_fontSizeMax: 3
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256

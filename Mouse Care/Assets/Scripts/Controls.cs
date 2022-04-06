@@ -306,6 +306,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""e19f70b5-0a48-46d7-97dd-c85e85963898"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -317,6 +326,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da09e2b6-ff97-400d-9828-d2d7ab91967e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -342,6 +362,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         // GameManager
         m_GameManager = asset.FindActionMap("GameManager", throwIfNotFound: true);
         m_GameManager_Select = m_GameManager.FindAction("Select", throwIfNotFound: true);
+        m_GameManager_Menu = m_GameManager.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -532,11 +553,13 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GameManager;
     private IGameManagerActions m_GameManagerActionsCallbackInterface;
     private readonly InputAction m_GameManager_Select;
+    private readonly InputAction m_GameManager_Menu;
     public struct GameManagerActions
     {
         private @Controls m_Wrapper;
         public GameManagerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_GameManager_Select;
+        public InputAction @Menu => m_Wrapper.m_GameManager_Menu;
         public InputActionMap Get() { return m_Wrapper.m_GameManager; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -549,6 +572,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Select.started -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnSelect;
+                @Menu.started -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnMenu;
+                @Menu.performed -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnMenu;
+                @Menu.canceled -= m_Wrapper.m_GameManagerActionsCallbackInterface.OnMenu;
             }
             m_Wrapper.m_GameManagerActionsCallbackInterface = instance;
             if (instance != null)
@@ -556,6 +582,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Menu.started += instance.OnMenu;
+                @Menu.performed += instance.OnMenu;
+                @Menu.canceled += instance.OnMenu;
             }
         }
     }
@@ -579,5 +608,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     public interface IGameManagerActions
     {
         void OnSelect(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

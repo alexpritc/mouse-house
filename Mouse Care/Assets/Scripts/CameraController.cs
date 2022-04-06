@@ -74,6 +74,11 @@ public class CameraController : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
+        if (GameManager.Instance.isGamePaused)
+        {
+            return;
+        }
+        
         _direction = mousePosLastFrame - mousePosThisFrame;
 
         if (_canMove)
