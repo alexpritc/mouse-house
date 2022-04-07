@@ -72,8 +72,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 4}
-  m_Center: {x: 0, y: -0.6809976, z: 0.4405493}
+  m_Size: {x: 1.5, y: 1.4999999, z: 4}
+  m_Center: {x: 0.053647757, y: 0.7880617, z: 0.01675886}
 --- !u!1 &2463699302608154118
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,8 +143,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1444460858095362738, guid: d7bbee2f444f57448859082dab212f01, type: 3}
-  - {fileID: -2047124107730329952, guid: d7bbee2f444f57448859082dab212f01, type: 3}
+  - {fileID: -1444460858095362738, guid: 077504f7ac9287146a75d5adca095413, type: 3}
+  - {fileID: -2047124107730329952, guid: 0afbaefac9fc9694188a719e081b6d7b, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   _name: Wooden tunnel
   _description: A great chew toy for mice to also hide in.
   _isUnlocked: 1
-  _yPos: -2
+  _yPos: 0
   prefab: {fileID: 2463699302608154118}
   _changeableMaterialIndex: 0
   _preview: {fileID: 21300000, guid: 202473838069960438540d40a2ec4b0d, type: 3}
@@ -207,8 +207,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 4}
-  m_Center: {x: 0, y: -0.6809976, z: 0.4405493}
+  m_Size: {x: 1.5, y: 1.4999999, z: 4}
+  m_Center: {x: 0.053647757, y: 0.7880617, z: 0.01675886}
 --- !u!54 &5764681741392364847
 Rigidbody:
   m_ObjectHideFlags: 0

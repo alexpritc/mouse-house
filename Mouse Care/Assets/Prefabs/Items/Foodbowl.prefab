@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3843342, y: 0.76917076, z: 1.3843343}
-  m_Center: {x: -0.00091290474, y: -0.13940276, z: 0.57775056}
+  m_Size: {x: 1.3843342, y: 0.76917076, z: 1.3843341}
+  m_Center: {x: 0.059405923, y: 0.36757433, z: 0.064337164}
 --- !u!1 &8418734521880020837
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8418734521880020837}
-  m_Mesh: {fileID: -1550514412580984892, guid: 9e96bb3977f0efc4ab6fb0808aaefc98, type: 3}
+  m_Mesh: {fileID: -1550514412580984892, guid: c9818db8328e2a346997f7e101c95132, type: 3}
 --- !u!23 &8058529632755230384
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -109,8 +109,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2826419248541557335, guid: 9e96bb3977f0efc4ab6fb0808aaefc98, type: 3}
   - {fileID: -3376749121926177121, guid: 9e96bb3977f0efc4ab6fb0808aaefc98, type: 3}
+  - {fileID: 2826419248541557335, guid: 9e96bb3977f0efc4ab6fb0808aaefc98, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,8 +159,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3843342, y: 0.76917076, z: 1.3843343}
-  m_Center: {x: -0.00091290474, y: -0.13940276, z: 0.57775056}
+  m_Size: {x: 1.3843342, y: 0.76917076, z: 1.3843341}
+  m_Center: {x: 0.059405923, y: 0.36757433, z: 0.064337164}
 --- !u!114 &8652597549040351786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
   _description: Although you can scatter food for increased enrichment, it is usually
     a good idea to have a food bowl in your enclosure as well.
   _isUnlocked: 1
-  _yPos: -1
+  _yPos: 0
   prefab: {fileID: 8418734521880020837}
   _changeableMaterialIndex: 1
   _preview: {fileID: 21300000, guid: 5e50691eea0d49046a7f11a1d8c6d11c, type: 3}

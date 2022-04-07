@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9545351, y: 1.9301144, z: 3.2288687}
-  m_Center: {x: 0.14006156, y: -0.9207968, z: -0.0951879}
+  m_Size: {x: 1.9545351, y: 1.9301143, z: 3.2288687}
+  m_Center: {x: 0.19370931, y: 0.95731497, z: -0.07784295}
 --- !u!1 &2910931022121109444
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,8 +145,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9545351, y: 1.9301144, z: 3.2288687}
-  m_Center: {x: 0.14006156, y: -0.9207968, z: -0.0951879}
+  m_Size: {x: 1.9545351, y: 1.9301143, z: 3.2288687}
+  m_Center: {x: 0.19370931, y: 0.95731497, z: -0.07784295}
 --- !u!54 &2910931022121109467
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   _description: A cutesy apple made of a cooling ceramic material. It is the perfect
     hidey hole for small animals.
   _isUnlocked: 1
-  _yPos: -3
+  _yPos: 0
   prefab: {fileID: 2910931022121109444}
   _changeableMaterialIndex: 0
   _preview: {fileID: 21300000, guid: f09bd97542dfac245911cb3b6b5287f6, type: 3}

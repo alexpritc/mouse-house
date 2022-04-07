@@ -44,7 +44,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         GameManager.Instance.CursorExitUI();
     }
-    
+
     public void DisplayToolTip()
     {
         if (_hasToolTip)

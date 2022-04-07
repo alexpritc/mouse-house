@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8593317, y: 2.155234, z: 2.3188252}
-  m_Center: {x: -0.019194497, y: 0.16765366, z: 0.21561898}
+  m_Size: {x: 1.8593318, y: 2.2807724, z: 2.3188252}
+  m_Center: {x: 0.012520881, y: 1.1326352, z: 0.27192724}
 --- !u!1 &6571561008392935032
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   _name: Mushroom Hide
   _description: Cutesy mushroom forest hide.
   _isUnlocked: 1
-  _yPos: -1
+  _yPos: 0
   prefab: {fileID: 6571561008392935032}
   _changeableMaterialIndex: 1
   _preview: {fileID: 21300000, guid: aad4506d4fc8cec4aaee3cb2e09b44af, type: 3}
@@ -169,8 +169,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8593317, y: 2.203507, z: 2.3188252}
-  m_Center: {x: -0.019194497, y: 0.14351723, z: 0.21561898}
+  m_Size: {x: 1.8593318, y: 2.2807724, z: 2.3188252}
+  m_Center: {x: 0.012520881, y: 1.1326352, z: 0.27192724}
 --- !u!54 &6571561008392935038
 Rigidbody:
   m_ObjectHideFlags: 0

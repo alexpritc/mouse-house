@@ -43,7 +43,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10.000001, y: 2.0000002, z: 9.999999}
-  m_Center: {x: 0.0047190185, y: -0.008848428, z: 0.2658529}
+  m_Center: {x: 0.072032206, y: 1.0006808, z: 0.15014456}
 --- !u!1 &4502781726421034703
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10.000001, y: 2.0000002, z: 9.999999}
-  m_Center: {x: 0.0047190185, y: -0.008848428, z: 0.2658529}
+  m_Center: {x: 0.072032206, y: 1.0006808, z: 0.15014456}
 --- !u!54 &1392214445761295243
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
   _description: A little wooden maze that is very enriching and an excellent hide
     for mice.
   _isUnlocked: 1
-  _yPos: -2
+  _yPos: 0
   prefab: {fileID: 4502781726421034703}
   _changeableMaterialIndex: 0
   _preview: {fileID: 21300000, guid: f1793ca1681473f41a9c5747fda40a58, type: 3}
@@ -345,5 +345,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.000005, y: 0.13244753, z: 9.999999}
-  m_Center: {x: 0.0047187805, y: 0.9956003, z: 0.2658528}
+  m_Size: {x: 10.000005, y: 0.21109281, z: 9.999999}
+  m_Center: {x: 0.072032385, y: 2.0200567, z: 0.15014431}

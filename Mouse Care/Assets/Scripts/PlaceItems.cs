@@ -178,6 +178,7 @@ public class PlaceItems : MonoBehaviour
                     go.SetActive(true);
                     GameManager.Instance.IsInPlaceItemMode = false;
                     isMovingExistingItem = false;
+                    go.GetComponent<Outline>().enabled = true;
                 }
             }
         }
@@ -206,7 +207,7 @@ public class PlaceItems : MonoBehaviour
                 return;
             }
             
-            _preview.transform.Rotate(_preview.transform.up, 90f);
+            _preview.transform.Rotate(_preview.transform.up, 22.5f);
         }
     }
 

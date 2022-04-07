@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
@@ -156,10 +158,20 @@ public class GameManager : MonoBehaviour {
         get => _beddingInches;
         set => _beddingInches = value;
     }
+
+    private float _beddingTimer = 0f;
     
+    private void Update()
+    {
+        _beddingTimer += Time.deltaTime;
+    }
+
     public void FillBedding()
     {
-        _beddingInches += 0.2f;
+        _beddingTimer = 0f;
+        _beddingInches += 0.1f;
+        DisplayBeddingLimit();
+        
             if (_beddingInches > 1)
             {
                 _beddingInches = 0;
@@ -172,9 +184,34 @@ public class GameManager : MonoBehaviour {
                     _bedding.transform.localScale.z);
             }
     }
+
+    private GameObject _beddingLimit;
+    public void DisplayBeddingLimit()
+    {
+        if (_beddingLimit == null)
+        {
+            _beddingLimit = Instantiate(Enclosure.GetComponent<Enclosure>().Bedding, Enclosure.transform);
+            _beddingLimit.SetActive(true);
+            _beddingLimit.transform.localScale = new Vector3(_beddingLimit.transform.localScale.x, 
+                Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y - (Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y * 0.1f), _beddingLimit.transform.localScale.z);
+            Destroy(_beddingLimit.GetComponent<Collider>());
+            _beddingLimit.GetComponent<MeshRenderer>().material.color = new Color(0f, 0.9f, 0.3f, 0.2f);
+        }
+        else
+        {
+            _beddingLimit.SetActive(true);
+        }
+
+        StartCoroutine(HideBedding());
+    }
+
+    IEnumerator HideBedding()
+    {
+        yield return new WaitUntil(() => _beddingTimer >= 2f);
+        _beddingLimit.SetActive(false);
+    }
     
     // Manage keeping track of all items placed in the enclosure
-
     private List<Item> _items;
     public List<Item> Items
     {

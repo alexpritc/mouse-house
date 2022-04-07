@@ -643,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb4ea69732464343b4e70496e0eec33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selected: {fileID: 0}
   InfoPanel: {fileID: 2336960733548335096, guid: 846009ff722225f408648bb0a9a6a4c3,
     type: 3}
   InfoCanvas: {fileID: 1430280975}
@@ -5092,6 +5093,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 1056
+  so: {fileID: 241821863}
 --- !u!4 &2036146756
 Transform:
   m_ObjectHideFlags: 0
