@@ -25,6 +25,8 @@ public class Item : MonoBehaviour
     [SerializeField] private Sprite _preview;
     public bool canPlaceOnTopOf;
 
+    public bool isInfoOpen = false;
+    
     [SerializeField] private float _xOffset = 0f;
     [SerializeField] private float _zOffset = 0f;
 

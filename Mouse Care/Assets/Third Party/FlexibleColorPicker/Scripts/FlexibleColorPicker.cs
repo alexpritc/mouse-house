@@ -215,6 +215,7 @@ public class FlexibleColorPicker : MonoBehaviour {
         MakeModeOptions();
         UpdateMarkers();
         UpdateHex();
+        startingColor = _infoPanelUI.GetItemColour();
         onColorChange.Invoke(startingColor);
     }
 

@@ -75,6 +75,10 @@ public class SelectObject : MonoBehaviour
                 Remove();
             }
         }
+        else
+        {
+            // check if the UI is related to the object or not
+        }
     }
 
     public void Remove()
@@ -91,18 +95,14 @@ public class SelectObject : MonoBehaviour
     
     public void CreatePrompt()
     {
-        CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
-        CurrentInfoPanel.transform.position += new Vector3(100f, 2f, 0f);
-        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
-        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().panelManager = _panel;
+        InfoPanel.SetActive(true);
+        InfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
+        InfoPanel.GetComponent<DisplayInfoPanelUI>().panelManager = _panel;
     }
 
     public void RemovePrompt()
     {
-        if (CurrentInfoPanel != null)
-        {
-            Destroy(CurrentInfoPanel);   
-        }
+        InfoPanel.SetActive(false);
     }
     
     private void OnEnable() {

@@ -207,7 +207,7 @@ public class PlaceItems : MonoBehaviour
                 return;
             }
             
-            _preview.transform.Rotate(_preview.transform.up, 22.5f);
+            _preview.transform.Rotate(_preview.transform.up, 45f);
         }
     }
 
