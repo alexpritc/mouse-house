@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private GameObject _beddingLimit;
+    [SerializeField] private Material _beddingPreviewMat;
     public void DisplayBeddingLimit()
     {
         if (_beddingLimit == null)
@@ -195,7 +196,7 @@ public class GameManager : MonoBehaviour {
             _beddingLimit.transform.localScale = new Vector3(_beddingLimit.transform.localScale.x, 
                 Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y - (Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y * 0.1f), _beddingLimit.transform.localScale.z);
             Destroy(_beddingLimit.GetComponent<Collider>());
-            _beddingLimit.GetComponent<MeshRenderer>().material.color = new Color(0f, 0.9f, 0.3f, 0.2f);
+            _beddingLimit.GetComponent<MeshRenderer>().material = _beddingPreviewMat;
         }
         else
         {

@@ -527,6 +527,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7267429253075802788, guid: 648a98d2559ac254ea4b94bef295cab9,
+        type: 3}
+      propertyPath: _beddingPreviewMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 6efec4e22751e2c47a652371a2879a43, type: 2}
     - target: {fileID: 7267429253075802789, guid: 648a98d2559ac254ea4b94bef295cab9,
         type: 3}
       propertyPath: m_RootOrder
