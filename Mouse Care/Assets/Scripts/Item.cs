@@ -26,6 +26,7 @@ public class Item : MonoBehaviour
     public bool canPlaceOnTopOf;
 
     public bool isInfoOpen = false;
+    public bool isColourOpen = false;
     
     [SerializeField] private float _xOffset = 0f;
     [SerializeField] private float _zOffset = 0f;

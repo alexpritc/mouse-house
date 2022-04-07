@@ -33,6 +33,8 @@ public class DisplayInfoPanelUI : MonoBehaviour
         _enrichmentText.text = Item._enrichment;
         
         transform.GetChild(0).gameObject.SetActive(Item.isInfoOpen);
+        transform.GetChild(4).gameObject.SetActive(Item.isColourOpen);
+        transform.GetChild(4).GetComponent<FlexibleColorPicker>().color = GetItemColour();
     }
 
     public void TogglePanel()
@@ -46,6 +48,20 @@ public class DisplayInfoPanelUI : MonoBehaviour
             }
         }
         transform.GetChild(0).gameObject.SetActive(Item.isInfoOpen);
+    }
+
+    public void ToggleColour()
+    {
+        Item.isColourOpen = !Item.isColourOpen;
+        foreach (var item in GameManager.Instance.Items)
+        {
+            if (item.Name == Item.Name)
+            {
+                item.isColourOpen = Item.isColourOpen;
+            }
+        }
+        transform.GetChild(4).gameObject.SetActive(Item.isColourOpen);
+        transform.GetChild(4).GetComponent<FlexibleColorPicker>().color = GetItemColour();
     }
     
     public void DestroyGameObject()

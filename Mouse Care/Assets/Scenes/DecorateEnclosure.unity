@@ -242,7 +242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 193.59, y: -21.8}
+  m_AnchoredPosition: {x: -203.71, y: -21.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &63826768
@@ -2828,6 +2828,76 @@ PrefabInstance:
       propertyPath: m_Name
       value: Info Button
       objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1002968371}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1002968370}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ToggleColour
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: DisplayInfoPanelUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: ToggleSetActive, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 115351021882163979, guid: 846009ff722225f408648bb0a9a6a4c3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1581062459930719877, guid: 846009ff722225f408648bb0a9a6a4c3,
         type: 3}
       propertyPath: m_IsActive
@@ -2951,7 +3021,7 @@ PrefabInstance:
     - target: {fileID: 2336960733548335096, guid: 846009ff722225f408648bb0a9a6a4c3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3062634581416963208, guid: 846009ff722225f408648bb0a9a6a4c3,
         type: 3}
@@ -2982,6 +3052,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1002968368}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1002968371 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6757971609801784437, guid: 846009ff722225f408648bb0a9a6a4c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1002968368}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002968370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9defb43654193504794c4f5791df820d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1046659654
 GameObject:
   m_ObjectHideFlags: 0

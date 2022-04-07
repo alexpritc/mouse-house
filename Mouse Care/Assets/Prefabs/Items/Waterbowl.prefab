@@ -139,6 +139,7 @@ MonoBehaviour:
   _changeableMaterialIndex: 0
   _preview: {fileID: 21300000, guid: a9bbc71a2e6c11d49aad75a18c0546d2, type: 3}
   canPlaceOnTopOf: 0
+  isInfoOpen: 0
   _xOffset: 0
   _zOffset: 0
   _itemType: 3
