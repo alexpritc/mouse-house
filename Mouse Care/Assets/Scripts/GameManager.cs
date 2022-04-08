@@ -579,6 +579,41 @@ public class GameManager : MonoBehaviour {
         _uiAudioSource.Play();
     }
 
+    public float masterVol = 1f;
+    public float musicVol = 1f;
+    public float effectsVol = 1f;
+
+    public void UpdateVolumeSlider(string mixer, float vol)
+    {
+        switch (mixer)
+        {
+            case "Master":
+                masterVol = vol;
+                break;
+            case "Music":
+                musicVol = vol;
+                break;
+            case "Effects":
+                effectsVol = vol;
+                break;
+        }
+    }
+
+    public float GetVolume(string mixer)
+    {
+        switch (mixer)
+        {
+            case "Master":
+                return masterVol;
+            case "Music":
+                return musicVol;
+            case "Effects":
+                return effectsVol;
+        }
+
+        return 1f;
+    }
+    
     // Controls
     private void OnEnable() {
         _controls.Enable();
