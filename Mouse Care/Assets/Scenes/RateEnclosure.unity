@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.16001281, g: 0.5987527, b: 0.57098997, a: 1}
+  m_IndirectSpecularColor: {r: 0.1462296, g: 0.53939945, b: 0.514522, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -534,11 +534,7 @@ MonoBehaviour:
   _message: Next tip
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1943470969}
-  _xOffset: 160
-  _yOffset: 60
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &155217943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,14 +810,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4ef49d48599a341a9eada2736ad391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: Toggle seethrough walls
+  _message: Toggle walls
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1430280979}
-  _xOffset: 160
-  _yOffset: -60
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &194473498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1293,11 +1285,7 @@ MonoBehaviour:
   _message: Toggle advice
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1943470969}
-  _xOffset: -60
-  _yOffset: -30
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &978338991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1723,11 +1711,7 @@ MonoBehaviour:
   _message: Save this enclosure
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1430280979}
-  _xOffset: 160
-  _yOffset: -60
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &1473863684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1911,11 +1895,7 @@ MonoBehaviour:
   _message: Take screenshot
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1430280979}
-  _xOffset: 160
-  _yOffset: -60
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &1478547881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2328,11 +2308,7 @@ MonoBehaviour:
   _message: Previous tip
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1943470969}
-  _xOffset: 160
-  _yOffset: 60
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &1566503922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3161,11 +3137,7 @@ MonoBehaviour:
   _message: Back to editing
   _toolTipPrefab: {fileID: 3942289006705635263, guid: 4cf13ffdd866dc7478cae97ea5229cf6,
     type: 3}
-  infoCanvas: {fileID: 1430280979}
-  _xOffset: 160
-  _yOffset: -60
   _hasToolTip: 1
-  _clickAudioClip: {fileID: 0}
 --- !u!114 &2089624676
 MonoBehaviour:
   m_ObjectHideFlags: 0
