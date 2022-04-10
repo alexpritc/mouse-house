@@ -45,7 +45,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6468941024011438543}
-  m_Mesh: {fileID: -8678823145569952518, guid: c9818db8328e2a346997f7e101c95132, type: 3}
+  m_Mesh: {fileID: -1550514412580984892, guid: c9818db8328e2a346997f7e101c95132, type: 3}
 --- !u!23 &4811735451830904858
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.3843342, y: 0.76917076, z: 1.3843341}
-  m_Center: {x: 0.0057581663, y: -0.14852548, z: 0.59949565}
+  m_Center: {x: 0.059405923, y: 0.36757433, z: 0.064337164}
 --- !u!114 &6126903508633023640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,11 +134,12 @@ MonoBehaviour:
     reduce fights. Some people choose to also have a water bottle mounted to the
     side of the enclosure.
   _isUnlocked: 1
-  _yPos: -1
+  _yPos: 0
   prefab: {fileID: 6468941024011438543}
   _changeableMaterialIndex: 0
   _preview: {fileID: 21300000, guid: a9bbc71a2e6c11d49aad75a18c0546d2, type: 3}
   canPlaceOnTopOf: 0
+  isInfoOpen: 0
   _xOffset: 0
   _zOffset: 0
   _itemType: 3
@@ -302,5 +303,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3843342, y: 0.76917076, z: 1.3843343}
-  m_Center: {x: -0.00091290474, y: -0.13940276, z: 0.57775056}
+  m_Size: {x: 1.3843342, y: 0.76917076, z: 1.3843341}
+  m_Center: {x: 0.059405923, y: 0.36757433, z: 0.064337164}

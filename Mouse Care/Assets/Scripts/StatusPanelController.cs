@@ -50,6 +50,6 @@ public class StatusPanelController : MonoBehaviour
     
     public void ChangeMessage(string message)
     {
-        tmp.text = message;
+        //tmp.text = message;
     }
 }

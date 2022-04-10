@@ -7,8 +7,14 @@ public class Highlighter : MonoBehaviour
     private GameObject _highlightedObject;
     [SerializeField] private LayerMask _layerMask;
 
+    [SerializeField] private SelectObject so;
+
+    private GameObject lastSelected;
+    
     private void Update()
     {
+        ClearAllHighlights();
+        
         if (GameManager.Instance.IsInPlaceItemMode || GameManager.Instance.IsShopOpen || GameManager.Instance.IsCursorOverUI)
         {
             if (_highlightedObject != null)
@@ -22,6 +28,17 @@ public class Highlighter : MonoBehaviour
         Highlight();
     }
 
+    void ClearAllHighlights()
+    {
+        foreach (var item in GameManager.Instance.Items)
+        {
+            if (item.gameObject != _highlightedObject && item.gameObject != so._selected)
+            {
+                item.GetComponent<Outline>().enabled = false;
+            }
+        }
+    }
+    
     void Highlight()
     {
         if (!GameManager.Instance.IsCursorOverUI)
@@ -29,7 +46,7 @@ public class Highlighter : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask))
             {
-                if (_highlightedObject != null)
+                if (_highlightedObject != null && _highlightedObject != so._selected)
                 {
                     _highlightedObject.GetComponent<Outline>().enabled = false;
                 }
@@ -39,7 +56,7 @@ public class Highlighter : MonoBehaviour
             }
             else
             {
-                if (_highlightedObject != null)
+                if (_highlightedObject != null && _highlightedObject != so._selected)
                 {
                     _highlightedObject.GetComponent<Outline>().enabled = false;
                 }

@@ -89,8 +89,8 @@ public class Outline : MonoBehaviour {
     outlineMaskMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineMask"));
     outlineFillMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineFill"));
 
-    outlineMaskMaterial.name = "OutlineMask (Instance)";
-    outlineFillMaterial.name = "OutlineFill (Instance)";
+    outlineMaskMaterial.name = "OutlineMask";
+    outlineFillMaterial.name = "OutlineFill";
 
     // Retrieve or generate smooth normals
     LoadSmoothNormals();
@@ -132,7 +132,7 @@ public class Outline : MonoBehaviour {
   void Update() {
     if (needsUpdate) {
       needsUpdate = false;
-
+ 
       UpdateMaterialProperties();
     }
   }
@@ -142,19 +142,37 @@ public class Outline : MonoBehaviour {
 
       // Remove outline shaders
       var materials = renderer.sharedMaterials.ToList();
-
-      materials.Remove(outlineMaskMaterial);
-      materials.Remove(outlineFillMaterial);
+      var temp = renderer.sharedMaterials.ToList();
+      
+      foreach (var material in temp)
+      {
+          if (material.name.Contains("OutlineMask") || material.name.Contains("OutlineFill"))
+          {
+            materials.Remove(material);
+          }
+      }
 
       renderer.materials = materials.ToArray();
     }
   }
 
-  void OnDestroy() {
+  void OnDestroy()
+  {
 
-    // Destroy material instances
-    Destroy(outlineMaskMaterial);
-    Destroy(outlineFillMaterial);
+    foreach (var renderer in renderers)
+    {
+
+      // Remove outline shaders
+      var materials = renderer.sharedMaterials.ToList();
+
+      foreach (var material in materials)
+      {
+        if (material.name.Contains("OutlineMask") || material.name.Contains("OutlineFill"))
+        {
+          Destroy(material);
+        }
+      }
+    }
   }
 
   void Bake() {

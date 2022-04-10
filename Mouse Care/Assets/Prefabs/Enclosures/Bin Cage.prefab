@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 203812481619846195}
   m_Layer: 0
   m_Name: Bin Cage
-  m_TagString: Untagged
+  m_TagString: Enclosure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

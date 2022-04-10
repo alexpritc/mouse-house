@@ -11,6 +11,7 @@ TagManager:
   - Item
   - UI
   - Walls
+  - Enclosure
   layers:
   - Default
   - TransparentFX

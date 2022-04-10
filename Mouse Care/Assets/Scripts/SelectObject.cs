@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class SelectObject : MonoBehaviour
 {
     private Controls _controls;
-    private GameObject _selected;
+    public GameObject _selected;
 
     private GameObject CurrentInfoPanel;
     public GameObject InfoPanel;
@@ -22,7 +22,7 @@ public class SelectObject : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
 
     private GameObject _mouseInfo;
-
+    
     private void Awake() {
         _controls = new Controls();
         _controls.GameManager.Select.performed += ctx => Select();
@@ -75,45 +75,34 @@ public class SelectObject : MonoBehaviour
                 Remove();
             }
         }
+        else
+        {
+            // check if the UI is related to the object or not
+        }
     }
 
     public void Remove()
     {
+        cc._target = null;
+        cc._isFollowing = false;
         if (_selected != null)
         {
             _selected.GetComponent<Outline>().enabled = false;
         }
-        cc._target = null;
-        cc._isFollowing = false;
+        _selected = null;
         RemovePrompt();
     }
     
     public void CreatePrompt()
     {
-        CurrentInfoPanel = Instantiate(InfoPanel, InfoCanvas.transform);
-        CurrentInfoPanel.transform.position += new Vector3(100f, 2f, 0f);
-        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
-        CurrentInfoPanel.GetComponent<DisplayInfoPanelUI>().panelManager = _panel;
+        InfoPanel.SetActive(true);
+        InfoPanel.GetComponent<DisplayInfoPanelUI>().SetInitialValues( _selected.GetComponentInParent<Item>());
+        InfoPanel.GetComponent<DisplayInfoPanelUI>().panelManager = _panel;
     }
 
-    private Vector2 WorldToUI(Vector3 position)
-    {
-        RectTransform CanvasRect = InfoCanvas.GetComponent<RectTransform>();
-
-        Vector2 ViewportPosition = Camera.main.WorldToScreenPoint(position);
-        Vector2 WorldObject_ScreenPosition = new Vector2(
-            ((ViewportPosition.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-            ((ViewportPosition.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-
-        return WorldObject_ScreenPosition;
-    }
-    
     public void RemovePrompt()
     {
-        if (CurrentInfoPanel != null)
-        {
-            Destroy(CurrentInfoPanel);   
-        }
+        InfoPanel.SetActive(false);
     }
     
     private void OnEnable() {

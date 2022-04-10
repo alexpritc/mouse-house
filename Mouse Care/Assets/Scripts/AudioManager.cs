@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,14 @@ public class AudioManager : MonoBehaviour
     public AudioMixer mixer;
     public string volName;
 
+    private void Awake()
+    {
+        slider.value = GameManager.Instance.GetVolume(volName);
+    }
+
     public void UpdateValueOnChange(float value)
     {
         mixer.SetFloat(volName, Mathf.Log(value) * 20f);
+        GameManager.Instance.UpdateVolumeSlider(volName,  value);
     }
 }

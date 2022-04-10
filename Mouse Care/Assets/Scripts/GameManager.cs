@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour {
         {
             // If Instance is ever not its first 'this',
             //  destroy it.
+            _controls = new Controls();
             Destroy(gameObject);
         }
         else
@@ -78,6 +81,41 @@ public class GameManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
             _controls = new Controls();
             _items = new List<Item>();
+            Instance.GetComponent<LookIntoEnclosure>().isEnabled = false;
+            _controls.GameManager.Menu.performed += ctx => OpenMenu();
+        }
+    }
+
+    [SerializeField] private GameObject _pauseMenu;
+
+    public bool isGamePaused;
+    
+    public void OpenMenu()
+    {
+        if (SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "Settings")
+        {
+            if (_pauseMenu.GetComponent<MainMenu>().isMenuOpen)
+            {
+                // Go back to main menu
+                if (_pauseMenu.GetComponent<MainMenu>().isSettingsOpen)
+                {
+                    _pauseMenu.GetComponent<MainMenu>().CloseSettings();
+                    _pauseMenu.GetComponent<MainMenu>().OpenMainMenu();
+                }
+                // Close pause menu entirely
+                else
+                {
+                    isGamePaused = false;
+                    _pauseMenu.GetComponent<MainMenu>().CloseMainMenu();
+                    _pauseMenu.GetComponent<MainMenu>().CloseSettings();   
+                }
+            }
+            else
+            {
+                isGamePaused = true;
+                _pauseMenu.GetComponent<MainMenu>().CloseSettings();
+                _pauseMenu.GetComponent<MainMenu>().OpenMainMenu();
+            }
         }
     }
     
@@ -87,8 +125,10 @@ public class GameManager : MonoBehaviour {
     
     public void SpawnEnclosure(GameObject prefab)
     {
+        Instance.GetComponent<LookIntoEnclosure>().targets.Clear();
+        Instance.GetComponent<LookIntoEnclosure>().ClearObstructions();
+        Instance.GetComponent<LookIntoEnclosure>().isEnabled = true;
         SceneManager.LoadScene("DecorateEnclosure");
-
         _prefab = prefab;
         Invoke("SetEnclosure", 0.25f);
     }
@@ -112,8 +152,8 @@ public class GameManager : MonoBehaviour {
         _bedding = Enclosure.GetComponent<Enclosure>().Bedding;
         _beddingMultiplier = Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y;
         
-        GetComponent<LookIntoEnclosure>().targets = Enclosure.GetComponent<Enclosure>().Targets;
-        GetComponent<LookIntoEnclosure>().radius = Enclosure.GetComponent<Enclosure>().Radius;
+        Instance.GetComponent<LookIntoEnclosure>().targets = Enclosure.GetComponent<Enclosure>().Targets;
+        Instance.GetComponent<LookIntoEnclosure>().radius = Enclosure.GetComponent<Enclosure>().Radius;
     }
 
     private float _beddingInches = 0;
@@ -121,10 +161,20 @@ public class GameManager : MonoBehaviour {
         get => _beddingInches;
         set => _beddingInches = value;
     }
+
+    private float _beddingTimer = 0f;
     
+    private void Update()
+    {
+        _beddingTimer += Time.deltaTime;
+    }
+
     public void FillBedding()
     {
-        _beddingInches += 0.2f;
+        _beddingTimer = 0f;
+        _beddingInches += 0.1f;
+        DisplayBeddingLimit();
+        
             if (_beddingInches > 1)
             {
                 _beddingInches = 0;
@@ -137,9 +187,35 @@ public class GameManager : MonoBehaviour {
                     _bedding.transform.localScale.z);
             }
     }
+
+    private GameObject _beddingLimit;
+    [SerializeField] private Material _beddingPreviewMat;
+    public void DisplayBeddingLimit()
+    {
+        if (_beddingLimit == null)
+        {
+            _beddingLimit = Instantiate(Enclosure.GetComponent<Enclosure>().Bedding, Enclosure.transform);
+            _beddingLimit.SetActive(true);
+            _beddingLimit.transform.localScale = new Vector3(_beddingLimit.transform.localScale.x, 
+                Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y - (Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y * 0.1f), _beddingLimit.transform.localScale.z);
+            Destroy(_beddingLimit.GetComponent<Collider>());
+            _beddingLimit.GetComponent<MeshRenderer>().material = _beddingPreviewMat;
+        }
+        else
+        {
+            _beddingLimit.SetActive(true);
+        }
+
+        StartCoroutine(HideBedding());
+    }
+
+    IEnumerator HideBedding()
+    {
+        yield return new WaitUntil(() => _beddingTimer >= 2f);
+        _beddingLimit.SetActive(false);
+    }
     
     // Manage keeping track of all items placed in the enclosure
-
     private List<Item> _items;
     public List<Item> Items
     {
@@ -490,7 +566,33 @@ public class GameManager : MonoBehaviour {
     
     public void MainMenu()
     {
+        DeleteEnclosureInfo();
+        GetComponent<LookIntoEnclosure>().isEnabled = false;
+        GameManager.Instance.isGamePaused = false;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void DeleteEnclosureInfo()
+    {
+        List<GameObject> toDestroy = new List<GameObject>();
+        
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).tag == "Item")
+            {
+                RemoveFromItems(transform.GetChild(i).GetComponent<Item>());
+                toDestroy.Add(transform.GetChild(i).gameObject);
+            }
+            else if (transform.GetChild(i).tag == "Enclosure")
+            {
+                toDestroy.Add(transform.GetChild(i).gameObject);
+            }
+        }
+
+        foreach (var item in toDestroy)
+        {
+            Destroy(item);
+        }
     }
     
     [SerializeField] private AudioSource _uiAudioSource;
@@ -506,6 +608,41 @@ public class GameManager : MonoBehaviour {
         _uiAudioSource.Play();
     }
 
+    public float masterVol = 1f;
+    public float musicVol = 1f;
+    public float effectsVol = 1f;
+
+    public void UpdateVolumeSlider(string mixer, float vol)
+    {
+        switch (mixer)
+        {
+            case "Master":
+                masterVol = vol;
+                break;
+            case "Music":
+                musicVol = vol;
+                break;
+            case "Effects":
+                effectsVol = vol;
+                break;
+        }
+    }
+
+    public float GetVolume(string mixer)
+    {
+        switch (mixer)
+        {
+            case "Master":
+                return masterVol;
+            case "Music":
+                return musicVol;
+            case "Effects":
+                return effectsVol;
+        }
+
+        return 1f;
+    }
+    
     // Controls
     private void OnEnable() {
         _controls.Enable();

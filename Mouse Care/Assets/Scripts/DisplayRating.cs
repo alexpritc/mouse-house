@@ -21,6 +21,16 @@ public class DisplayRating : MonoBehaviour
 
     [SerializeField] private Animator RecommendationsPanel;
     public bool toggle;
+
+    [SerializeField] private Gradient _textColour;
+
+    [SerializeField] private Animator _letterAnim;
+    
+    private string lastLetter = "";
+
+    [SerializeField] private AudioSource _letterAudio;
+    [SerializeField] private AudioSource _pointsAudio;
+    
     void Awake()
     {
         _scoreTextbox = GetComponent<TextMeshProUGUI>();
@@ -30,6 +40,11 @@ public class DisplayRating : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.isGamePaused)
+        {
+            return;
+        }
+        
         if (_current < _total)
         {
             StartCoroutine(AddToScoreDisplay());
@@ -63,8 +78,17 @@ public class DisplayRating : MonoBehaviour
     
     private IEnumerator AddToScoreDisplay()
     {
+        if (GameManager.Instance.isGamePaused)
+        {
+            yield return new WaitUntil(() => !GameManager.Instance.isGamePaused);
+        }
+        
         string temp = "";
         _current += 20;
+        _pointsAudio.Play();
+        float t = _current * 0.00001f;
+        _letterTextbox.color = _textColour.Evaluate(t );
+        _scoreTextbox.color = _textColour.Evaluate(t);
 
         if (_current < 10)
         {
@@ -112,6 +136,12 @@ public class DisplayRating : MonoBehaviour
             _letterTextbox.text = "S";
         }
 
+        if (_letterTextbox.text != lastLetter)
+        {
+            _letterAnim.Play("LetterPulse");
+            _letterAudio.Play();
+        }
+
         if (_current >= GameManager.Instance.Score)
         {
             _current = GameManager.Instance.Score;
@@ -126,6 +156,8 @@ public class DisplayRating : MonoBehaviour
         }
 
         _scoreTextbox.text = temp + _current.ToString();
+        lastLetter = _letterTextbox.text;
+        
         yield return new WaitForEndOfFrame();
     }
 }

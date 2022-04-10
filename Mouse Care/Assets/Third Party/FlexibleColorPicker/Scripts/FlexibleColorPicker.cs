@@ -215,6 +215,7 @@ public class FlexibleColorPicker : MonoBehaviour {
         MakeModeOptions();
         UpdateMarkers();
         UpdateHex();
+        startingColor = _infoPanelUI.GetItemColour();
         onColorChange.Invoke(startingColor);
     }
 
@@ -307,7 +308,7 @@ public class FlexibleColorPicker : MonoBehaviour {
             Picker p = pickers[i];
             if(IsPickerAvailable(i) & p.dynamicMaterial != null) {
                 Material original = p.dynamicMaterial;
-                Material seperate = new Material(original);
+                Material seperate = original;
                 p.dynamicMaterial = seperate;
                 pickers[i] = p;
                 if(!staticMode)
