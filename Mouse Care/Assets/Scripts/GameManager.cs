@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour {
         {
             // If Instance is ever not its first 'this',
             //  destroy it.
+            _controls = new Controls();
             Destroy(gameObject);
         }
         else
@@ -80,7 +81,7 @@ public class GameManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
             _controls = new Controls();
             _items = new List<Item>();
-            Instance.GetComponent<LookIntoEnclosure>().isEnabled = true;
+            Instance.GetComponent<LookIntoEnclosure>().isEnabled = false;
             _controls.GameManager.Menu.performed += ctx => OpenMenu();
         }
     }
@@ -124,8 +125,10 @@ public class GameManager : MonoBehaviour {
     
     public void SpawnEnclosure(GameObject prefab)
     {
+        Instance.GetComponent<LookIntoEnclosure>().targets.Clear();
+        Instance.GetComponent<LookIntoEnclosure>().ClearObstructions();
+        Instance.GetComponent<LookIntoEnclosure>().isEnabled = true;
         SceneManager.LoadScene("DecorateEnclosure");
-
         _prefab = prefab;
         Invoke("SetEnclosure", 0.25f);
     }
@@ -149,8 +152,8 @@ public class GameManager : MonoBehaviour {
         _bedding = Enclosure.GetComponent<Enclosure>().Bedding;
         _beddingMultiplier = Enclosure.GetComponent<Enclosure>().Bedding.transform.localScale.y;
         
-        GetComponent<LookIntoEnclosure>().targets = Enclosure.GetComponent<Enclosure>().Targets;
-        GetComponent<LookIntoEnclosure>().radius = Enclosure.GetComponent<Enclosure>().Radius;
+        Instance.GetComponent<LookIntoEnclosure>().targets = Enclosure.GetComponent<Enclosure>().Targets;
+        Instance.GetComponent<LookIntoEnclosure>().radius = Enclosure.GetComponent<Enclosure>().Radius;
     }
 
     private float _beddingInches = 0;
@@ -563,7 +566,33 @@ public class GameManager : MonoBehaviour {
     
     public void MainMenu()
     {
+        DeleteEnclosureInfo();
+        GetComponent<LookIntoEnclosure>().isEnabled = false;
+        GameManager.Instance.isGamePaused = false;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void DeleteEnclosureInfo()
+    {
+        List<GameObject> toDestroy = new List<GameObject>();
+        
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).tag == "Item")
+            {
+                RemoveFromItems(transform.GetChild(i).GetComponent<Item>());
+                toDestroy.Add(transform.GetChild(i).gameObject);
+            }
+            else if (transform.GetChild(i).tag == "Enclosure")
+            {
+                toDestroy.Add(transform.GetChild(i).gameObject);
+            }
+        }
+
+        foreach (var item in toDestroy)
+        {
+            Destroy(item);
+        }
     }
     
     [SerializeField] private AudioSource _uiAudioSource;

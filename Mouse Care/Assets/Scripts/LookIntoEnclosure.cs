@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LookIntoEnclosure : MonoBehaviour
 {
-    public Transform[] targets;
+    public List<Transform> targets;
     public float radius;
     private List<Transform> obstructions;
 
@@ -13,15 +14,25 @@ public class LookIntoEnclosure : MonoBehaviour
     void Start()
     {
         obstructions = new List<Transform>();
+        targets = new List<Transform>();
     }
 
+
+    public void ClearObstructions()
+    {
+        obstructions.Clear();
+    }
+    
     private void LateUpdate()
     {
         if (isEnabled)
         {
-            foreach (var target in targets)
+            if (targets != null)
             {
-                ViewObstructedSphere(target);   
+                foreach (var target in targets)
+                {
+                    ViewObstructedSphere(target);   
+                }   
             }
         }
     }

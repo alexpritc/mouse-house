@@ -30,7 +30,7 @@ public class Enclosure : MonoBehaviour
     [SerializeField] private string _mice;
 
     
-    public Transform[] Targets;
+    public List<Transform> Targets;
 
     public GameObject Bedding;
 
