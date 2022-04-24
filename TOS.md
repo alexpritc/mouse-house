@@ -1,6 +1,6 @@
 # Terms of service
 
-"I", "My","Me", "The Developer", refers to Alex Pritchard (alexpritc).
+"I", "My", "Me", "The Developer", refers to Alex Pritchard (alexpritc).
 
 By using this application, you hereby agree to the following terms and conditions.
 
