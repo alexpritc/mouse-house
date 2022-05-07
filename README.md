@@ -5,6 +5,8 @@ Alex Pritchard - [@alexpritc](https://twitter.com/alexpritc) - hi@apritc.com
 
 Project Link: [https://github.com/alexpritc/mouse-house](https://github.com/alexpritc/mouse-house)
 
+Overview: [https://www.youtube.com/watch?v=ckOSFHkkx3A](https://www.youtube.com/watch?v=ckOSFHkkx3A)
+
 ## License
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License:
 https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
