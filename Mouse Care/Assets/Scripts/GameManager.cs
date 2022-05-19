@@ -504,7 +504,7 @@ public class GameManager : MonoBehaviour {
         {
             _recommendations.Add("Your enclosure is too empty. You need to add items for your mice to gnaw on, hide in, and play with.");
         }
-        else if (_numberOfUniqueItems <= 10)
+        else if (_numberOfUniqueItems <= 3)
         {
             _recommendations.Add("You should add more variety to your enclosure. Mice can get bored of having the same things to play with.");
         }
@@ -515,9 +515,9 @@ public class GameManager : MonoBehaviour {
             _recommendations.Add("You need to upgrade the size of your enclosure. Mice need at least 600 sq inches of unbroken floorspace.");
         }
 
-        if ((int)_beddingInches * 12 < 8)
+        if (_beddingInches * 12 < 6)
         {
-            _recommendations.Add("You need to add more substrate to your enclosure so that your mice can make burrows. Ideally, they need at least 8 inches of bedding.");
+            _recommendations.Add("You need to add more substrate to your enclosure so that your mice can make burrows. Consider upgrading your enclosure if there is not enough space for deeper bedding.");
         }
 
         if (_numberOfWheels < 2)
@@ -527,20 +527,11 @@ public class GameManager : MonoBehaviour {
 
         if (_numberOfWaterSources == 0)
         {
-            _recommendations.Add("Your mice have no water! You can add water from the forage tab. It is recommended to have at least 2 water sources to reduce fighting.");
+            _recommendations.Add("Your mice have no water!");
         }
-        else if (_numberOfWaterSources < 2)
-        {
-            _recommendations.Add("You should add more water sources to your enclosure, otherwise your pets might fight. You can add water from the forage tab.");
-        }
-        
         if (_numberOfFoodSources == 0)
         {
-            _recommendations.Add("Your mice have no food! You can add food from the forage tab. It is recommended to have at least 2 food sources to reduce fighting.");
-        }
-        else if (_numberOfFoodSources < 2)
-        {
-            _recommendations.Add("You should add more food sources to your enclosure, otherwise your pets might fight. You can add food from the forage tab.");
+            _recommendations.Add("Your mice have no food!");
         }
 
         if (_recommendations.Count == 0)

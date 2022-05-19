@@ -113,7 +113,6 @@ public class CameraController : MonoBehaviour {
         }
         else if (_isPanning && !GameManager.Instance.IsInPlaceItemMode && _canPan)
         {
-            // _direction = _touchStart - cursorWorldPosOnNCP;
             _cameraPivot.transform.Translate(_direction * _panningSpeed, Space.Self);
         }
         else if (_isRotating && _canRot)

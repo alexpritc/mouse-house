@@ -23,6 +23,7 @@ public class LookIntoEnclosure : MonoBehaviour
         obstructions.Clear();
     }
     
+    // Physics-based
     private void LateUpdate()
     {
         if (isEnabled)
@@ -79,7 +80,7 @@ public class LookIntoEnclosure : MonoBehaviour
                 }
                 obstructions.Clear();
             }
-        }
+        } 
     }
 
     public void ToggleXray()
