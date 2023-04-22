@@ -55,18 +55,18 @@ public class LookIntoEnclosure : MonoBehaviour
                 // Repaint all the previous obstructions. Because some of the stuff might be not blocking anymore
                 for (int i = 0; i < obstructions.Count; i++)
                 {
-                    obstructions[i].gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    obstructions[i].gameObject.GetComponent<MeshRenderer>().enabled = true;
                 }
 
                 obstructions.Clear();
             }
-            
+
             // Hide the current obstructions
             for (int i = 0; i < hits.Length; i++)
             {
                 Transform obstruction = hits[i].transform;
-                obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
                 obstructions.Add(obstruction);
+                obstructions[i].gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
         }
         else
@@ -76,7 +76,7 @@ public class LookIntoEnclosure : MonoBehaviour
             {
                 for (int i = 0; i < obstructions.Count; i++)
                 {
-                    obstructions[i].gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    obstructions[i].gameObject.GetComponent<MeshRenderer>().enabled = true;
                 }
                 obstructions.Clear();
             }
@@ -94,7 +94,7 @@ public class LookIntoEnclosure : MonoBehaviour
                 // Repaint all the previous obstructions. Because some of the stuff might be not blocking anymore
                 for (int i = 0; i < obstructions.Count; i++)
                 {
-                    obstructions[i].gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    obstructions[i].gameObject.GetComponent<MeshRenderer>().enabled = true;
                 }
 
                 obstructions.Clear();

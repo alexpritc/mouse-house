@@ -51,8 +51,6 @@ public class PlaceItems : MonoBehaviour
         }
         
         _preview.GetComponent<MeshRenderer>().material = _previewMat;
-        _preview.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
-        _preview.GetComponent<MeshRenderer>().receiveShadows = false;
         Destroy(_preview.GetComponent<NavMeshObstacle>());
         Destroy(_preview.GetComponentInChildren<NavMeshObstacle>()); 
         Destroy(_preview.GetComponentInChildren<AudioSource>()); 
